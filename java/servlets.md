@@ -854,6 +854,7 @@ Overall, session servlets and the use of `JSESSIONID` provide a mechanism to mai
 Here's an example of how to implement a basic login functionality using an HTML form and sessions in a Java servlet:
 
 1. Create a servlet (`LoginServlet`) to handle the login request and manage the session:
+
 ```java
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -898,6 +899,7 @@ public class LoginServlet extends HttpServlet {
 ```
 
 2. Create a `index.jsp` to show a secret section and handle the logout request and invalidate the session:
+
 ```java
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
@@ -932,6 +934,7 @@ public class LoginServlet extends HttpServlet {
 ```
 
 3. Configure the `web.xml` file to map the servlet:
+
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -959,7 +962,6 @@ public class LoginServlet extends HttpServlet {
 Please note that this is a basic example for demonstration purposes. In a real-world application, you would use proper security measures, such as hashing and salting passwords, validating user input, and using secure communication channels.
     
 ### Context session
-
 
 In Java Servlets, the `javax.servlet.ServletContext` interface represents the context of a web application. It provides a way to share data between servlets, filters, and other components within the same web application. One of the key features of the ServletContext is the ability to create and manage sessions.
 
