@@ -850,7 +850,7 @@ public class LoginServlet extends HttpServlet {
         // Get the username and password from the request
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-
+        
         // Hardcoded validation (replace with your actual authentication logic)
         if ("admin".equals(username) && "password".equals(password)) {
             // Create a session and set attributes
@@ -867,9 +867,10 @@ public class LoginServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        doPost(request, response);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        session.invalidate();
+        response.sendRedirect("index.jsp");
     }
 }
 
@@ -900,7 +901,7 @@ public class LoginServlet extends HttpServlet {
         <h1>Welcome, <%= session.getAttribute("username") %>!</h1>
         <p>You are logged in.</p>
         <p>Secret Section: Only visible when logged in.</p>
-        <form action="logout" method="post">
+        <form action="logout" method="get">
             <input type="submit" value="Logout">
         </form>
     <% } %>
@@ -909,7 +910,7 @@ public class LoginServlet extends HttpServlet {
 
 ```
 
-5. Configure the `web.xml` file to map the servlet:
+3. Configure the `web.xml` file to map the servlet:
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
