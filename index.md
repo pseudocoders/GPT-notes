@@ -1,8 +1,10 @@
+<!--
 ---
 layout: page
 title: GPT-notes
 subtitle: All you need to be a web developer
 ---
+-->
 
 # Tools
 1. [Git](git/index.md)
