@@ -16,3 +16,5 @@ subtitle: All you need to be a web developer
 3. [Typescript](typescript/index.md)
 
 # Frameworks
+1. [Spring Boot](springboot/index.md)
+2. [Angular](angular/index.md)
