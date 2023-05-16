@@ -12,7 +12,7 @@ Servlets do not have a `main` method like standalone Java applications because t
 
 The lifecycle and execution of servlets are managed by the servlet container, which handles the initialization, service, and destruction phases of the servlet. This allows multiple servlets to be deployed within a web application and executed concurrently to handle different requests.
 
-### Advantages
+## Advantages of using servlets
 
 Servlets offer several advantages for web application development:
 
@@ -30,7 +30,7 @@ Servlets offer several advantages for web application development:
 
 Overall, Java Servlets provide a robust foundation for building web applications in Java. They offer flexibility, scalability, and platform independence, making them a popular choice for developers working on web-based projects.
 
-## Hierarchy
+## Servlet Class Hierarchy
 
 The inheritance hierarchy for a typical servlet:
 
@@ -67,9 +67,6 @@ Regarding whether it is good practice to override these methods, it depends on t
 However, it is important to note that the `service()` method, which is responsible for routing requests to the appropriate HTTP method-specific methods, should generally not be overridden unless you have a specific reason to do so. The default implementation of `service()` in `HttpServlet` provides the necessary logic to dispatch requests based on the HTTP method. Overriding `service()` can disrupt this behavior and may require you to handle request routing manually.
 
 In summary, overriding the `init()` method and HTTP method-specific methods is common practice, while overriding the `service()` method should be done with caution and a clear understanding of the implications.
-
-
-
 
 ## Creating a servlet
 
@@ -289,7 +286,7 @@ In this example, the servlet is configured to handle GET requests. The HTML form
 Save the servlet code in a file named `FormServlet.java` and the HTML code in a file named `form.html`. Place both files in the appropriate locations within your web application directory. Then, you can access the HTML form by opening the `form.html` file in a web browser or by deploying it on a web server. When you submit the form, the servlet will process the parameters and generate an HTML response displaying the entered values.
 
 
-## Lifecycle
+## Lifecycle of a servlet
 
 The lifecycle of a servlet refers to the various stages that a servlet goes through during its lifetime, from initialization to destruction. The servlet container manages the lifecycle of servlets based on the requests it receives. The lifecycle consists of the following stages:
 
@@ -439,7 +436,9 @@ Note that the use of annotations for servlet configuration requires a Java EE 6+
 
 Overall, annotations provide a more modern and convenient way to configure servlets, making it easier to develop and maintain Java web applications.
 
-## JSP (JavaServer Pages) is a technology used in web development to create dynamic web pages. It allows you to combine HTML markup with Java code to generate dynamic content that can be sent to the client's web browser.
+## JSP (JavaServer Pages) 
+
+JSP (JavaServer Pages) is a technology used in web development to create dynamic web pages. It allows you to combine HTML markup with Java code to generate dynamic content that can be sent to the client's web browser.
 
 Here are some key points about JSP:
 
@@ -458,7 +457,7 @@ Here are some key points about JSP:
 Overall, JSP is a powerful technology for building dynamic web pages. It combines the ease of HTML markup with the flexibility of Java code, allowing developers to create dynamic and interactive web applications.
 
 
-## Example
+### JSP Example
 
 Here's a simple example of a JSP file:
 
@@ -482,7 +481,7 @@ Assuming you have a servlet or a web framework properly configured to handle req
 
 The resulting page would display "Hello, John!" as the greeting message.
 
-## Example
+### JSP Example
 
 ```jsp
 <!DOCTYPE html>
@@ -508,7 +507,7 @@ So, when you access the JSP file, you'll see the greeting message if the `name` 
 
 Remember to make sure your servlet or web framework is properly configured to handle the form submission and map it to the JSP file.
 
-### Scriptlets, Expressions and Declarations
+### Scriptlets, Expressions and Declarations in JSPs
 
 In JSP (JavaServer Pages), you can use three types of elements to embed Java code within an HTML-like syntax: scriptlets, expressions, and declarations.
 
@@ -552,7 +551,7 @@ In JSP (JavaServer Pages), you can use three types of elements to embed Java cod
 It's important to note that scriptlets and declarations can lead to mixing presentation and business logic, which can make the code harder to maintain. It's generally recommended to use expressions and separate the business logic into separate Java classes (such as servlets) to achieve better code organization and separation of concerns.
 
 
-### Page directives
+### Page directives in JSPs
 
 Page directives in JSP (JavaServer Pages) are special instructions that provide configuration settings and control the behavior of the JSP page. They are typically placed at the top of the JSP file and are enclosed within `<%@ %>` tags. Page directives are processed by the JSP container during the translation phase before the JSP is executed.
 
@@ -617,7 +616,7 @@ Below that, the `getGreeting()` method from the declaration is called using `<%=
 
 This example demonstrates the use of page directives to set configuration options and declarations to define variables and methods within the JSP page.
 
-## JSP are servlets
+### JSP are actually servlets
 
 JSP (JavaServer Pages) are indeed interpreted as servlets by the web container at runtime. When a JSP page is requested, the web container dynamically translates it into a servlet class, which is then compiled and executed.
 
@@ -753,7 +752,7 @@ Remember to properly configure the filter in your web application's deployment d
 
 By implementing the `doFilter()` method, you have control over the preprocessing and postprocessing of data for requests and responses in your Java web application.
 
-### CORS example
+### CORS filter example
 
 CORS (Cross-Origin Resource Sharing) is a mechanism that allows web browsers to make cross-origin HTTP requests, which are requests sent from a different domain, protocol, or port. CORS helps enforce security policies to prevent unauthorized access to resources on a different origin.
 
