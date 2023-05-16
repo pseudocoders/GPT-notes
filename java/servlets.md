@@ -832,29 +832,7 @@ Overall, sessions in Java web applications provide a convenient way to maintain 
 
 Here's an example of how to implement a basic login functionality using an HTML form and sessions in a Java servlet:
 
-1. Create an HTML login form (`login.html`) with fields for username and password, and a submit button:
-```html
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-</head>
-<body>
-    <h2>Login</h2>
-    <form action="login" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br>
-        
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br>
-        
-        <input type="submit" value="Login">
-    </form>
-</body>
-</html>
-```
-
-2. Create a servlet (`LoginServlet`) to handle the login request and manage the session:
+1. Create a servlet (`LoginServlet`) to handle the login request and manage the session:
 ```java
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -864,109 +842,100 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class LoginServlet extends HttpServlet {
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         // Get the username and password from the request
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        
-        // Perform authentication (replace with your own authentication logic)
+
+        // Hardcoded validation (replace with your actual authentication logic)
         if ("admin".equals(username) && "password".equals(password)) {
-            // Create a new session or get the existing session
+            // Create a session and set attributes
             HttpSession session = request.getSession();
-            
-            // Store the username in the session
+            session.setAttribute("loggedIn", true);
             session.setAttribute("username", username);
-            
-            // Redirect to a secure page or the home page
-            response.sendRedirect("home.jsp");
+
+            // Redirect to the home page
+            response.sendRedirect("index.jsp");
         } else {
-            // Invalid credentials, redirect back to the login page with an error message
-            response.sendRedirect("login.html?error=true");
+            // Redirect back to the login page with an error message
+            response.sendRedirect("index.jsp?error=Invalid credentials");
         }
     }
-}
-```
 
-3. Create a logout servlet (`LogoutServlet`) to handle the logout request and invalidate the session:
-```java
-import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-public class LogoutServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        // Get the current session (if exists)
-        HttpSession session = request.getSession(false);
-        
-        if (session != null) {
-            // Invalidate the session
-            session.invalidate();
-        }
-        
-        // Redirect to the login page
-        response.sendRedirect("login.html");
+        doPost(request, response);
     }
 }
+
 ```
 
-4. Create a `home.jsp` page that will be displayed after successful login:
-```html
+2. Create a `index.jsp` to show a secret section and handle the logout request and invalidate the session:
+```java
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>Home</title>
 </head>
 <body>
-    <h2>Welcome, <%= session.getAttribute("username") %></h2>
-    
-    <!-- Add your home page content here -->
-    
-    <form action="logout" method="get">
-        <input type="submit" value="Logout">
-    </form>
+    <%-- Check if the user is logged in by checking the session attribute --%>
+    <% if (session.getAttribute("loggedIn") == null) { %>
+        <h1>Login</h1>
+        <form action="login" method="post">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username"><br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password"><br>
+            <input type="submit" value="Login">             
+        </form>
+        <p style="color: red">${error}</p>
+    <% } else { %>
+        <h1>Welcome, <%= session.getAttribute("username") %>!</h1>
+        <p>You are logged in.</p>
+        <p>Secret Section: Only visible when logged in.</p>
+        <form action="logout" method="post">
+            <input type="submit" value="Logout">
+        </form>
+    <% } %>
 </body>
 </html>
+
 ```
 
-5. Configure the `web.xml` file to map the servlets:
+5. Configure the `web.xml` file to map the servlet:
 ```xml
-<web-app>
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+    version="4.0">
+
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>LoginServlet</servlet-class>
+        <servlet-class>com.example.LoginServlet</servlet-class>
     </servlet>
-    
-    <servlet>
-        <servlet-name>LogoutServlet</servlet-name>
-        <servlet-class>LogoutServlet</servlet-class>
-    </servlet>
-    
+
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
-    
-    <servlet-mapping>
-        <servlet-name>LogoutServlet</servlet-name>
-        <url-pattern>/logout</url-pattern>
-    </servlet-mapping>
-    
+
     <welcome-file-list>
-        <welcome-file>login.html</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
+
 </web-app>
 ```
 
-In this example, when the user submits the login form, the `LoginServlet` is invoked. It performs the authentication using hardcoded credentials (replace with your own authentication logic). If the credentials are valid, a session is created or retrieved, and the username is stored in the session. The user is then redirected to the `home.jsp` page, which displays a welcome message and provides a logout button. Clicking the logout button invokes the `LogoutServlet`, which invalidates the session and redirects the user back to the login page.
+
 
 Please note that this is a basic example for demonstration purposes. In a real-world application, you would use proper security measures, such as hashing and salting passwords, validating user input, and using secure communication channels.
+
 
