@@ -230,6 +230,94 @@ Arrow functions are often used in scenarios where concise function syntax is pre
 Both standard functions and arrow functions have their uses, and the choice between them depends on the specific requirements and coding style preferences of your project.
 
 
+
+
+## Classes
+
+**Class Declaration and Constructor:**
+In TypeScript, you declare a class using the `class` keyword followed by the class name. You can also define a constructor method using the `constructor` keyword. The constructor is a special method that is executed when an instance of the class is created. Here's an example:
+
+```typescript
+class Person {
+  name: string;
+
+  constructor(name: string) {
+    this.name = name;
+  }
+}
+```
+
+**Properties and Methods:**
+Properties and methods can be defined within a class. Properties hold values associated with each instance of the class, while methods define the behavior of the class. TypeScript allows you to specify the types of properties and method parameters. Here's an example:
+
+```typescript
+class Person {
+  name: string;
+  age: number;
+
+  constructor(name: string, age: number) {
+    this.name = name;
+    this.age = age;
+  }
+
+  sayHello(): void {
+    console.log(`Hello, my name is ${this.name} and I am ${this.age} years old.`);
+  }
+}
+```
+
+**Inheritance:**
+In TypeScript, classes support inheritance. You can create a subclass (child class) that inherits properties and methods from a superclass (parent class) using the `extends` keyword. Subclasses can also have their own properties and methods. Here's an example:
+
+```typescript
+class Student extends Person {
+  studentId: number;
+
+  constructor(name: string, age: number, studentId: number) {
+    super(name, age); // Invoke the superclass constructor
+    this.studentId = studentId;
+  }
+
+  study(): void {
+    console.log(`${this.name} is studying.`);
+  }
+}
+```
+
+**Access Modifiers:**
+TypeScript introduces access modifiers (`public`, `private`, and `protected`) that control the accessibility of class members (properties and methods). These modifiers restrict access to class members within the class itself or from external code. The default access modifier is `public`. Here's an example:
+
+```typescript
+class Person {
+  private name: string;
+  protected age: number;
+
+  constructor(name: string, age: number) {
+    this.name = name;
+    this.age = age;
+  }
+
+  sayHello(): void {
+    console.log(`Hello, my name is ${this.name} and I am ${this.age} years old.`);
+  }
+}
+```
+
+**Difference from ES6 Classes:**
+TypeScript classes build upon ES6 classes and provide additional features:
+
+1. **Static Properties and Methods:** TypeScript allows defining static properties and methods using the `static` keyword, which are accessible on the class itself rather than instances of the class.
+
+2. **Type Annotations:** TypeScript enables specifying types for properties, method parameters, and return types, which provides static type checking and helps catch errors early during development.
+
+3. **Interfaces and Class Implementations:** TypeScript supports implementing interfaces in classes, ensuring that classes adhere to specific structures defined by the interfaces.
+
+4. **Access Modifiers:** TypeScript introduces access modifiers (`private`, `protected`, and `public`) to control the visibility and accessibility of class members.
+
+5. **Type Inference:** TypeScript's type inference system infers types based on assigned values and return statements, reducing the need for explicit type annotations in many cases.
+
+These additional features in TypeScript make it a powerful superset of ES6 classes, providing enhanced type safety, code organization, and development experience.
+
 ## Interfaces
 
 Interfaces in TypeScript provide a way to define the structure and shape of an object or a class. They allow you to enforce a contract on objects, specifying the names and types of their properties and the signatures of their methods. Interfaces are primarily used to achieve type checking and ensure consistency across different parts of your codebase. Here are the key aspects of interfaces in TypeScript:
@@ -285,3 +373,30 @@ Interfaces in TypeScript provide a way to define the structure and shape of an o
 9. **Duck Typing**: TypeScript uses a structural type system, which means that objects are considered compatible with an interface as long as they have the same structure and shape, regardless of their explicit declaration of implementing the interface. This concept is known as "duck typing" or "structural typing."
 
 Interfaces in TypeScript play a crucial role in defining contracts and ensuring type safety in your code. They promote code reusability, modularity, and consistency, making it easier to work with complex data structures and collaborate in larger projects.
+
+### Extending interfaces
+
+Extending an interface in TypeScript allows you to create a new interface that inherits properties and methods from one or more existing interfaces. This enables you to create a combination of interfaces, combining their members into a single interface. Here's how you can extend an interface in TypeScript:
+
+```typescript
+interface Interface1 {
+  property1: string;
+  method1(): void;
+}
+
+interface Interface2 {
+  property2: number;
+  method2(): void;
+}
+
+interface CombinedInterface extends Interface1, Interface2 {
+  additionalProperty: boolean;
+}
+```
+
+In the example above, we have two interfaces, `Interface1` and `Interface2`, each with their own properties and methods. To create a combination of these interfaces, we use the `extends` keyword followed by the names of the interfaces we want to inherit from.
+
+The `CombinedInterface` interface extends `Interface1` and `Interface2`, and it also introduces its own `additionalProperty` of type `boolean`. As a result, `CombinedInterface` includes all the properties and methods from both `Interface1` and `Interface2`, along with the new property.
+
+By extending interfaces, you can create reusable and modular code by defining smaller interfaces and then combining them as needed. This approach promotes code organization, reduces duplication, and allows for better type checking and code consistency.
+
