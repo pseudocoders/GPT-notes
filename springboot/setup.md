@@ -153,14 +153,14 @@ In the above example, the `MyApplication` class is annotated with `@SpringBootAp
 
 By using `@SpringBootApplication`, you benefit from Spring Boot's auto-configuration, component scanning, and bean registration features. It simplifies the setup process and allows you to focus on developing the application's functionality while leveraging the conventions and defaults provided by Spring Boot.
 
-The placement of the `@SpringBootApplication` annotation in a Spring Boot application's main class is significant because it affects the scope and behavior of component scanning.
-
-Component scanning is the process by which Spring searches for and registers beans within an application context. It scans the specified packages and their sub-packages to discover components such as controllers, services, repositories, and other Spring-managed beans.
-
-When the `@SpringBootApplication` annotation is placed at the root of the package hierarchy (typically in the main class), it enables component scanning for all the components within the same package and its sub-packages. This means that Spring will automatically detect and instantiate beans defined within those packages without the need for explicit configuration.
-
-By placing the `@SpringBootApplication` annotation in the main class at the root package, Spring Boot can scan and discover all the components in the application. This includes the main class itself and any other components, such as controllers or services, within the same package or its sub-packages.
-
-If the `@SpringBootApplication` annotation is placed in a different package or a sub-package of the root package, component scanning will be limited to that specific package and its sub-packages. Components in other packages outside the scanning scope will not be detected, leading to potential issues like bean not found exceptions or missing autowiring dependencies.
-
-It's important to place the `@SpringBootApplication` annotation in the appropriate location to ensure that Spring Boot can perform comprehensive component scanning and detect all the necessary components in the application. By doing so, you can leverage the benefits of Spring Boot's automatic configuration and dependency injection mechanisms effectively.
+> :warning: The placement of the `@SpringBootApplication` annotation in a Spring Boot application's main class is significant because it affects the scope and behavior of component scanning.
+>
+> Component scanning is the process by which Spring searches for and registers beans within an application context. It scans the specified packages and their sub-packages to discover components such as controllers, services, repositories, and other Spring-managed beans.
+>
+> When the `@SpringBootApplication` annotation is placed at the root of the package hierarchy (typically in the main class), it enables component scanning for all the components within the same package and its sub-packages. This means that Spring will automatically detect and instantiate beans defined within those packages without the need for explicit configuration.
+>
+> By placing the `@SpringBootApplication` annotation in the main class at the root package, Spring Boot can scan and discover all the components in the application. This includes the main class itself and any other components, such as controllers or services, within the same package or its sub-packages.
+>
+> If the `@SpringBootApplication` annotation is placed in a different package or a sub-package of the root package, component scanning will be limited to that specific package and its sub-packages. Components in other packages outside the scanning scope will not be detected, leading to potential issues like bean not found exceptions or missing autowiring dependencies.
+> 
+> It's important to place the `@SpringBootApplication` annotation in the appropriate location to ensure that Spring Boot can perform comprehensive component scanning and detect all the necessary components in the application. By doing so, you can leverage the benefits of Spring Boot's automatic configuration and dependency injection mechanisms effectively.
