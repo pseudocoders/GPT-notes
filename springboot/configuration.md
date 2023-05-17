@@ -417,5 +417,9 @@ By configuring CORS properties, you can control which origins, methods, and head
 
 ## Cache Configuration
 
+## Database Configuration:
 
+## Connection Pool Configuration
+
+## Spring Security Configuration
 
