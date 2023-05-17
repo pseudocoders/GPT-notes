@@ -1,0 +1,43 @@
+# CORS implementation in Spring Boot
+
+To implement CORS (Cross-Origin Resource Sharing) in a Spring Boot project, you can use the `@CrossOrigin` annotation or configure CORS globally.
+
+1. Using `@CrossOrigin` annotation:
+   - Apply the `@CrossOrigin` annotation on specific controller methods or controller classes.
+   - Specify the allowed origins, methods, headers, and other CORS configuration options.
+   - For example:
+
+     ```java
+     @RestController
+     @RequestMapping("/api/users")
+     @CrossOrigin(origins = "http://example.com", methods = {RequestMethod.GET, RequestMethod.POST})
+     public class UserController {
+         // Controller methods
+     }
+     ```
+
+   - In the above example, the `@CrossOrigin` annotation allows requests from `http://example.com` and allows only `GET` and `POST` methods.
+
+2. Configuring CORS globally:
+   - Create a configuration class that implements `WebMvcConfigurer` or extend `WebMvcConfigurerAdapter`.
+   - Override the `addCorsMappings` method to configure global CORS settings.
+   - For example:
+
+     ```java
+     @Configuration
+     public class CorsConfig implements WebMvcConfigurer {
+         @Override
+         public void addCorsMappings(CorsRegistry registry) {
+             registry.addMapping("/api/**")
+                     .allowedOrigins("http://example.com")
+                     .allowedMethods("GET", "POST")
+                     .allowedHeaders("*");
+         }
+     }
+     ```
+
+   - In the above example, requests to paths starting with `/api/` are allowed from `http://example.com`, with `GET` and `POST` methods allowed, and all headers permitted.
+
+By implementing CORS, you allow cross-origin requests from specified origins to access your RESTful API. This helps in enabling communication between different domains or ports, ensuring secure and controlled data exchange.
+
+Remember to configure CORS according to your specific requirements, such as specifying the allowed origins, methods, headers, and other options to meet your application's needs.
