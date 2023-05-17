@@ -349,11 +349,7 @@ In the above example:
 
 By using `ResponseEntity`, you have fine-grained control over the HTTP response sent back to the client. It allows you to customize the status code, headers, and body according to your application's specific needs.
 
-
-
 ## Example
-
-Sure! Here's an example of building a RESTful API that emits JSON using Spring Boot and the mentioned annotations:
 
 ```java
 import org.springframework.http.HttpStatus;
