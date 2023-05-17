@@ -131,3 +131,221 @@ In the above example, the `MyRestController` class is annotated with `@RestContr
 
 By using `@RestController`, you can create concise and straightforward REST controllers in Spring Boot, focusing on handling request mappings and business logic without worrying about response serialization.
 
+### @RequestMapping
+
+The `@RequestMapping` annotation in Spring Boot is a versatile annotation used to map web requests to specific controller methods. It is a fundamental annotation for defining the URL mapping and request handling behavior in Spring MVC and Spring WebFlux applications.
+
+Key features of the `@RequestMapping` annotation:
+
+1. Mapping URL paths: The `@RequestMapping` annotation is used to map a specific URL path or pattern to a controller method. It specifies the URL at which the method should be invoked when a request is made.
+
+2. Handling various HTTP methods: The `@RequestMapping` annotation supports multiple HTTP methods, including GET, POST, PUT, DELETE, and more. By default, if no explicit method is specified, the method will handle all HTTP methods for the specified URL.
+
+3. Request parameter mapping: The `@RequestMapping` annotation allows you to map and handle requests based on specific request parameters. You can define required or optional parameters and even specify their values using the `params` attribute.
+
+4. Path variables mapping: The `@RequestMapping` annotation supports path variables, allowing you to extract dynamic values from the URL and use them as method parameters. Path variables are defined within the URL pattern using curly braces `{}` and can be accessed through method parameters with the `@PathVariable` annotation.
+
+Example usage of `@RequestMapping`:
+
+```java
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/api")
+public class MyController {
+
+    @RequestMapping(value = "/hello", method = RequestMethod.GET)
+    public String sayHello() {
+        return "Hello, World!";
+    }
+
+    @RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
+    public User getUserById(@PathVariable("id") Long userId) {
+        // Retrieve and return the user with the specified ID
+    }
+
+    @RequestMapping(value = "/search", method = RequestMethod.GET, params = "query")
+    public List<Product> searchProducts(@RequestParam("query") String searchQuery) {
+        // Perform product search based on the provided query
+    }
+}
+```
+
+In the above example, the `@RequestMapping` annotation is used to define different endpoints:
+
+- `/api/hello`: When a GET request is made to `/api/hello`, the `sayHello()` method is invoked, which returns the string "Hello, World!" as the response.
+- `/api/users/{id}`: The `{id}` is a path variable that captures a dynamic value. The `getUserById()` method retrieves a user based on the provided `id` value and returns the user object as the response.
+- `/api/search`: The `searchProducts()` method accepts a request parameter called `query`. It performs a product search based on the provided query value and returns a list of products as the response.
+
+By using `@RequestMapping`, you have more flexibility in mapping requests to specific methods, handling different HTTP methods, working with request parameters, and capturing dynamic values from the URL in your Spring MVC or Spring WebFlux application.
+
+
+### @GetMapping, @PostMapping, @PutMapping and @DeleteMapping
+
+The `@GetMapping`, `@PostMapping`, `@PutMapping`, and `@DeleteMapping` annotations are specialized versions of the more general `@RequestMapping` annotation in Spring Boot. They are used to handle HTTP GET, POST, PUT, and DELETE requests, respectively, for specific endpoint mappings in a Spring MVC or Spring WebFlux application.
+
+Here's an explanation of each annotation:
+
+1. `@GetMapping`: This annotation is used to handle HTTP GET requests. It maps a specific URL path or pattern to a controller method that will be invoked when a GET request is made to that URL.
+
+Example:
+```java
+@GetMapping("/users")
+public List<User> getUsers() {
+    // Retrieve and return a list of users
+}
+```
+
+2. `@PostMapping`: This annotation is used to handle HTTP POST requests. It maps a specific URL path or pattern to a controller method that will be invoked when a POST request is made to that URL.
+
+Example:
+```java
+@PostMapping("/users")
+public User createUser(@RequestBody User newUser) {
+    // Create a new user based on the provided request body and return the created user
+}
+```
+
+3. `@PutMapping`: This annotation is used to handle HTTP PUT requests. It maps a specific URL path or pattern to a controller method that will be invoked when a PUT request is made to that URL.
+
+Example:
+```java
+@PutMapping("/users/{id}")
+public User updateUser(@PathVariable("id") Long userId, @RequestBody User updatedUser) {
+    // Update the user with the specified ID using the provided request body and return the updated user
+}
+```
+
+4. `@DeleteMapping`: This annotation is used to handle HTTP DELETE requests. It maps a specific URL path or pattern to a controller method that will be invoked when a DELETE request is made to that URL.
+
+Example:
+```java
+@DeleteMapping("/users/{id}")
+public void deleteUser(@PathVariable("id") Long userId) {
+    // Delete the user with the specified ID
+}
+```
+
+In each of the above examples, the respective annotation is used to map a specific URL to a controller method. The method is responsible for processing the request, performing any necessary operations, and returning an appropriate response. Additional annotations like `@PathVariable` and `@RequestBody` may be used to access path variables or request bodies sent along with the requests.
+
+By using these specialized mapping annotations, you can handle specific HTTP methods in a more readable and concise manner, enhancing the clarity and maintainability of your Spring Boot application's code.
+
+### @PathVariable
+
+The `@PathVariable` annotation in Spring Boot is used to bind a path variable from the URL to a method parameter in a controller method. It allows you to extract dynamic values from the URL and use them in your request handling logic.
+
+When a URL contains a path variable, such as `/users/{id}`, the `@PathVariable` annotation can be used to capture the value of `id` and pass it as an argument to the corresponding method parameter.
+
+Here's an example of using `@PathVariable`:
+
+```java
+@GetMapping("/users/{id}")
+public ResponseEntity<User> getUserById(@PathVariable("id") Long userId) {
+    // Retrieve the user with the specified ID
+    User user = userService.getUserById(userId);
+    
+    if (user != null) {
+        return ResponseEntity.ok(user);
+    } else {
+        return ResponseEntity.notFound().build();
+    }
+}
+```
+
+In the above example, the `@PathVariable("id")` annotation is used to bind the value of the `id` path variable from the URL to the `userId` method parameter. When a GET request is made to `/users/123`, the `getUserById` method is invoked with `userId` set to `123`.
+
+The `@PathVariable` annotation supports various data types for method parameters, such as `String`, `int`, `Long`, or custom types. You can also specify the variable name in the annotation if it differs from the method parameter name, as shown in the example.
+
+It's important to note that the name of the path variable in the annotation should match the name defined in the URL mapping. Additionally, the path variable can be optional by using the `required` attribute of `@PathVariable`, such as `@PathVariable(value = "id", required = false)`. In this case, if the path variable is not present in the URL, the method parameter will be set to `null` or the default value of the corresponding data type.
+
+By using `@PathVariable`, you can easily capture dynamic values from the URL and incorporate them into your controller methods, enabling flexible and parameterized request handling in your Spring Boot application.
+
+### @RequestBody
+
+The `@RequestBody` annotation in Spring Boot is used to bind the request body of an HTTP request to a method parameter in a controller method. It allows you to extract data sent in the request body and use it in your request handling logic.
+
+When a request is made with a body containing JSON, XML, or other data formats, the `@RequestBody` annotation can be applied to a method parameter to automatically deserialize the request body into an object of the specified type.
+
+Here's an example of using `@RequestBody`:
+
+```java
+@PostMapping("/users")
+public ResponseEntity<User> createUser(@RequestBody User newUser) {
+    // Create a new user based on the provided request body
+    User savedUser = userService.createUser(newUser);
+
+    // Return the saved user in the response
+    return ResponseEntity.ok(savedUser);
+}
+```
+
+In the above example, the `@RequestBody` annotation is used to bind the request body to the `newUser` method parameter of type `User`. When a POST request is made to `/users` with a request body containing user data in JSON format, the `createUser` method is invoked, and Spring automatically converts the request body into a `User` object.
+
+The `@RequestBody` annotation supports various data types for method parameters, including custom objects, collections, and primitives. When the request body is deserialized, Spring uses the configured `HttpMessageConverter` to convert the request body into the appropriate object type.
+
+It's important to note that the `@RequestBody` annotation is typically used with HTTP methods that have request bodies, such as POST, PUT, and PATCH. It is not applicable to methods handling GET or DELETE requests, as they usually do not have request bodies.
+
+By using `@RequestBody`, you can easily retrieve and use the data sent in the request body, allowing you to process and manipulate it within your controller methods. This annotation simplifies the handling of complex data structures and enables seamless integration of RESTful APIs in your Spring Boot application.
+
+### ResponseEntity
+
+In Spring Boot, `ResponseEntity` is a class that represents the entire HTTP response, including the status code, headers, and body. It provides a way to customize the response sent back to the client from a controller method.
+
+`ResponseEntity` allows you to specify the HTTP status code, headers, and body of the response in a flexible manner. It provides more control and flexibility compared to the default response handling in Spring MVC or Spring WebFlux.
+
+Here's a deeper explanation of `ResponseEntity` and its usage:
+
+1. Customizing the HTTP status code: With `ResponseEntity`, you can set the desired HTTP status code for the response. You can use the `ResponseEntity.status(HttpStatus)` method to specify the status code explicitly or use convenience methods like `ok()`, `badRequest()`, `notFound()`, etc., to set commonly used status codes.
+
+2. Setting headers: `ResponseEntity` allows you to set custom headers for the response. You can use the `header(String, String)` method to add a single header or the `headers(HttpHeaders)` method to set multiple headers at once.
+
+3. Defining the response body: `ResponseEntity` provides various methods to set the response body. You can use the `body(T)` method to set a single object as the response body, or you can use the `body(Object, MediaType)` method to set the body along with the desired media type. Additionally, you can return `ResponseEntity<Void>` if you don't need to include a response body.
+
+4. Returning the `ResponseEntity` from a controller method: In a controller method, you can return `ResponseEntity` as the result. This allows you to have fine-grained control over the response, including the status code, headers, and body. If you return `ResponseEntity<T>`, Spring will automatically serialize the response body using the configured `HttpMessageConverter`.
+
+Here's an example of using `ResponseEntity` in a controller method:
+
+```java
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class MyController {
+
+    @GetMapping("/hello")
+    public ResponseEntity<String> sayHello() {
+        String message = "Hello, World!";
+        return ResponseEntity.ok(message);
+    }
+
+    @GetMapping("/notfound")
+    public ResponseEntity<Void> notFound() {
+        return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/custom")
+    public ResponseEntity<String> customResponse() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Custom-Header", "Custom Value");
+
+        String body = "Custom response body";
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .headers(headers)
+                .body(body);
+    }
+}
+```
+
+In the above example:
+- The `sayHello()` method returns a `ResponseEntity<String>` with a response body of "Hello, World!" and the default HTTP status code of 200 (OK).
+- The `notFound()` method returns a `ResponseEntity<Void>` with the HTTP status code of 404 (Not Found) and no response body.
+- The `customResponse()` method constructs a custom `ResponseEntity<String>` with a status code of 201 (Created), adds a custom header, and sets a custom response body.
+
+By using `ResponseEntity`, you have fine-grained control over the HTTP response sent back to the client. It allows you to customize the status code, headers, and body according to your application's specific needs.
+
