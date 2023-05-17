@@ -349,3 +349,99 @@ In the above example:
 
 By using `ResponseEntity`, you have fine-grained control over the HTTP response sent back to the client. It allows you to customize the status code, headers, and body according to your application's specific needs.
 
+
+
+## Example
+
+Sure! Here's an example of building a RESTful API that emits JSON using Spring Boot and the mentioned annotations:
+
+```java
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/users")
+public class UserController {
+
+    private List<User> userList = new ArrayList<>();
+
+    @GetMapping
+    public ResponseEntity<List<User>> getAllUsers() {
+        return ResponseEntity.ok(userList);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable("id") Long id) {
+        for (User user : userList) {
+            if (user.getId().equals(id)) {
+                return ResponseEntity.ok(user);
+            }
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        // Generate a unique ID for the new user
+        Long id = generateUniqueId();
+
+        // Set the generated ID for the user
+        user.setId(id);
+
+        // Add the user to the list
+        userList.add(user);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(user);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable("id") Long id, @RequestBody User updatedUser) {
+        for (User user : userList) {
+            if (user.getId().equals(id)) {
+                user.setName(updatedUser.getName());
+                user.setEmail(updatedUser.getEmail());
+                return ResponseEntity.ok(user);
+            }
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable("id") Long id) {
+        for (User user : userList) {
+            if (user.getId().equals(id)) {
+                userList.remove(user);
+                return ResponseEntity.noContent().build();
+            }
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    private Long generateUniqueId() {
+        // Logic to generate a unique ID (e.g., using an atomic counter or UUID)
+        return System.currentTimeMillis();
+    }
+}
+```
+
+In this example, we have a `UserController` class that handles CRUD operations for a `User` entity. Here's a breakdown of the annotations used:
+
+- `@RestController`: Indicates that the class is a REST controller, allowing it to handle HTTP requests and produce JSON responses.
+- `@RequestMapping("/api/users")`: Specifies the base URL mapping for all the endpoints defined in the controller.
+- `@GetMapping`: Handles HTTP GET requests.
+- `@PostMapping`: Handles HTTP POST requests.
+- `@PutMapping`: Handles HTTP PUT requests.
+- `@DeleteMapping`: Handles HTTP DELETE requests.
+- `@PathVariable`: Binds a path variable from the URL to a method parameter.
+- `@RequestBody`: Binds the request body to a method parameter, deserializing it into an object.
+- `ResponseEntity<T>`: Represents the HTTP response, allowing you to customize the status code, headers, and body.
+
+Make sure to define the `User` class with appropriate attributes (e.g., `id`, `name`, `email`) to match your application's requirements.
+
+You can test the API by running the Spring Boot application and making HTTP requests to the corresponding endpoints (`/api/users`) using tools like cURL or Postman.
+
+
