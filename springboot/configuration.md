@@ -264,7 +264,7 @@ Using application name and profile configuration, you can give a meaningful name
 
 ## Static Resources and Web Configuration
 
-Static resources and web configuration in `application.properties` and `application.yml` allow you to define settings related to serving static files and configuring web-related behavior in your Spring Boot application. Here's an explanation of static resources and web configuration in both formats:
+Static resources and web configuration allow you to define settings related to serving static files and configuring web-related behavior in your Spring Boot application. Here's an explanation of static resources and web configuration in both formats:
 
 1. Static Resources Configuration:
    - Static resources are files like CSS, JavaScript, images, or HTML files that are served directly by the web server without any processing by the application.
@@ -304,7 +304,114 @@ By configuring static resources and web-related settings, you can control the be
 
 ## File Upload Configuration
 
+File upload configuration allows you to control various aspects of handling file uploads in your Spring Boot application. Here's an explanation of file upload configuration in both formats:
+
+1. Maximum File Size:
+   - You can specify the maximum allowed file size for file uploads.
+   - Example configuration in `application.properties`:
+     ```properties
+     spring.servlet.multipart.max-file-size=10MB
+     ```
+   - Example configuration in `application.yml`:
+     ```yaml
+     spring:
+       servlet:
+         multipart:
+           max-file-size: 10MB
+     ```
+   - In the above examples, the maximum file size allowed for uploads is set to 10 megabytes.
+
+2. Maximum Request Size:
+   - Along with the maximum file size, you can also configure the maximum request size, which includes the entire request (headers, form data, and uploaded files).
+   - Example configuration in `application.properties`:
+     ```properties
+     spring.servlet.multipart.max-request-size=20MB
+     ```
+   - Example configuration in `application.yml`:
+     ```yaml
+     spring:
+       servlet:
+         multipart:
+           max-request-size: 20MB
+     ```
+   - In the above examples, the maximum request size is set to 20 megabytes.
+
+3. File Location:
+   - By default, Spring Boot stores uploaded files in a temporary location.
+   - You can configure the location where uploaded files are stored.
+   - Example configuration in `application.properties`:
+     ```properties
+     spring.servlet.multipart.location=/path/to/upload/files
+     ```
+   - Example configuration in `application.yml`:
+     ```yaml
+     spring:
+       servlet:
+         multipart:
+           location: /path/to/upload/files
+     ```
+   - In the above examples, uploaded files will be stored in the `/path/to/upload/files` directory.
+
+4. File Upload Configuration in Spring MVC:
+   - If you're using Spring MVC for handling file uploads, additional configuration may be required in your controller or configuration classes.
+   - You can annotate a method parameter in your controller with `@RequestParam("file")` to bind the uploaded file to that parameter.
+   - You may also need to configure the `CommonsMultipartResolver` bean in your Spring configuration to enable multipart file handling.
+
+By configuring file upload properties, you can control the size limits for uploaded files and requests, specify the storage location for uploaded files, and customize the behavior of file uploads in your Spring Boot application. Note that file upload configuration may vary depending on the underlying web server and file upload library used in your application.
+
 ## CORS Configuration
+
+CORS (Cross-Origin Resource Sharing) configuration allows you to control cross-origin requests in your Spring Boot application. Here's an explanation of CORS configuration in both formats:
+
+1. Enabling CORS:
+   - CORS needs to be enabled to allow cross-origin requests. By default, Spring Boot provides a basic CORS configuration that allows requests from any origin.
+   - Example configuration in `application.properties`:
+     ```properties
+     spring.webflux.cors.allowed-origins=*
+     ```
+   - Example configuration in `application.yml`:
+     ```yaml
+     spring:
+       webflux:
+         cors:
+           allowed-origins: "*"
+     ```
+   - In the above examples, the `allowed-origins` property is set to `*`, allowing requests from any origin.
+   - You can customize the `allowed-origins` value to specify a specific origin or a list of allowed origins.
+
+2. Fine-grained CORS Configuration:
+   - You can provide more fine-grained configuration by specifying multiple CORS-related properties.
+   - Example configuration in `application.properties`:
+     ```properties
+     spring.webflux.cors.allowed-origins=http://localhost:8080
+     spring.webflux.cors.allowed-methods=GET,POST,PUT,DELETE
+     spring.webflux.cors.allowed-headers=Authorization,Content-Type
+     ```
+   - Example configuration in `application.yml`:
+     ```yaml
+     spring:
+       webflux:
+         cors:
+           allowed-origins:
+             - http://localhost:8080
+           allowed-methods:
+             - GET
+             - POST
+             - PUT
+             - DELETE
+           allowed-headers:
+             - Authorization
+             - Content-Type
+     ```
+   - In the above examples, the `allowed-origins` property is set to `http://localhost:8080`, allowing requests from that specific origin.
+   - The `allowed-methods` property specifies the HTTP methods allowed in cross-origin requests.
+   - The `allowed-headers` property lists the headers allowed in cross-origin requests.
+
+3. Custom CORS Configuration:
+   - If you require more complex CORS configuration, you can define a custom `CorsConfigurationSource` bean in your Spring configuration.
+   - This allows you to have fine-grained control over CORS policies, including handling preflight requests, setting allowed headers, and more.
+
+By configuring CORS properties, you can control which origins, methods, and headers are allowed in cross-origin requests in your Spring Boot application. This helps ensure the security and integrity of your application while allowing legitimate cross-origin interactions.
 
 ## Email Configuration
 
