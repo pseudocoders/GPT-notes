@@ -199,8 +199,117 @@ In the above example, the `id` field is marked with `@Id`, indicating it as the 
 By using `@Id` and `@GeneratedValue` together, you can define and generate primary key values for entities in a Spring Boot application. This combination allows for automatic assignment or generation of primary key values, simplifying the handling of unique identifiers in database operations.
 
 
-### Relationships
+## Relationships
 
+### @OneToMany and @ManyToOne
+
+In Spring Boot, the `@OneToMany` and `@ManyToOne` annotations are used to define relationships between entities. These annotations specify a one-to-many or many-to-one association between two entity classes.
+
+1. `@OneToMany` Annotation:
+   - The `@OneToMany` annotation is used to define a one-to-many relationship between two entities.
+   - It is typically placed on a field or property in the parent entity class, representing a collection or set of child entities.
+   - The `mappedBy` attribute of `@OneToMany` is used to specify the corresponding field or property in the child entity class that maps back to the parent entity.
+   - Example: `@OneToMany(mappedBy = "parentEntity")`
+
+2. `@ManyToOne` Annotation:
+   - The `@ManyToOne` annotation is used to define a many-to-one relationship between two entities.
+   - It is typically placed on a field or property in the child entity class, representing the association with the parent entity.
+   - The `@ManyToOne` annotation requires the `@JoinColumn` annotation to specify the foreign key column in the child entity table that references the primary key of the parent entity table.
+   - Example: `@ManyToOne @JoinColumn(name = "parent_entity_id")`
+
+3. Bidirectional Association:
+   - When using `@OneToMany` and `@ManyToOne` together, you can establish a bidirectional association between entities.
+   - This means that both the parent and child entities are aware of the association and can navigate to each other.
+   - To establish a bidirectional association, you need to annotate both sides of the relationship accordingly.
+   - Example: In the parent entity: `@OneToMany(mappedBy = "parentEntity")`, and in the child entity: `@ManyToOne @JoinColumn(name = "parent_entity_id")`.
+
+4. Cascading and Fetching:
+   - You can configure cascading behavior using the `cascade` attribute of `@OneToMany` or `@ManyToOne`.
+   - Cascading allows operations performed on one side of the relationship to propagate to the other side.
+   - Fetching strategy can be specified using the `fetch` attribute of `@OneToMany` or `@ManyToOne` to control how associated entities are loaded from the database.
+
+By using `@OneToMany` and `@ManyToOne` annotations, you can establish relationships between entities in a Spring Boot application. These annotations enable you to model complex associations between entities, such as one-to-many and many-to-one relationships. The bidirectional nature of the association allows for easy traversal and manipulation of related entities.
+
+### Example
+
+Sure! Let's consider an example of a blog application where we have two entities: `Post` and `Comment`. Each `Post` can have multiple `Comment` entities associated with it, and each `Comment` belongs to a single `Post`. We'll use `@OneToMany` and `@ManyToOne` annotations to establish the relationship between these entities.
+
+Here's an example implementation:
+
+1. `Post` Entity:
+
+```java
+@Entity
+public class Post {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    private String title;
+    
+    // One-to-Many relationship with Comment
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<>();
+
+    // Getters and setters
+
+    // ...
+}
+```
+
+2. `Comment` Entity:
+
+```java
+@Entity
+public class Comment {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    private String content;
+    
+    // Many-to-One relationship with Post
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id")
+    private Post post;
+
+    // Getters and setters
+
+    // ...
+}
+```
+
+In the above example, we have defined the relationship between `Post` and `Comment` entities using `@OneToMany` and `@ManyToOne` annotations. Here's a breakdown of the code:
+
+- In the `Post` entity:
+  - We have annotated the `comments` field with `@OneToMany(mappedBy = "post")`, indicating a one-to-many relationship where `Post` is the owning side.
+  - The `mappedBy` attribute specifies the field `post` in the `Comment` entity that maps back to the `Post` entity.
+  - We have also specified `cascade = CascadeType.ALL` to enable cascading operations (such as saving, updating, and deleting) on `Post` to propagate to associated `Comment` entities.
+
+- In the `Comment` entity:
+  - We have annotated the `post` field with `@ManyToOne(fetch = FetchType.LAZY)`.
+  - The `@JoinColumn(name = "post_id")` specifies the foreign key column `post_id` in the `Comment` table that references the primary key of the `Post` table.
+  - We have set `fetch = FetchType.LAZY` to use lazy loading for the `Post` entity when retrieving associated comments.
+
+The resulting database schema (DDL) would have the following structure:
+
+```sql
+CREATE TABLE post (
+  id bigint NOT NULL AUTO_INCREMENT,
+  title varchar(255),
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE comment (
+  id bigint NOT NULL AUTO_INCREMENT,
+  content varchar(255),
+  post_id bigint,
+  PRIMARY KEY (id),
+  FOREIGN KEY (post_id) REFERENCES post(id)
+);
+```
+
+This example demonstrates the use of `@OneToMany` and `@ManyToOne` annotations to establish a one-to-many relationship between the `Post` and `Comment` entities in Spring Boot. The annotations define the mapping and provide cascading and fetching configurations.
 
 
 ## Repositories
