@@ -230,9 +230,59 @@ In Spring Boot, the `@OneToMany` and `@ManyToOne` annotations are used to define
 
 By using `@OneToMany` and `@ManyToOne` annotations, you can establish relationships between entities in a Spring Boot application. These annotations enable you to model complex associations between entities, such as one-to-many and many-to-one relationships. The bidirectional nature of the association allows for easy traversal and manipulation of related entities.
 
+## @JoinColumn
+
+In Spring Boot, the `@JoinColumn` annotation is used in conjunction with the `@ManyToOne` or `@OneToOne` annotations to specify the column that joins two related entities in a database table. It helps establish the foreign key relationship between the entities.
+
+Here's an explanation of the `@JoinColumn` annotation:
+
+1. Purpose:
+   - The `@JoinColumn` annotation is used to specify the column that represents the foreign key in a database table.
+   - It defines the association between two entities when using the `@ManyToOne` or `@OneToOne` relationship annotations.
+   - The annotation allows customization of the column name, foreign key constraints, and other properties related to the join column.
+
+2. Placement:
+   - The `@JoinColumn` annotation is typically placed on the field or property that represents the foreign key in the entity class that holds the many side of the relationship.
+   - It can be placed alongside the `@ManyToOne` or `@OneToOne` annotation to establish the association.
+
+3. Attributes:
+   - `name`: Specifies the name of the foreign key column in the database table. By default, it uses the name of the referenced entity's primary key column.
+   - `referencedColumnName`: Specifies the name of the referenced entity's primary key column. By default, it uses the primary key column name of the referenced entity.
+   - `nullable`: Indicates whether the join column allows null values. The default value is `true`.
+   - `unique`: Specifies whether the join column should have a unique constraint. The default value is `false`.
+   - `foreignKey`: Specifies the foreign key constraint options, such as `ForeignKey` name, update behavior, and delete behavior.
+
+Example Usage:
+
+```java
+@Entity
+public class Comment {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    private String content;
+    
+    @ManyToOne
+    @JoinColumn(name = "post_id", referencedColumnName = "id")
+    private Post post;
+
+    // Getters and setters
+
+    // ...
+}
+```
+
+In the above example, the `@JoinColumn` annotation is used in the `Comment` entity to define the foreign key column for the association with the `Post` entity. Here's a breakdown of the code:
+
+- The `@JoinColumn(name = "post_id", referencedColumnName = "id")` annotation specifies that the `post_id` column in the `Comment` table references the `id` column of the `Post` table.
+- By default, the column name would be derived from the name of the referenced entity's primary key column (`id` in this case). However, you can customize it using the `referencedColumnName` attribute if the referenced entity has a different primary key column name.
+
+By using the `@JoinColumn` annotation, you can precisely define the foreign key column that establishes the association between entities in a Spring Boot application. It allows you to customize column names, constraints, and other properties related to the join column in the database schema.
+
 ### Example
 
-Sure! Let's consider an example of a blog application where we have two entities: `Post` and `Comment`. Each `Post` can have multiple `Comment` entities associated with it, and each `Comment` belongs to a single `Post`. We'll use `@OneToMany` and `@ManyToOne` annotations to establish the relationship between these entities.
+Let's consider an example of a blog application where we have two entities: `Post` and `Comment`. Each `Post` can have multiple `Comment` entities associated with it, and each `Comment` belongs to a single `Post`. We'll use `@OneToMany` and `@ManyToOne` annotations to establish the relationship between these entities.
 
 Here's an example implementation:
 
