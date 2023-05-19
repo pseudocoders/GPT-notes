@@ -584,13 +584,440 @@ Using `@OneToOne` annotation allows you to establish a one-to-one relationship b
 
 ## Repositories
 
+In Spring Boot, repositories provide a convenient way to interact with a data source, such as a database, by abstracting the underlying data access operations. Repositories serve as an interface between your application and the data source, allowing you to perform common CRUD (Create, Read, Update, Delete) operations and more.
 
-## JPQL
+Spring Boot provides the Spring Data JPA module, which simplifies the creation of repositories using a set of predefined interfaces and annotations.
+
+Here's how repositories work in Spring Boot:
+
+1. Define an Entity:
+   - Start by defining an entity class that represents a table or document in your data source. An entity typically maps to a database table or a document in a NoSQL database.
+
+2. Create a Repository Interface:
+   - Create an interface that extends one of the Spring Data repository interfaces, such as `CrudRepository`, `PagingAndSortingRepository`, or `JpaRepository`.
+         - By utilizing Spring Data repository interfaces, you can significantly reduce the amount of boilerplate code needed for data access, improve code maintainability, and promote code reuse across your Spring Boot application.
+         - Here are the key Spring Data repository interfaces:
+
+         1. `CrudRepository`:
+            - It is the most basic repository interface provided by Spring Data.
+            - Extends the `Repository` interface and provides CRUD (Create, Read, Update, Delete) operations for entities.
+            - Includes methods like `save()`, `findById()`, `findAll()`, `deleteById()`, and more.
+
+         2. `PagingAndSortingRepository`:
+            - Extends `CrudRepository` and adds support for pagination and sorting of query results.
+            - Includes methods like `findAll(Pageable pageable)` for retrieving data in chunks based on page and size.
+
+         3. `JpaRepository`:
+            - Extends `PagingAndSortingRepository` and provides additional JPA-specific methods.
+            - Includes methods like `flush()` to force synchronization with the underlying database, `saveAndFlush()` to save and immediately flush changes, and more.
+
+   - The repository interface defines methods for common data access operations like saving, updating, deleting, and querying entities.
+   - You can also define custom query methods using method naming conventions or by using the `@Query` annotation.
+
+```java
+@Repository
+public interface EmployeeRepository extends JpaRepository<Employee, Long> {
+    // Custom query method to find employees by name
+    List<Employee> findByName(String name);
+}
+```
+
+3. Autowire and Use the Repository:
+   - In your service or controller classes, autowire the repository interface using `@Autowired` or constructor injection.
+   - Use the repository methods to perform data access operations. The Spring Data JPA module automatically provides implementations for the methods defined in the repository interface.
+
+```java
+@Service
+public class EmployeeService {
+    private final EmployeeRepository employeeRepository;
+
+    @Autowired
+    public EmployeeService(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
+
+    public List<Employee> getAllEmployees() {
+        return employeeRepository.findAll();
+    }
+
+    public Employee getEmployeeById(Long id) {
+        return employeeRepository.findById(id).orElse(null);
+    }
+
+    public Employee saveEmployee(Employee employee) {
+        return employeeRepository.save(employee);
+    }
+
+    public void deleteEmployee(Long id) {
+        employeeRepository.deleteById(id);
+    }
+}
+```
+
+With the repository in place, you can easily perform common data access operations without writing boilerplate code for database interactions. The repository abstracts away the underlying implementation details, making your code more concise and maintainable.
+
+Spring Boot repositories support different data sources, including relational databases (e.g., MySQL, PostgreSQL) and NoSQL databases (e.g., MongoDB). You can configure the data source and other related properties in the application configuration files, such as `application.properties` or `application.yml`.
+
+Repositories in Spring Boot are an essential part of building data-driven applications, providing a convenient and consistent way to interact with the data source. They help reduce the amount of boilerplate code and promote code reuse by providing common data access operations out of the box.
+
+The pair `<JpaRepository, Long>` represents the combination of a specific repository interface, such as `JpaRepository`, and the type of the entity identifier, which in this case is `Long`. The entity identifier is the unique identifier of each entity instance in the data source.
+
+By extending from the pair `<JpaRepository, Long>`, the repository interface gains the following benefits:
+
+1. Type Safety:
+   - The repository interface can utilize type-safe methods related to the entity identifier, such as `findById()`, `deleteById()`, and `existsById()`.
+   - The methods accept and return the correct identifier type (`Long` in this case), preventing type mismatch errors at compile-time.
+
+2. Convenience:
+   - The repository interface inherits all the methods provided by `JpaRepository` for CRUD operations and common data access tasks.
+   - Additional methods for managing entities, such as flushing changes to the database (`flush()`) and deleting entities in batches (`deleteAllInBatch()`), are also available.
+
+By specifying the entity identifier type in the repository interface, Spring Data provides a more robust and type-safe approach to working with entity identifiers. This helps avoid potential errors and ensures consistency in data access operations.
+
+If your entity uses a different identifier type, such as `String` or a custom class, you can replace `Long` with the appropriate identifier type in the pair `<JpaRepository, IdentifierType>`.
+
+### JpaRepository methods
+
+Sure! Here's a list of commonly used methods provided by the `JpaRepository` interface in Spring Data:
+
+1. Save:
+   - `T save(T entity)`: Saves the given entity and returns the saved entity.
+
+2. Save All:
+   - `Iterable<T> saveAll(Iterable<T> entities)`: Saves multiple entities and returns the saved entities.
+
+3. Find by ID:
+   - `Optional<T> findById(ID id)`: Retrieves an entity by its ID and returns it wrapped in an `Optional`.
+   - `boolean existsById(ID id)`: Checks if an entity with the given ID exists.
+
+4. Find All:
+   - `List<T> findAll()`: Retrieves all entities in the repository.
+   - `Iterable<T> findAllById(Iterable<ID> ids)`: Retrieves entities by their IDs.
+   - `long count()`: Returns the count of entities in the repository.
+
+5. Delete:
+   - `void deleteById(ID id)`: Deletes an entity by its ID.
+   - `void delete(T entity)`: Deletes the given entity.
+   - `void deleteAll()`: Deletes all entities in the repository.
+   - `void deleteAll(Iterable<? extends T> entities)`: Deletes the given entities.
+
+6. Paging and Sorting:
+   - `Page<T> findAll(Pageable pageable)`: Retrieves a page of entities based on the provided `Pageable` object.
+   - `List<T> findAll(Sort sort)`: Retrieves all entities and sorts them according to the provided `Sort` object.
+
+These are just a few examples of the methods available in the `JpaRepository` interface. Additionally, `JpaRepository` inherits methods from other interfaces like `CrudRepository` and `PagingAndSortingRepository`, providing additional functionality for CRUD operations, pagination, and sorting.
+
+It's important to note that Spring Data repositories also support the creation of custom query methods using method naming conventions or annotations like `@Query` to define more specific queries tailored to your application's needs.
+
+### Page and Pageable
+
+`Pageable` is an interface that represents the information needed to perform pagination, such as the page number, page size, and sorting criteria. It is used as an input parameter when querying the data repository to specify which page of data should be retrieved. The `Pageable` object does not contain the actual data elements but rather defines the parameters for pagination.
+
+On the other hand, `Page` is an interface that represents a single page of data retrieved from a larger dataset using pagination. It encapsulates the actual data elements along with metadata about the page, such as the total number of pages, total number of elements, and other pagination-related information. The `Page` object contains the content of the current page as a list and provides methods to access the content and navigate between pages.
+
+In summary, the key differences between `Pageable` and `Page` are as follows:
+
+1. `Pageable` is used as an input parameter to specify the pagination parameters when querying the repository. It defines the page number, page size, and sorting criteria.
+
+2. `Page` is the result object returned by the repository method when using pagination. It contains the actual data elements for the current page along with metadata about the page, such as the total number of pages and elements.
+
+To perform pagination, you typically create a `Pageable` object with the desired pagination parameters and pass it to the repository method. The repository method returns a `Page` object containing the requested page of data. By using both `Pageable` and `Page` together, you can efficiently retrieve and work with paginated data in your Spring Data application.
+
+The `Pageable` object in Spring Data is used for pagination purposes, allowing you to retrieve data from a large dataset in smaller chunks or pages. It provides configuration options for specifying the page size, sorting criteria, and the current page number.
+
+The `Pageable` interface defines the following methods:
+
+1. `int getPageNumber()`: Returns the current page number. The first page is numbered 0.
+
+2. `int getPageSize()`: Returns the number of items to be returned per page.
+
+3. `int getOffset()`: Returns the offset of the current page. It is calculated as `pageNumber * pageSize`.
+
+4. `Sort getSort()`: Returns the sorting criteria for the page.
+
+5. `Pageable next()`: Returns a new `Pageable` object for the next page.
+
+6. `Pageable previousOrFirst()`: Returns a new `Pageable` object for the previous page or the first page if the current page is the first.
+
+7. `Pageable first()`: Returns a new `Pageable` object for the first page.
+
+8. `boolean hasPrevious()`: Checks if there is a previous page available.
+
+You can create a `Pageable` object using the `PageRequest` class, which is an implementation of `Pageable`. `PageRequest` provides constructors to specify the page number, page size, and sorting criteria:
+
+```java
+Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("propertyName").descending());
+```
+
+Here's an example of how to use `Pageable` in a repository method:
+
+```java
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+    Page<User> findAll(Pageable pageable);
+}
+```
+
+By passing a `Pageable` object to the `findAll()` method, you can retrieve a specific page of results from the repository. The returned `Page` object contains the requested data along with additional information such as the total number of pages, total number of items, and more.
+
+Using `Pageable` allows you to efficiently retrieve and display data in a paginated manner, which can be beneficial when dealing with large datasets. It enables you to control the size of the result set, navigate through the pages, and apply sorting to the returned data.
+
+In Spring Data, the `Page` object represents a single page of data retrieved from a larger dataset using pagination. It encapsulates the actual data elements along with additional metadata about the page, such as the total number of pages, total number of items, and other pagination-related information.
+
+The `Page` interface provides the following methods:
+
+1. `int getTotalPages()`: Returns the total number of pages available.
+
+2. `long getTotalElements()`: Returns the total number of elements/items in the entire dataset.
+
+3. `int getNumber()`: Returns the current page number. The first page is numbered 0.
+
+4. `int getSize()`: Returns the size (number of elements) of the current page.
+
+5. `int getNumberOfElements()`: Returns the number of elements/items in the current page.
+
+6. `List<T> getContent()`: Returns the actual content/data elements of the current page as a list.
+
+7. `boolean hasContent()`: Checks if the current page has any content.
+
+8. `boolean isFirst()`: Checks if the current page is the first page.
+
+9. `boolean isLast()`: Checks if the current page is the last page.
+
+10. `boolean hasNext()`: Checks if there is a next page available.
+
+11. `boolean hasPrevious()`: Checks if there is a previous page available.
+
+By returning a `Page` object from a repository method, you can retrieve a specific page of data along with the associated metadata. This allows you to display the content to the user and provide navigation controls for moving between pages.
 
 
-## Native SQL
+### Query Methods
+
+Query Methods in Spring Data provide a convenient way to define queries using method names in repository interfaces. By following naming conventions, Spring Data automatically generates the appropriate queries for you, eliminating the need to write JPQL or SQL queries manually.
+
+Key points about Query Methods:
+
+1. Naming Convention:
+   - Spring Data uses naming conventions to generate queries based on the method names defined in the repository interfaces.
+   - By adhering to the conventions, you can express query criteria through the method name itself.
+
+2. Type-Safe Queries:
+   - Query Methods provide type safety by allowing you to use the entity's properties and their types in the method names.
+   - This helps catch errors at compile-time, as incorrect property names or types will be flagged by the compiler.
+
+3. Automatic Query Generation:
+   - Spring Data automatically translates the method names into queries using the provided naming conventions.
+   - It infers the query parameters from the method arguments and generates the appropriate query based on the criteria specified in the method name.
+
+4. Limitations:
+   - Query Methods have some limitations compared to writing custom JPQL or SQL queries.
+   - They may not cover complex or dynamic query scenarios, where you need more control over the query structure or use advanced query features.
+
+Query Methods provide a convenient and type-safe way to express simple queries using method names. However, for more complex queries or when you require fine-grained control over the query structure, you can use custom JPQL or SQL queries using annotations like `@Query` in combination with repository interfaces.
+
+#### Examples
+
+Here's a list of examples showcasing different named query methods in Spring Data repositories:
+
+1. Find by a single property:
+```java
+List<User> findByFirstName(String firstName);
+```
+
+2. Find by multiple properties:
+```java
+List<User> findByFirstNameAndLastName(String firstName, String lastName);
+```
+
+3. Find by property ignoring case:
+```java
+List<User> findByLastNameIgnoreCase(String lastName);
+```
+
+4. Find by property with sorting:
+```java
+List<User> findByAgeOrderByLastNameDesc(int age);
+```
+
+5. Find by property with pagination:
+```java
+Page<User> findByAge(int age, Pageable pageable);
+```
+
+6. Find by property with custom query:
+```java
+@Query("SELECT u FROM User u WHERE u.age >= :minAge")
+List<User> findByAgeGreaterThanEqual(@Param("minAge") int minAge);
+```
+
+7. Find by property using native SQL:
+```java
+@Query(value = "SELECT * FROM users WHERE age > :age", nativeQuery = true)
+List<User> findByAgeGreaterThan(@Param("age") int age);
+```
+
+8. Count by property:
+```java
+long countByFirstName(String firstName);
+```
+
+9. Delete by property:
+```java
+void deleteByLastName(String lastName);
+```
+
+10. Find by property with custom projection:
+```java
+List<UserProjection> findByAge(int age);
+```
+(Note: `UserProjection` is a custom projection interface defining the desired subset of properties to be returned.)
+
+Here's a list of examples showcasing named query methods combined in queries using logical operators in Spring Data repositories:
+
+1. Find by property with logical AND:
+```java
+List<User> findByFirstNameAndLastName(String firstName, String lastName);
+```
+
+2. Find by property with logical OR:
+```java
+List<User> findByFirstNameOrLastName(String firstName, String lastName);
+```
+
+3. Find by property with logical NOT:
+```java
+List<User> findByFirstNameNot(String firstName);
+```
+
+4. Find by property with logical AND and Ignore Case:
+```java
+List<User> findByFirstNameAndLastNameIgnoreCase(String firstName, String lastName);
+```
+
+5. Find by property with logical OR and Ignore Case:
+```java
+List<User> findByFirstNameOrLastNameIgnoreCase(String firstName, String lastName);
+```
+
+6. Find by property with logical AND and Sorting:
+```java
+List<User> findByAgeAndLastNameOrderByFirstName(int age, String lastName);
+```
+
+7. Find by property with logical OR and Pagination:
+```java
+Page<User> findByAgeOrLastName(int age, String lastName, Pageable pageable);
+```
+
+### Custom Query Methods:
+
+Besides query methods generated by naming conventions, you can define custom query methods using annotations like `@Query`. With `@Query`, you can write JPQL (Java Persistence Query Language) or native SQL queries to perform more complex data retrieval operations. You can also use query method parameters to define dynamic queries based on runtime values.
+
+#### JPQL
+
+JPQL (Java Persistence Query Language) is a query language used to perform database queries in Java-based applications that use the Java Persistence API (JPA). JPQL is designed to be database-agnostic, allowing developers to write queries that work across different database systems.
+
+Here are key points about JPQL:
+
+1. Object-Oriented Query Language:
+   - JPQL is an object-oriented query language that operates on persistent entities and their relationships.
+   - It allows you to query and manipulate entities using object-oriented concepts such as classes, attributes, and associations.
+
+2. Similar to SQL:
+   - JPQL has a syntax similar to SQL (Structured Query Language), making it familiar to developers who have experience with SQL.
+   - However, JPQL operates at the object level rather than the relational level.
+
+3. Entity-Focused Queries:
+   - JPQL focuses on querying entities and their properties rather than directly querying database tables.
+   - It allows you to express queries based on the entity's attributes, relationships, and associations.
+
+4. Database-Agnostic:
+   - JPQL is designed to be independent of the underlying database system.
+   - Queries written in JPQL should work across different databases supported by the JPA provider without modification.
+
+5. Type Safety:
+   - JPQL offers type safety by allowing developers to specify the types of entities and their properties in queries.
+   - This helps catch errors at compile-time, reducing the chances of runtime errors.
+
+
+#### Custom Query Methods in Native SQL
+
+In Spring Data repositories, you can define custom query methods using Native SQL to perform complex database queries that go beyond the capabilities of query generation based on method names. Native SQL allows you to write database-specific SQL queries directly in your repository interface.
+
+Here's how you can define custom query methods using Native SQL in Spring Data repositories:
+
+1. Annotate the method with `@Query`:
+   - Begin by annotating the custom query method in your repository interface with the `@Query` annotation.
+   - Specify the SQL query using the `value` attribute of the `@Query` annotation.
+
+```java
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+
+    @Query(value = "SELECT * FROM users WHERE age > :age", nativeQuery = true)
+    List<User> findByAgeGreaterThan(@Param("age") int age);
+}
+```
+
+2. Use the `nativeQuery` attribute:
+   - Set the `nativeQuery` attribute of the `@Query` annotation to `true` to indicate that the query is written in Native SQL.
+
+3. Specify method parameters:
+   - If your custom query method requires parameters, define them as method parameters and use placeholders in the SQL query.
+   - To bind the method parameters to the placeholders in the SQL query, annotate the method parameters with `@Param` and provide the corresponding placeholder name.
+
+4. Return the desired result:
+   - Define the return type of the custom query method based on the expected result of the SQL query.
+   - Spring Data automatically maps the query result to the specified return type.
+
+By using Native SQL in custom query methods, you have the flexibility to write complex queries that leverage the full power of the underlying database system. You can utilize database-specific features, perform advanced joins and aggregations, and handle complex conditions that may not be expressible using the built-in query generation mechanisms.
+
+It's important to note that using Native SQL introduces a potential risk of SQL injection if you concatenate user input directly into the SQL query. To mitigate this risk, you should always parameterize the query and use parameter binding techniques provided by Spring Data, such as `@Param` annotation, to ensure the safety and integrity of your application.
+
+Custom query methods with Native SQL in Spring Data repositories provide a powerful tool for handling advanced database queries that cannot be easily expressed using the default query generation based on method names.
 
 ## Database Configuration
 
 ## Transaction Management
 
+
+
+
+
+
+
+
+
+
+Spring Data repository interfaces provide a set of predefined methods and query generation mechanisms to simplify data access operations in your Spring Boot application. These interfaces are part of the Spring Data project, which aims to enhance data access by providing a common API for interacting with different data sources.
+
+Here are the key Spring Data repository interfaces:
+
+1. `CrudRepository`:
+   - It is the most basic repository interface provided by Spring Data.
+   - Extends the `Repository` interface and provides CRUD (Create, Read, Update, Delete) operations for entities.
+   - Includes methods like `save()`, `findById()`, `findAll()`, `deleteById()`, and more.
+
+2. `PagingAndSortingRepository`:
+   - Extends `CrudRepository` and adds support for pagination and sorting of query results.
+   - Includes methods like `findAll(Pageable pageable)` for retrieving data in chunks based on page and size.
+
+3. `JpaRepository`:
+   - Extends `PagingAndSortingRepository` and provides additional JPA-specific methods.
+   - Includes methods like `flush()` to force synchronization with the underlying database, `saveAndFlush()` to save and immediately flush changes, and more.
+
+4. Query Methods:
+   - Spring Data repositories allow you to define query methods by following a specific naming convention.
+   - By naming your methods according to the convention, Spring Data generates the corresponding queries for you.
+   - For example, a method named `findByFirstName(String firstName)` in a repository interface will automatically generate a query to find entities by their first name.
+
+5. Custom Query Methods:
+   - Besides query methods generated by naming conventions, you can define custom query methods using annotations like `@Query`.
+   - With `@Query`, you can write JPQL (Java Persistence Query Language) or native SQL queries to perform more complex data retrieval operations.
+   - You can also use query method parameters to define dynamic queries based on runtime values.
+
+These repository interfaces provide a higher-level abstraction for data access operations, allowing you to focus on defining business logic rather than dealing with low-level database interactions. By following the naming conventions or using custom query methods, you can easily perform common data retrieval, modification, and deletion operations.
+
+Spring Data repositories support various data sources, including relational databases (e.g., MySQL, PostgreSQL), NoSQL databases (e.g., MongoDB, Redis), and more. The underlying implementation depends on the chosen data source, but the repository interfaces provide a consistent API across different data sources.
+
+By utilizing Spring Data repository interfaces, you can significantly reduce the amount of boilerplate code needed for data access, improve code maintainability, and promote code reuse across your Spring Boot application.
