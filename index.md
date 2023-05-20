@@ -8,6 +8,8 @@ subtitle: All you need to be a web developer
 
 # Basics
 1. [The Internet, HTTP and the world wide web](basics/http.md)
+2. [Software Production Engineering](production.md)
+3. [Software architecture for web projects](basics/architecture.md)
 
 # Tools
 1. [Git](git/index.md)
