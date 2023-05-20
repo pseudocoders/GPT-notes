@@ -7,4 +7,5 @@
 5. [APIs](apis.md)
 6. [Data Access](databases.md)
 7. [Services](services.md)
-8. [Validation](validation.md)
+8. [Validation and exception management](validation.md)
+9. [Log](log.md)
