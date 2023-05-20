@@ -9,3 +9,4 @@
 7. [Services](services.md)
 8. [Validation and exception management](validation.md)
 9. [Log](log.md)
+10. [Uploading files to the server](uploading.md)
