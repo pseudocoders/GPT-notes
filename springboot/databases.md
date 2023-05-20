@@ -1212,7 +1212,7 @@ To configure a connection pool in a Spring Boot application with `spring-boot-st
 
 By following these steps, you can configure a connection pool using HikariCP with MySQL in your Spring Boot application, allowing for efficient management and reuse of database connections.
 
-## Database Configuration
+
 
 
 
