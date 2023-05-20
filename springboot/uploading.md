@@ -11,6 +11,8 @@ To upload images to a Spring Boot project, you can follow these steps:
        <version>1.4</version>
    </dependency>
    ```
+   
+   The `commons-fileupload` library is used in the example to handle file uploads in Spring Boot. It provides utility classes and methods to process and handle multipart/form-data requests, which are used when uploading files. Internally, `MultipartFile` relies on the functionality provided by `commons-fileupload` to parse and extract the uploaded file data.  
 
 2. Create a file upload controller: Create a controller class that handles the file upload requests. Annotate the class with `@RestController` and define a method to handle the file upload request. Here's an example:
 
