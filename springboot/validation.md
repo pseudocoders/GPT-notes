@@ -1,5 +1,7 @@
 # Data validation and exception control 
 
+## Data validation
+
 In a Spring Boot project, data validation from the request should typically be placed in the controller layer. The controller layer is responsible for handling incoming requests, validating the request data, and forwarding the data to the appropriate service or business logic layer.
 
 Here's a recommended approach for data validation in a Spring Boot project:
@@ -57,7 +59,100 @@ Here's a recommended approach for data validation in a Spring Boot project:
 
 By placing the data validation in the controller layer, you can ensure that the incoming request data is validated before further processing. This helps maintain the integrity and consistency of the data and provides meaningful error responses to clients in case of validation failures.
 
-## ErrorResponse
+### Example
+
+Here's an example of how you can perform data validation in the controller layer of a Spring Boot application:
+
+```java
+@RestController
+public class UserController {
+    
+    @Autowired
+    private UserService userService;
+
+    @PostMapping("/users")
+    public ResponseEntity<User> createUser(@Valid @RequestBody CreateUserRequest request) {
+        // Validate request data
+        if (!isValidEmail(request.getEmail())) {
+            throw new IllegalArgumentException("Invalid email format");
+        }
+
+        // Convert request to user entity
+        User user = convertToUserEntity(request);
+
+        // Save the user
+        User savedUser = userService.createUser(user);
+
+        return ResponseEntity.ok(savedUser);
+    }
+
+    // Other controller methods...
+
+    private boolean isValidEmail(String email) {
+        // Perform email validation logic
+        // Return true if email is valid, false otherwise
+    }
+
+    private User convertToUserEntity(CreateUserRequest request) {
+        // Convert request data to User entity object
+        // Return the converted User entity
+    }
+}
+```
+
+In this example, we have a `UserController` class with a `createUser` method that handles the creation of a user. The `@Valid` annotation is used to enable data validation on the `CreateUserRequest` object received in the request body.
+
+Inside the method, you can perform additional data validation checks based on your requirements. In this case, we have a validation check for the email format using the `isValidEmail` method. If the email is determined to be invalid, we throw an `IllegalArgumentException` with an appropriate error message.
+
+If the request data passes the validation checks, we then convert the `CreateUserRequest` object to a `User` entity using the `convertToUserEntity` method. This method handles the conversion logic specific to your application.
+
+Finally, we save the user using the `userService` and return the saved user as the response with a status of 200 OK.
+
+By implementing data validation in the controller layer, you can ensure that the incoming request data meets the required criteria before further processing and persisting the data. This helps in maintaining data integrity and preventing the storage of invalid or inconsistent data in your Spring Boot application.
+
+### Example
+
+Here's an example of how you can use various validation annotations in a DTO (Data Transfer Object) class:
+
+```java
+public class UserDTO {
+    
+    @NotBlank(message = "Name is required")
+    private String name;
+
+    @Email(message = "Invalid email format")
+    private String email;
+
+    @Size(min = 6, max = 20, message = "Password must be between 6 and 20 characters")
+    private String password;
+
+    @Pattern(regexp = "\\d{3}-\\d{3}-\\d{4}", message = "Phone number must be in the format XXX-XXX-XXXX")
+    private String phoneNumber;
+
+    @NotNull(message = "Date of birth is required")
+    @Past(message = "Date of birth must be in the past")
+    private LocalDate dateOfBirth;
+
+    // Getters and Setters
+}
+```
+
+In this example, the `UserDTO` class represents a Data Transfer Object that contains various fields representing user data. We apply different validation annotations to these fields:
+
+- `@NotBlank` ensures that the `name` field is not blank or empty.
+- `@Email` validates that the `email` field is a valid email address.
+- `@Size` specifies the minimum and maximum length of the `password` field.
+- `@Pattern` applies a regular expression pattern to validate the `phoneNumber` field.
+- `@NotNull` ensures that the `dateOfBirth` field is not null.
+- `@Past` checks if the `dateOfBirth` field represents a date in the past.
+
+These validation annotations provide built-in validation logic that is automatically triggered during request processing. If any of the validations fail, Spring Boot will automatically handle the validation errors and return a proper response with the error messages.
+
+By using these validation annotations in your DTO class, you can enforce data validation rules on the incoming request data, ensuring that it meets the specified criteria before further processing or persisting it.
+
+## Using exceptions
+
+### ErrorResponse
 
 `ErrorResponse` is a custom class used to represent an error response in a Spring Boot application. It typically contains information about an error that occurred during the processing of a request.
 
@@ -93,7 +188,7 @@ When an error occurs, you can create an instance of the `ErrorResponse` class, p
 
 Using a custom `ErrorResponse` class allows you to have more control over the structure and content of your error responses, making it easier to communicate meaningful error information to clients and facilitating the debugging and resolution of issues in your Spring Boot application.
 
-## @ExceptionHandler
+### @ExceptionHandler
 
 The `@ExceptionHandler` annotation in Spring Boot is used to handle exceptions in a centralized manner within a controller or an advice class. It allows you to define methods that specifically handle exceptions thrown during the execution of request mappings.
 
@@ -138,9 +233,7 @@ The second method, `handleGenericException`, acts as a fallback handler for any 
 
 By using `@ExceptionHandler`, you can handle exceptions in a centralized and consistent manner, providing appropriate error responses to clients. It helps to decouple the exception handling logic from the controller methods and promotes better error management in your Spring Boot application.
 
-
-
-## @RestControllerAdvice
+### @RestControllerAdvice
 
 The `@RestControllerAdvice` annotation in Spring Boot is used to define a global exception handler and to apply advice to all `@RestController` classes in your application. It combines the functionalities of `@ControllerAdvice` and `@ResponseBody`, making it suitable for building RESTful APIs.
 
@@ -189,7 +282,7 @@ In this example, the `GlobalExceptionHandler` class is annotated with `@RestCont
 
 By using `@RestControllerAdvice`, you can centralize the exception handling and data transformations logic for your RESTful APIs, ensuring consistent error responses and simplifying error management across your application.
 
-## Example
+### Example
 
 1. Create a User-Defined Exception:
    ```java
@@ -244,3 +337,46 @@ In the `UserController` class, we have a GET mapping for retrieving a user. In t
 When the `CustomException` is thrown from the `UserController`, the `handleCustomException` method in the `GlobalExceptionHandler` is invoked due to the `@ExceptionHandler` annotation. It creates an `ErrorResponse` object and returns it as the response with the specified HTTP status code.
 
 This way, you can create and use a user-defined exception in your Spring Boot project, handle it globally using `@ExceptionHandler`, and customize the error response using the `ErrorResponse` class.
+
+## Example
+
+Here's an example of how you can handle data validation errors using Exceptions:
+
+```java
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleValidationException(MethodArgumentNotValidException ex) {
+        BindingResult bindingResult = ex.getBindingResult();
+        List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+
+        // Create an ErrorResponse object to hold the validation errors
+        ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setErrorCode("VALIDATION_ERROR");
+
+        // Loop through the field errors and add them to the error response
+        for (FieldError fieldError : fieldErrors) {
+            String fieldName = fieldError.getField();
+            String errorMessage = fieldError.getDefaultMessage();
+            errorResponse.addValidationError(fieldName, errorMessage);
+        }
+
+        return errorResponse;
+    }
+}
+```
+
+In this example, we have a `GlobalExceptionHandler` class annotated with `@RestControllerAdvice`, which allows it to handle exceptions thrown across multiple controllers.
+
+The `handleValidationException` method is annotated with `@ExceptionHandler(MethodArgumentNotValidException.class)`, indicating that it will handle `MethodArgumentNotValidException` instances, which are thrown when request data fails validation.
+
+Inside the method, we retrieve the `BindingResult` from the exception to get access to the validation errors. We loop through the field errors using `getFieldErrors()` and create an `ErrorResponse` object to hold the validation errors.
+
+For each field error, we extract the field name and error message and add them to the `ErrorResponse` object using the `addValidationError()` method.
+
+Finally, we return the populated `ErrorResponse` object with an HTTP status of `BAD_REQUEST`. The `ErrorResponse` class can be customized to suit your needs and may contain fields such as error code, timestamp, and a list of validation errors.
+
+By using `@ExceptionHandler` in conjunction with `MethodArgumentNotValidException`, you can intercept and handle validation errors centrally in your Spring Boot project. This ensures consistent error handling and allows you to provide informative error responses to the client when data validation fails.
+
