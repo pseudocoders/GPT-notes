@@ -364,27 +364,7 @@ There are several reasons why Agile methodologies prioritize lightweight documen
 
 Despite the emphasis on lightweight documentation, Agile methodologies still recognize the importance of documentation in ensuring that code is maintainable and easily understood by other developers. Agile teams may use techniques such as code comments, user stories, and lightweight design documents to ensure that code is well-documented and easily maintainable.
 
-## Guiones
 
-  * Requirements, specifications of an application
-  * Software development methodologies:
-    * Cascade model
-    * Spiral model
-    * Models based on prototypes
-    * Agile methodologies:
-      * Kanban methods
-      * Extreme Programming
-      * Scrum (concept, kanban method, sprints, burnout diagram, tools)
-  * Continuous integration (concept, servers)
-    * Unit testing concept (concept, tools, mock)
-    * Integration testing concept (concept, tools)
-    * TDD: Test Driven Development
-  * Program documentation (concept, types, tools)
-  * Deployment in production and in test. Automated deployment. Cloud deployment.
-  * Containers
-  * Version managers (concept, tools and features)
-  * Code repository (types, tools)
-  * Software quality assessment (concept, available tools)
 
 
 
