@@ -328,6 +328,8 @@ Here are some popular frontend libraries for JavaScript:
 
 1. jQuery: jQuery is a fast, lightweight, and feature-rich JavaScript library. It simplifies HTML document traversal, event handling, and animation. jQuery provides a concise syntax for manipulating the DOM, making AJAX requests, and implementing various UI interactions. It is widely used and has a large community and extensive plugin ecosystem.
 
+2. Underscore.js: Underscore.js is a utility library that provides a set of useful functions for working with arrays, objects, and other data types. It offers utility functions for common tasks like iteration, filtering, mapping, sorting, and manipulating data. Underscore.js provides a functional programming style and serves as a foundation for many other JavaScript libraries and frameworks.
+
 2. Lodash: Lodash is a utility library that provides helpful functions for manipulating arrays, objects, strings, and other data types. It offers a wide range of utility functions for tasks like data manipulation, array iteration, object manipulation, and functional programming. Lodash enhances JavaScript's native functionality and provides consistent and reliable cross-browser support.
 
 3. Axios: Axios is a popular JavaScript library for making HTTP requests from the browser or Node.js. It provides a simple and intuitive API for sending asynchronous HTTP requests and handling responses. Axios supports various request and response formats, such as JSON, FormData, and binary data. It also includes features like request cancellation, interceptors, and error handling.
@@ -340,7 +342,7 @@ Here are some popular frontend libraries for JavaScript:
 
 7. RxJS: RxJS (Reactive Extensions for JavaScript) is a library for reactive programming using observables. It provides a powerful and flexible approach to managing asynchronous events and data streams. RxJS allows you to easily compose complex asynchronous operations, handle event sequences, and manage asynchronous data flows in a reactive and declarative manner.
 
-1. Axios: Axios is a popular library for making HTTP requests from the browser or Node.js. It provides a simple and intuitive API for sending asynchronous HTTP requests and handling responses. Axios supports various request and response formats, such as JSON, FormData, and binary data. It also includes features like request cancellation, interceptors, and error handling.
+2. Redux: Redux is a predictable state management library commonly used with React.js. It provides a centralized store for managing application state and enables predictable state updates through a unidirectional data flow. Redux helps in maintaining a clear and manageable application state, making it easier to debug and reason about complex applications.
 
 2. Popper.js: Popper.js is a positioning library that helps with positioning and popovers. It calculates the position of an element relative to another element or the viewport, taking into account various factors like scroll, resize, and collision detection. Popper.js is commonly used in combination with UI components like tooltips, dropdowns, and modals.
 
@@ -352,10 +354,6 @@ Here are some popular frontend libraries for JavaScript:
 
 5. Swiper: Swiper is a touch-enabled JavaScript library for creating responsive and mobile-friendly sliders and carousels. It provides smooth and performant sliding transitions, support for multiple slides, pagination, navigation controls, and various customization options. Swiper is often used in creating image galleries, sliders, and interactive presentations.
 
-2. Underscore.js: Underscore.js is a utility library that provides a set of useful functions for working with arrays, objects, and other data types. It offers utility functions for common tasks like iteration, filtering, mapping, sorting, and manipulating data. Underscore.js provides a functional programming style and serves as a foundation for many other JavaScript libraries and frameworks.
-
-3. Lodash: Lodash is a widely used utility library that provides a large collection of helper functions for simplifying JavaScript code. It offers an extensive set of utility functions for manipulating arrays, objects, strings, and other data types. Lodash provides performance optimizations and additional functionality compared to the native JavaScript methods, making it a popular choice for developers.
-
 4. Hammer.js: Hammer.js is a library for adding touch gestures to web applications. It provides a simple and consistent API for handling touch events like tap, swipe, pinch, and rotate on both mobile and desktop devices. Hammer.js abstracts away the complexity of touch interactions and allows developers to create interactive and touch-enabled web experiences.
 
 6. React Helmet: React Helmet is a library for managing the head section of a React application. It allows you to dynamically update the document's head tags, such as the title, meta tags, and other elements, based on the application's state or route. React Helmet is useful for handling SEO-related metadata and managing the document's head in React applications.
@@ -365,8 +363,6 @@ Here are some popular frontend libraries for JavaScript:
 8. Draft.js: Draft.js is a powerful and extensible library for building rich text editors in JavaScript. It provides a framework for managing and manipulating structured content, including features like formatting, block styles, inline styles, and custom plugins. Draft.js is widely used in applications that require advanced text editing capabilities.
 
 1. Three.js: Three.js is a powerful library for creating 3D graphics and animations on the web. It provides an easy-to-use API for rendering 3D scenes using WebGL or fallbacks to HTML5 Canvas. Three.js supports features like lights, shadows, materials, cameras, and geometry manipulation. It is widely used in building interactive 3D experiences and games.
-
-2. Redux: Redux is a predictable state management library commonly used with React.js. It provides a centralized store for managing application state and enables predictable state updates through a unidirectional data flow. Redux helps in maintaining a clear and manageable application state, making it easier to debug and reason about complex applications.
 
 3. Jest: Jest is a testing framework developed by Facebook for JavaScript applications. It provides a simple and intuitive API for writing unit tests, integration tests, and snapshot tests. Jest includes features like test runners, assertions, mocking, and code coverage reporting. It is often used in conjunction with React applications, but it can be used for testing any JavaScript code.
 
