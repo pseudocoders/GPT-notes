@@ -10,7 +10,7 @@ subtitle: All you need to be a web developer
 1. [The Internet, HTTP and the world wide web](basics/http.md)
 2. [Software Production Engineering](basics/production.md)
 3. [Software architecture for web projects](basics/architecture.md)
-4. [Structured Design Programming](basics/programming.md)
+4. [Structured Design and Programming](basics/programming.md)
 5. [OOP](basics/oop.md)
 6. [Algoritmics](basics/algoritmics.md)
 7. [Patterns](basics/patterns.md)
