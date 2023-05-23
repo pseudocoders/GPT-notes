@@ -333,6 +333,60 @@ Here is a list of some commonly used built-in directives in Angular:
 
 These are just a few examples of the commonly used built-in directives in Angular. Each directive has its own purpose and provides a powerful way to manipulate the DOM, conditionally render elements, and apply dynamic styling. By leveraging these directives, you can create dynamic and interactive user interfaces in your Angular applications.
 
+### Example
+
+Here's a complete example of an Angular component that demonstrates the usage of directives:
+
+```typescript
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-example',
+  template: `
+    <h1>Welcome to the Example Component</h1>
+
+    <div *ngIf="showMessage">
+      <p>{{ message }}</p>
+    </div>
+
+    <ul>
+      <li *ngFor="let item of items">{{ item }}</li>
+    </ul>
+
+    <input type="text" [(ngModel)]="inputValue" [ngClass]="{ 'highlight': inputValue.length > 5 }">
+    <p [ngClass]="{ 'red-text': isError }">Current Value: {{ inputValue }}</p>
+  `,
+  styles: [`
+    .highlight {
+      background-color: yellow;
+    }
+
+    .red-text {
+      color: red;
+    }
+  `]
+})
+export class ExampleComponent {
+  showMessage: boolean = true;
+  message: string = "This message is shown conditionally";
+  items: string[] = ['Item 1', 'Item 2', 'Item 3'];
+  inputValue: string = '';
+  isError: boolean = false;
+}
+```
+
+In this example:
+
+- The `ngIf` directive is used to conditionally display the `<div>` element based on the value of the `showMessage` property.
+- The `ngFor` directive is used to iterate over the `items` array and render `<li>` elements for each item.
+- The `ngModel` directive is used for two-way data binding, binding the value of the `<input>` element to the `inputValue` property.
+- The `ngClass` directive is used to conditionally apply CSS classes to elements. In this case, it adds the `highlight` class to the `<input>` element if the `inputValue` has a length greater than 5 characters. It also adds the `red-text` class to the `<p>` element if the `isError` property is `true`.
+- The component has an associated CSS style block that defines the styles for the `highlight` and `red-text` classes.
+
+Please note that for this code to work, you'll need to import the necessary Angular modules in your application and ensure that the component is properly included in your module's declarations.
+
+This example demonstrates how you can use `ngIf` to conditionally show content, `ngFor` to iterate over a collection, `ngModel` for two-way data binding, and `ngClass` for conditional styling in an Angular component.
+
 ## Events
 
 In Angular, events play a crucial role in capturing user interactions and triggering specific actions in response. Events in Angular components are used to handle user input, such as clicks, keyboard inputs, mouse movements, and more. Angular provides several mechanisms to handle events and bind them to component methods or expressions.
