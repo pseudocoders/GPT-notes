@@ -18,7 +18,8 @@ subtitle: All you need to be a web developer
 9. [Frontend](basics/fontend.md)
 10. [Backend](basics/backend.md)
 11. [Databases](basics/databases.md)
-12. [Deployment](basics/deployment.md)
+12. [Testing](basics/testing.md)
+13. [Deployment](basics/deployment.md)
 
 # Tools
 1. [Git](git/index.md)
