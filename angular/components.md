@@ -1,5 +1,7 @@
 # Components
 
+## Introduction
+
 In Angular, a component is a fundamental building block of an application that encapsulates the logic, data, and view templates required to render a specific part of the user interface. It is a TypeScript class decorated with the `@Component` decorator, which provides metadata and configuration for the component.
 
 Components in Angular follow the concept of component-based architecture, where the user interface is broken down into smaller, reusable, and self-contained units. Each component represents a distinct part of the UI and is responsible for its own functionality and rendering.
@@ -37,3 +39,31 @@ Components form the building blocks of Angular applications and enable the creat
 7. Routing and Navigation: Components are often associated with specific routes in Angular applications. They play a key role in defining the views and behavior for different routes, allowing users to navigate between different parts of the application.
 
 Overall, components form the foundation of Angular applications, enabling the creation of modular, reusable, and interactive user interfaces. They combine the visual representation, data handling, and behavior logic required to build robust and dynamic web applications.
+
+
+## Structure
+
+In Angular, the structure of a component consists of several parts that work together to define the component's behavior, data, and view. Let's explore the structure of a typical Angular component:
+
+1. Import Statements: At the top of the component file, you'll find import statements for the necessary dependencies. This includes imports from Angular modules, third-party libraries, services, and other components.
+
+2. Component Decorator: The `@Component` decorator is used to decorate the component class and provide metadata and configuration options. It includes properties such as:
+   - `selector`: A selector that identifies how the component will be used in HTML templates.
+   - `template` or `templateUrl`: The HTML template that defines the component's view.
+   - `style` or `styleUrls`: The CSS styles that apply to the component's view.
+   - `inputs` and `outputs`: Declarations of input and output properties for data binding.
+   - `providers`: Configuration for dependency injection, specifying the services and dependencies required by the component.
+
+3. Component Class: The component class is defined using the `class` keyword and typically has the same name as the file. It contains the properties, methods, event handlers, and lifecycle hooks that define the component's behavior. The class may import services or other dependencies needed by the component.
+
+4. Component Properties: Properties are defined within the component class to store and manage the component's data. These properties can be accessed in the template for rendering and data binding purposes. Properties can be decorated with `@Input()` or `@Output()` decorators to establish data binding with other components.
+
+5. Lifecycle Hooks: Angular provides a set of lifecycle hooks that allow you to tap into specific stages of a component's lifecycle. These hooks include `ngOnInit()`, `ngOnChanges()`, `ngDoCheck()`, `ngAfterViewInit()`, and `ngOnDestroy()`, among others. You can define methods in the component class corresponding to these hooks to perform custom logic at various stages.
+
+6. Methods and Event Handlers: Component methods are defined within the component class to handle events, perform calculations, or provide additional functionality. These methods can be called from the template or other parts of the component class.
+
+7. Template: The template defines the structure and layout of the component's view. It is typically written in HTML and can include Angular-specific syntax, such as directives (`*ngFor`, `*ngIf`) and bindings (`{{}}`, `[property]`, `(event)`). The template can access component properties and methods to render data and respond to user interactions.
+
+8. Styles: Styles define the appearance and visual styling of the component. They can be defined inline using the `styles` property in the component decorator or externally using the `styleUrls` property to reference an external CSS file or preprocessor syntax file (e.g., SCSS).
+
+The structure of an Angular component follows a modular and encapsulated approach, where the class, template, and styles work together to define the component's behavior and appearance. By separating concerns and leveraging data binding and event handling, components provide a flexible and maintainable way to build complex user interfaces in Angular applications.
