@@ -13,11 +13,12 @@ subtitle: All you need to be a web developer
 4. [Structured Design Programming](basics/programming.md)
 5. [OOP](basics/oop.md)
 6. [Patterns](basics/patterns.md)
-7. [Languages](basics/languages.md)
-8. [Frontend](basics/fontend.md)
-9. [Backend](basics/backend.md)
-10. [Databases](basics/databases.md)
-11. [Deployment](basics/deployment.md)
+7. [Algoritmics](basics/algoritmics.md)
+8. [Languages](basics/languages.md)
+9. [Frontend](basics/fontend.md)
+10. [Backend](basics/backend.md)
+11. [Databases](basics/databases.md)
+12. [Deployment](basics/deployment.md)
 
 # Tools
 1. [Git](git/index.md)
