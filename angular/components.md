@@ -67,3 +67,55 @@ In Angular, the structure of a component consists of several parts that work tog
 8. Styles: Styles define the appearance and visual styling of the component. They can be defined inline using the `styles` property in the component decorator or externally using the `styleUrls` property to reference an external CSS file or preprocessor syntax file (e.g., SCSS).
 
 The structure of an Angular component follows a modular and encapsulated approach, where the class, template, and styles work together to define the component's behavior and appearance. By separating concerns and leveraging data binding and event handling, components provide a flexible and maintainable way to build complex user interfaces in Angular applications.
+
+
+## Lifecycle Hooks
+
+In Angular, lifecycle hooks are methods provided by the Angular framework that allow you to tap into specific stages of a component's lifecycle. These hooks provide opportunities to execute custom logic and perform tasks at various points in the component's lifecycle. Let's explore the different lifecycle hooks available in Angular:
+
+1. `ngOnChanges()`:
+   - Description: Called when one or more input properties of the component change.
+   - Purpose: Allows you to react to changes in input properties and perform actions based on the new values.
+   - Parameters: `changes` (a `SimpleChanges` object containing the previous and current values of the input properties).
+
+2. `ngOnInit()`:
+   - Description: Called once after the component's constructor and `ngOnChanges()` have been called.
+   - Purpose: Used for initialization tasks, such as fetching initial data, subscribing to observables, or setting up the component's initial state.
+   - No parameters.
+
+3. `ngDoCheck()`:
+   - Description: Called during every change detection cycle, right after `ngOnChanges()` and `ngOnInit()`.
+   - Purpose: Allows you to perform custom change detection and react to changes in component properties or its child components.
+   - No parameters.
+
+4. `ngAfterContentInit()`:
+   - Description: Called after Angular projects external content into the component's view (e.g., projected content from a parent component or dynamic component creation).
+   - Purpose: Used to perform additional initialization tasks that depend on the component's content.
+   - No parameters.
+
+5. `ngAfterContentChecked()`:
+   - Description: Called after every change detection cycle when Angular has checked the projected content within the component's view.
+   - Purpose: Used for tasks that need to be performed after the projected content has been checked and updated.
+   - No parameters.
+
+6. `ngAfterViewInit()`:
+   - Description: Called after Angular initializes the component's view and child views.
+   - Purpose: Used for DOM manipulation, interacting with child components, or accessing elements in the component's view.
+   - No parameters.
+
+7. `ngAfterViewChecked()`:
+   - Description: Called after every change detection cycle when Angular has checked the component's view and child views.
+   - Purpose: Used for tasks that need to be performed after the component's view has been checked and updated.
+   - No parameters.
+
+8. `ngOnDestroy()`:
+   - Description: Called just before the component is destroyed.
+   - Purpose: Used for cleanup tasks such as unsubscribing from observables, canceling timers, or releasing resources.
+   - No parameters.
+
+These lifecycle hooks provide points of control and flexibility during the component's lifecycle. By implementing these hooks in your component, you can customize the behavior and perform tasks at specific stages, ensuring proper initialization, updates, and cleanup of resources.
+
+It's important to note that the lifecycle hooks are not always required for every component. Use the appropriate hooks based on your component's needs and the tasks you want to perform at different stages of the lifecycle.
+
+
+
