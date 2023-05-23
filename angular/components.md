@@ -251,3 +251,121 @@ Here is a list of some commonly used built-in directives in Angular:
 
 These are just a few examples of the commonly used built-in directives in Angular. Each directive has its own purpose and provides a powerful way to manipulate the DOM, conditionally render elements, and apply dynamic styling. By leveraging these directives, you can create dynamic and interactive user interfaces in your Angular applications.
 
+## Events
+
+In Angular, events play a crucial role in capturing user interactions and triggering specific actions in response. Events in Angular components are used to handle user input, such as clicks, keyboard inputs, mouse movements, and more. Angular provides several mechanisms to handle events and bind them to component methods or expressions.
+
+1. Event Binding:
+   Event binding is a way to capture and handle events in Angular components. It allows you to bind an event from the template to a method or expression in the component class. Event binding is denoted by the parentheses `()` syntax in the template.
+
+   Example:
+   ```html
+   <button (click)="handleClick()">Click Me</button>
+   ```
+
+   In the above example, the `(click)` event is bound to the `handleClick()` method in the component class. When the button is clicked, the associated method will be invoked.
+
+2. Event Filtering:
+   Angular provides the ability to filter events based on certain conditions using event modifiers. Event modifiers are appended to the event binding syntax and allow you to specify additional conditions for event handling.
+
+   Example:
+   ```html
+   <input (keyup.enter)="submitForm()" />
+   ```
+
+   In the above example, the `(keyup.enter)` event binding is used to trigger the `submitForm()` method only when the Enter key is pressed within the input field.
+
+3. Event Objects:
+   When an event occurs, Angular provides an event object that contains information about the event. You can capture this event object by passing it as a parameter to the event handler method.
+
+   Example:
+   ```html
+   <button (click)="handleClick($event)">Click Me</button>
+   ```
+
+   In the above example, the `$event` object is passed as a parameter to the `handleClick()` method, allowing you to access additional event details such as the event type, target element, or event payload.
+
+4. Two-Way Event Binding:
+   Angular supports two-way event binding, which allows you to establish a bi-directional data flow between an input element and a component property. It combines event binding and property binding into a single syntax using the `[(ngModel)]` directive.
+
+   Example:
+   ```html
+   <input [(ngModel)]="name" />
+   ```
+
+   In the above example, the input element is bound to the `name` property of the component. Changes in the input value will update the `name` property, and vice versa.
+
+Events are essential for capturing user interactions and making components interactive in Angular applications. By utilizing event binding, filtering, event objects, and two-way event binding, you can respond to user actions and trigger appropriate logic in your Angular components.
+
+Here is a list of commonly used bindable events in Angular along with their filtering options:
+
+1. **Click Event**
+   - Event: `(click)`
+   - Filter: `.stopPropagation`, `.preventDefault`, `.stopPropagation.preventDefaut`, `.stopPropagation.preventDefaut.self`
+
+2. **Input Event**
+   - Event: `(input)`
+   - Filter: `.debounceTime`, `.distinctUntilChanged`
+
+3. **Change Event**
+   - Event: `(change)`
+   - Filter: `.debounceTime`, `.distinctUntilChanged`
+
+4. **Submit Event**
+   - Event: `(submit)`
+   - Filter: `.preventDefault`
+
+5. **Key Event**
+   - Event: `(keyup)`, `(keydown)`, `(keypress)`
+   - Filter: `.enter`, `.escape`, `.space`, `.tab`, `.arrowUp`, `.arrowDown`, `.arrowLeft`, `.arrowRight`
+
+6. **Mouse Event**
+   - Event: `(mouseover)`, `(mouseout)`, `(mouseenter)`, `(mouseleave)`, `(mousedown)`, `(mouseup)`
+   - Filter: `.stopPropagation`, `.preventDefault`, `.stopPropagation.preventDefaut`, `.stopPropagation.preventDefaut.self`
+
+7. **Focus Event**
+   - Event: `(focus)`, `(blur)`
+   - Filter: `.stopPropagation`, `.preventDefault`, `.stopPropagation.preventDefaut`, `.stopPropagation.preventDefaut.self`
+
+8. **Scroll Event**
+   - Event: `(scroll)`
+   - Filter: `.debounceTime`, `.throttleTime`
+
+9. **DoubleClick Event**
+   - Event: `(dblclick)`
+   - Filter: `.stopPropagation`, `.preventDefault`, `.stopPropagation.preventDefaut`, `.stopPropagation.preventDefaut.self`
+
+10. **Contextmenu Event**
+   - Event: `(contextmenu)`
+   - Filter: `.stopPropagation`, `.preventDefault`, `.stopPropagation.preventDefaut`, `.stopPropagation.preventDefaut.self`
+
+11. **Drag Event**
+   - Event: `(drag)`, `(dragstart)`, `(dragend)`, `(dragover)`, `(dragenter)`, `(dragleave)`, `(drop)`
+   - Filter: `.stopPropagation`, `.preventDefault`, `.stopPropagation.preventDefaut`, `.stopPropagation.preventDefaut.self`
+
+12. **Resize Event**
+   - Event: `(resize)`
+   - Filter: `.debounceTime`, `.throttleTime`
+
+13. **Window Event**
+   - Event: `(window:resize)`, `(window:scroll)`
+   - Filter: `.debounceTime`, `.throttleTime`
+
+14. **Form Events**
+   - Event: `(focusin)`, `(focusout)`, `(select)`
+   - Filter: `.stopPropagation`, `.preventDefault`, `.stopPropagation.preventDefaut`, `.stopPropagation.preventDefaut.self`
+
+15. **Touch Events**
+   - Event: `(touchstart)`, `(touchend)`, `(touchmove)`, `(touchcancel)`
+   - Filter: `.stopPropagation`, `.preventDefault`, `.stopPropagation.preventDefaut`, `.stopPropagation.preventDefaut.self`
+
+16. **Animation Events**
+   - Event: `(animationstart)`, `(animationend)`, `(animationiteration)`, `(transitionend)`
+   - Filter: `.stopPropagation`, `.preventDefault`, `.stopPropagation.preventDefaut`, `.stopPropagation.preventDefaut.self`
+
+17. **Custom Events**
+   - Event: `(customEvent)`
+   - Filter: `.stopPropagation`, `.preventDefault`, `.stopPropagation.preventDefaut`, `.stopPropagation.preventDefaut.self`
+
+These are just a few examples of commonly used bindable events in Angular. Each event can be filtered using various modifiers to further refine the event handling based on specific conditions. The filters allow you to control event propagation, prevent default behavior, apply time-based delays, and more. By understanding these events and their filtering options, you can effectively handle user interactions and customize event handling behavior in your Angular applications.
+
