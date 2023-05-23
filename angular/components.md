@@ -226,25 +226,25 @@ Here is a list of some commonly used built-in directives in Angular:
     <div [ngClass]="{ 'active': isActive, 'disabled': isDisabled }">Content</div>
     ```
 
-3. **ngIfElse**: Conditionally renders different content based on a condition.
+11. **ngIfElse**: Conditionally renders different content based on a condition.
    ```html
    <div *ngIf="condition; else elseBlock">Content to be displayed when condition is true</div>
    <ng-template #elseBlock>Content to be displayed when condition is false</ng-template>
    ```
 
-7. **ngTemplateOutlet**: Renders a template dynamically based on a provided context.
+12. **ngTemplateOutlet**: Renders a template dynamically based on a provided context.
    ```html
    <ng-container *ngTemplateOutlet="templateRef; context: { prop: value }"></ng-container>
    ```
 
-8. **ng-content**: Represents the content projection slot for a component.
+13. **ng-content**: Represents the content projection slot for a component.
    ```html
    <app-custom-component>
      <h1>Content to be projected into the component</h1>
    </app-custom-component>
    ```
 
-1. **ngNonBindable**: Prevents Angular from compiling or evaluating the contents of an element.
+14. **ngNonBindable**: Prevents Angular from compiling or evaluating the contents of an element.
     ```html
     <div ngNonBindable>{{ someExpression }}</div>
     ```
