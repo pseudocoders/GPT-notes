@@ -130,3 +130,36 @@ The bootstrap process in an Angular application refers to the initialization and
 
 By understanding the bootstrap process, you gain insight into how Angular initializes and sets up your application. It's important to note that Angular's bootstrapping process is automatic, and you generally don't need to modify it unless you have specific customization requirements or need to integrate with external systems.
 
+##  Lifecycle of a component 
+
+In a routed Angular application, the lifecycle of a component includes various stages and events that occur as the component is created, rendered, updated, and destroyed. The lifecycle hooks provided by Angular allow you to tap into these stages and execute custom logic. Let's explore the detailed lifecycle of a component in a routed Angular application:
+
+1. Creation Stage:
+   - `constructor()`: The component's constructor is called first when the component is instantiated. This is where you initialize component properties and dependencies.
+
+   - `ngOnChanges()`: If the component has input properties, this hook is called when the inputs change. It receives a `SimpleChanges` object containing the previous and current values of the input properties.
+
+   - `ngOnInit()`: This hook is called once after the component's constructor and `ngOnChanges()` have been called. It is commonly used to perform initialization tasks like fetching data from a server or initializing component state.
+
+2. Rendering Stage:
+   - `ngDoCheck()`: This hook is called during every change detection cycle. It allows you to perform custom change detection and react to changes in component properties or its child components.
+
+   - `ngAfterContentInit()`: This hook is called after Angular projects external content into the component's view, such as projected content from a parent component or dynamic component creation.
+
+   - `ngAfterContentChecked()`: This hook is called after every change detection cycle when Angular has checked the projected content within the component's view.
+
+   - `ngAfterViewInit()`: This hook is called after Angular initializes the component's view and child views. It is commonly used for DOM manipulations or interacting with child components.
+
+   - `ngAfterViewChecked()`: This hook is called after every change detection cycle when Angular has checked the component's view and child views.
+
+3. Update Stage:
+   - `ngOnChanges()`: If any input properties change after the initial rendering, the `ngOnChanges()` hook is called again.
+
+   - `ngDoCheck()`: This hook is called during every change detection cycle, allowing you to perform additional change detection and react to any updates.
+
+4. Destruction Stage:
+   - `ngOnDestroy()`: This hook is called just before the component is destroyed. It provides an opportunity to clean up resources, such as unsubscribing from observables or releasing event listeners.
+
+Each lifecycle hook serves a specific purpose and provides a way to tap into different stages of a component's lifecycle. By implementing these hooks in your component, you can perform tasks like initialization, data updates, rendering adjustments, and cleanup operations.
+
+It's important to note that when navigating between routes in an Angular application, components might be destroyed and re-created depending on the routing configuration. Therefore, understanding the component lifecycle is essential for managing component state, data fetching, and resource cleanup in a routed Angular application.
