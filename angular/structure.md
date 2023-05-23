@@ -100,5 +100,33 @@ The `angular.json` file provides a centralized place to configure various aspect
 
 It's worth noting that when you make changes to the `angular.json` file, you may need to restart the Angular CLI commands for the changes to take effect.
 
+## Bootstraping
 
+The bootstrap process in an Angular application refers to the initialization and startup sequence of the Angular framework. During the bootstrap process, Angular initializes the necessary components, modules, services, and sets up the application's runtime environment. Let's dive into the details of the bootstrap process in an Angular application:
+
+1. Entry Point: The bootstrap process starts from the entry point file, typically `main.ts`, located in the `src/` directory of your Angular project.
+
+2. Imports and Dependencies: In `main.ts`, you'll find various import statements for Angular dependencies and modules required for bootstrapping the application. These imports usually include `platformBrowserDynamic` from `@angular/platform-browser-dynamic`, which is responsible for dynamically bootstrapping the Angular application.
+
+3. Bootstrap Function: Angular provides a `bootstrap` function that is called to bootstrap the application. It takes two arguments:
+   - The root module of the application, typically referred to as the AppModule.
+   - An optional configuration object that allows you to specify additional settings.
+
+4. AppModule: The AppModule is a core module that orchestrates and defines the structure of your application. It is typically defined in a file named `app.module.ts`, located in the `src/app/` directory. The AppModule imports other modules, declares components, provides services, and configures application-wide settings.
+
+5. Module Resolution: When the `bootstrap` function is called with the AppModule, Angular resolves the dependencies of the module and performs a recursive process to resolve the dependencies of all imported modules. This ensures that all required modules and components are available during the bootstrap process.
+
+6. Component Hierarchy: Angular identifies the root component of the application defined within the AppModule. This root component is usually referred to as AppComponent. It serves as the entry point for the application's user interface and contains other components, forming a hierarchy.
+
+7. Compilation and Compilation Context: Angular compiles the component templates, stylesheets, and TypeScript code into executable JavaScript. It creates a compilation context for the application, which is responsible for rendering and updating the application's views.
+
+8. Dependency Injection: Angular performs dependency injection for all required services, injecting instances into the components and other parts of the application as defined in the AppModule and their respective providers.
+
+9. Component Initialization: Angular initializes the root component (AppComponent) and its child components in a top-down manner. During the initialization process, Angular sets up component instances, binds data, and connects event handlers.
+
+10. Rendering: Angular renders the application's views based on the component hierarchy and the initial data state. It creates the necessary DOM elements, applies styles, and sets up event listeners.
+
+11. Application Lifecycle: Once the bootstrap process is completed, the Angular application enters the lifecycle phase. It can respond to user interactions, handle data changes, and update the view accordingly.
+
+By understanding the bootstrap process, you gain insight into how Angular initializes and sets up your application. It's important to note that Angular's bootstrapping process is automatic, and you generally don't need to modify it unless you have specific customization requirements or need to integrate with external systems.
 
