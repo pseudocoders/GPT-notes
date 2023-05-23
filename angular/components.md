@@ -68,6 +68,88 @@ In Angular, the structure of a component consists of several parts that work tog
 
 The structure of an Angular component follows a modular and encapsulated approach, where the class, template, and styles work together to define the component's behavior and appearance. By separating concerns and leveraging data binding and event handling, components provide a flexible and maintainable way to build complex user interfaces in Angular applications.
 
+## Examples
+
+Here are some examples of components:
+
+1. Using `selector` and `template`:
+   ```typescript
+   import { Component } from '@angular/core';
+
+   @Component({
+     selector: 'app-greeting',
+     template: `
+       <h1>Welcome to Angular!</h1>
+       <p>Thank you for using our app.</p>
+     `,
+   })
+   export class GreetingComponent {
+     // Component logic goes here
+   }
+   ```
+
+   In this example, the component is defined with the `selector` property set to `'app-greeting'`. It means that this component can be used as `<app-greeting></app-greeting>` in other templates. The content of the component is defined inline using the `template` property.
+
+2. Using `selector` and `templateUrl`:
+   ```typescript
+   import { Component } from '@angular/core';
+
+   @Component({
+     selector: 'app-greeting',
+     templateUrl: './greeting.component.html',
+   })
+   export class GreetingComponent {
+     // Component logic goes here
+   }
+   ```
+
+   In this example, the component's content is defined in a separate HTML file. The `templateUrl` property points to the external HTML file, which will be loaded and used as the template for the component. For example, `greeting.component.html` contains the HTML structure of the component.
+
+3. Using `selector`, `template`, and `style`:
+   ```typescript
+   import { Component } from '@angular/core';
+
+   @Component({
+     selector: 'app-greeting',
+     template: `
+       <h1>Welcome to Angular!</h1>
+       <p>Thank you for using our app.</p>
+     `,
+     styles: [
+       `
+         h1 {
+           color: blue;
+         }
+         p {
+           font-size: 16px;
+         }
+       `,
+     ],
+   })
+   export class GreetingComponent {
+     // Component logic goes here
+   }
+   ```
+
+   In this example, the component has an inline style defined using the `styles` property. The styles are provided as an array of strings, where each string represents CSS rules for the component. Here, the `h1` element will have blue color, and the `p` element will have a font size of 16 pixels.
+
+4. Using `selector`, `templateUrl`, and `styleUrls`:
+   ```typescript
+   import { Component } from '@angular/core';
+
+   @Component({
+     selector: 'app-greeting',
+     templateUrl: './greeting.component.html',
+     styleUrls: ['./greeting.component.css'],
+   })
+   export class GreetingComponent {
+     // Component logic goes here
+   }
+   ```
+
+   In this example, the component's template is defined in an external HTML file (`greeting.component.html`), and the styles are defined in an external CSS file (`greeting.component.css`). The `templateUrl` property points to the HTML file, and the `styleUrls` property is an array of CSS file paths.
+
+These examples showcase different ways of defining the component's template and styles using the `@Component` decorator in Angular. Depending on your needs, you can choose to define the template and styles inline using the `template` and `style` properties or externally using the `templateUrl` and `styleUrls` properties.
 
 ## Lifecycle Hooks
 
