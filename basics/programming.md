@@ -103,7 +103,133 @@ e. Modular Design Patterns: Design patterns, such as the module pattern, provide
 
 In summary, program modularization involves breaking down a program into smaller, self-contained modules to promote code reuse, readability, maintainability, and collaboration. It is an essential practice in software engineering, enabling efficient development and maintenance of complex software systems.
 
-## Top-down and bottom-up strategies 
+## Structured design
+
+Structured design is a systematic approach to designing software systems that emphasizes organization, modularity, and clarity. It is a top-down design methodology that aims to break down a complex system into smaller, more manageable modules or components.
+
+The key principles of structured design include:
+
+1. Modularity: The system is divided into separate modules or components, each responsible for a specific functionality or task. Modularity promotes code reusability, maintainability, and ease of understanding.
+
+2. Abstraction: The design focuses on capturing the essential characteristics of each module while hiding unnecessary implementation details. Abstraction allows developers to focus on the high-level functionality of each module without getting lost in the implementation specifics.
+
+3. Encapsulation: Modules are encapsulated, meaning that their internal details are hidden from other modules. This promotes information hiding, reduces dependencies, and allows for independent development and maintenance of different modules.
+
+4. Cohesion: Modules are designed to have high cohesion, meaning that the elements within a module are closely related and work together to achieve a specific objective. High cohesion reduces complexity and improves the maintainability and reusability of modules.
+
+5. Coupling: The level of coupling between modules is minimized to reduce dependencies and promote independence. Low coupling enables changes in one module to have minimal impact on other modules.
+
+6. Hierarchical Structure: The design follows a hierarchical structure, with modules organized in a layered or hierarchical manner. The higher-level modules coordinate the activities of lower-level modules and provide a clear overall system architecture.
+
+7. Structured Control Flow: The design utilizes structured control flow constructs, such as loops, conditionals, and structured branching, to ensure clear and predictable control flow within and between modules.
+
+Structured design techniques often involve the use of graphical notations, such as structure charts, data flow diagrams, and entity-relationship diagrams, to visualize the relationships and interactions between modules.
+
+By following structured design principles, developers can create software systems that are modular, maintainable, and extensible. The structured design approach helps in managing complexity, promoting code reusability, and enhancing overall software quality.
+
+High cohesion and low coupling are desirable design qualities. High cohesion ensures that modules have a single, well-defined purpose, while low coupling reduces dependencies between modules, promoting modularity and maintainability. Striking the right balance between cohesion and coupling leads to more robust and flexible software systems.
+
+### Cohesion 
+
+Cohesion and coupling are two important concepts in software design that describe the relationships and interactions between modules or components within a system.
+
+Cohesion:
+Cohesion refers to the degree to which the elements within a module or component are related and work together to achieve a common objective. It measures the functional strength and unity within a module. High cohesion is desirable as it indicates that the elements within a module are closely related and focused on a single task or responsibility.
+
+Types of Cohesion:
+1. Functional Cohesion: All elements within a module contribute to performing a single, well-defined function or task.
+2. Sequential Cohesion: The elements within a module are organized in a specific sequence, where the output of one element becomes the input for the next element.
+3. Communicational Cohesion: The elements within a module operate on the same input or output data.
+4. Procedural Cohesion: The elements within a module are grouped together based on a specific sequence of steps or procedure.
+5. Temporal Cohesion: The elements within a module are activated or executed together at a specific time.
+6. Logical Cohesion: The elements within a module are related based on a common logic or condition.
+7. Coincidental Cohesion: The elements within a module have no meaningful relationship to each other.
+
+Here are a few examples of modules with poor cohesion:
+
+1. Mixed Responsibility:
+A module that handles both user interface rendering and data manipulation violates cohesion principles. It would be better to separate the user interface logic and the data manipulation logic into separate modules with clear responsibilities.
+
+2. Excessive Functionality:
+A module that performs multiple unrelated functions or tasks exhibits low cohesion. For example, a module that handles file I/O, performs calculations, and sends network requests would benefit from being divided into separate modules, each responsible for a specific task.
+
+3. Low-Level Operations:
+A module that contains low-level implementation details, such as memory management or hardware interactions, alongside higher-level business logic, lacks cohesion. The low-level operations should be encapsulated in separate modules to isolate and abstract those concerns.
+
+4. God Object:
+A module that acts as a central hub and handles almost all aspects of the system, controlling numerous functionalities, violates cohesion principles. This monolithic module should be decomposed into smaller, more focused modules that handle specific responsibilities.
+
+5. Feature Envy:
+A module that frequently accesses or modifies data from another module, indicating a strong dependency, demonstrates poor cohesion. The data and operations related to that functionality should be consolidated into a cohesive module rather than scattered across different modules.
+
+6. Shotgun Surgery:
+A module that requires modifications in multiple places whenever a specific feature or functionality needs to be changed suffers from low cohesion. Ideally, each module should have a single, well-defined responsibility, reducing the need for widespread modifications.
+
+These examples illustrate situations where the responsibilities within a module are not well-aligned, resulting in poor cohesion. By identifying and addressing these issues, software designers can improve the maintainability, reusability, and readability of their codebase.
+
+High cohesion is desirable as it leads to more maintainable and reusable modules. Modules with high cohesion are easier to understand, modify, and test because they have a clear and focused purpose.
+
+### Coupling
+
+Coupling refers to the degree of interdependence or interaction between modules or components within a system. It measures the strength of the relationships between modules. Low coupling is desirable as it indicates that modules are loosely connected and have minimal dependencies on each other.
+
+Types of Coupling:
+1. Data Coupling: Modules communicate by passing data parameters.
+2. Stamp Coupling: Modules communicate by passing a data structure or record.
+3. Control Coupling: One module controls the execution of another module through parameters or flags.
+4. Common Coupling: Modules share global data or variables.
+5. Content Coupling: One module directly accesses or modifies the internal data of another module.
+6. External Coupling: Modules communicate through shared external storage or files.
+7. Message Coupling: Modules communicate by sending messages or using a messaging system.
+
+Low coupling is beneficial as it improves the maintainability and flexibility of a system. Modules with low coupling can be modified or replaced independently without affecting other modules. It promotes modular design, code reuse, and ease of testing.
+
+Here are a few examples of modules with poor coupling:
+
+1. Tight Coupling:
+Tight coupling occurs when modules have strong dependencies on each other, making it difficult to modify or replace one module without affecting others. For example, if Module A directly accesses and manipulates the internal data structures of Module B, they are tightly coupled.
+
+2. Circular Dependency:
+Circular dependency happens when two or more modules depend on each other in a circular manner. This can lead to a tangled web of dependencies and make it challenging to understand and maintain the code. For instance, Module A depends on Module B, which in turn depends on Module C, and Module C depends back on Module A.
+
+3. Inappropriate Dependency:
+Inappropriate dependency occurs when a module depends on another module that does not logically or semantically align with its functionality. For example, if a module responsible for handling user authentication also depends on a module related to graphic rendering, it signifies an inappropriate coupling between unrelated concerns.
+
+4. External Dependency:
+Modules that rely heavily on external libraries, frameworks, or services introduce external dependencies. Excessive reliance on external dependencies can make the system more fragile, as any changes or issues in those external dependencies may have cascading effects on the modules using them.
+
+5. Shared State:
+Modules that share mutable global variables or common data structures introduce coupling through shared state. Changes in one module's use of shared state can impact other modules that rely on the same data, leading to potential bugs and unintended side effects.
+
+6. Message Format Dependency:
+Modules that rely on specific message formats or protocols for communication can lead to tight coupling. If one module expects the messages from another module to follow a specific format, it becomes challenging to change the message structure without affecting the consuming module.
+
+Addressing these coupling issues is essential for creating more modular and maintainable software systems. By minimizing dependencies, promoting loose coupling, and employing proper abstraction and encapsulation techniques, developers can enhance the flexibility, scalability, and robustness of their codebase.
+
+When designing you have to be careful with high coupling:
+
+1. Direct Method Invocation:
+Module A directly invokes methods or functions defined in Module B, tightly coupling the two modules. Any changes in the method signatures or implementation details of Module B may require corresponding modifications in Module A.
+
+2. Shared Data Structures:
+Modules that share mutable data structures, such as global variables or shared memory, introduce high coupling. Changes to the structure or representation of the shared data can impact multiple modules, leading to potential bugs and maintenance challenges.
+
+3. Shared Database Tables:
+If multiple modules directly access and modify the same database tables, it creates high coupling between those modules. Modifying the structure or schema of the shared tables can affect the functioning of multiple modules and require synchronized changes.
+
+4. Strong Inter-Module Dependencies:
+When one module heavily relies on the internal workings or specific functionalities of another module, it introduces high coupling. This dependency can make it difficult to modify or replace the dependent module without impacting the module it relies on.
+
+5. Order-Based Execution:
+If modules depend on the specific order of execution, where one module must run before or after another module, it creates high coupling. Changing the order of execution or introducing new modules can disrupt the system's functioning.
+
+6. Inheritance Dependencies:
+In object-oriented programming, modules that inherit from or depend on specific classes or hierarchies tightly couple to those classes. Any changes to the superclass or base classes can have cascading effects on the dependent modules.
+
+It's important to minimize high coupling between modules to improve software maintainability, flexibility, and modularity. By reducing dependencies, encapsulating functionality, and promoting loose coupling through interfaces, abstractions, and dependency injection, developers can create more resilient and modular software systems.
+
+
+### Top-down and bottom-up strategies 
 
 Top-down and bottom-up strategies are two complementary approaches to structured program design. They offer different perspectives on how to tackle the design and development of a program.
 
@@ -137,7 +263,7 @@ In practice, a combination of both top-down and bottom-up strategies is often em
 
 By employing a balanced approach that combines top-down and bottom-up strategies, programmers can create well-structured, modular programs that are easier to develop, understand, and maintain.
 
-## Refactoring
+### Refactoring
 
 Refactoring is the process of making improvements to the structure, design, and implementation of existing code without changing its external behavior. It involves modifying the code to enhance readability, maintainability, extensibility, and performance while preserving the functionality of the program.
 
@@ -168,5 +294,6 @@ Common refactoring techniques include:
 It's important to note that refactoring should be done incrementally and with proper testing in place to ensure that the behavior of the code remains unchanged. Automated tests, such as unit tests or integration tests, provide confidence that the refactored code behaves as expected.
 
 Refactoring is an ongoing process throughout the software development lifecycle. As requirements change, new insights emerge, or as code quality issues are identified, refactoring allows developers to continuously improve the codebase while maintaining its functionality and reducing technical debt.
+
 
 
