@@ -118,4 +118,136 @@ These lifecycle hooks provide points of control and flexibility during the compo
 It's important to note that the lifecycle hooks are not always required for every component. Use the appropriate hooks based on your component's needs and the tasks you want to perform at different stages of the lifecycle.
 
 
+## Template bindings
+
+In Angular projects, template bindings are a powerful feature that allows you to establish a connection between component properties or expressions and elements within the HTML template. Bindings enable you to dynamically update and display data, respond to user interactions, and control the behavior of your application. There are different types of template bindings available in Angular:
+
+1. Interpolation ({{ }}):
+   - Interpolation is the most common type of binding used in Angular.
+   - Syntax: `{{ expression }}`
+   - Purpose: Allows you to embed component properties or expressions within the HTML template.
+   - Example: `<h1>{{ title }}</h1>`
+
+2. Property Binding ([ ]):
+   - Property binding allows you to bind component properties to element properties.
+   - Syntax: `[property]="expression"`
+   - Purpose: Dynamically sets the value of an element's property based on a component property or expression.
+   - Example: `<input [value]="username">`
+
+3. Event Binding (( ) or on-):
+   - Event binding enables you to bind component methods to element events.
+   - Syntax: `(event)="expression"` or `on-event="expression"`
+   - Purpose: Executes a component method when the specified event occurs on the element.
+   - Example: `<button (click)="onSubmit()">Submit</button>`
+
+4. Two-Way Binding ([( )]):
+   - Two-way binding allows you to establish a bi-directional data flow between a component property and an element property.
+   - Syntax: `[(property)]="expression"`
+   - Purpose: Updates both the component property and the element property simultaneously when either of them changes.
+   - Example: `<input [(ngModel)]="username">`
+
+5. Attribute Binding ([attr.]):
+   - Attribute binding allows you to bind component properties to HTML attributes.
+   - Syntax: `[attr.attributeName]="expression"`
+   - Purpose: Sets the value of an HTML attribute based on a component property or expression.
+   - Example: `<div [attr.role]="userRole">...</div>`
+
+6. Class Binding ([class.]):
+   - Class binding allows you to dynamically add or remove CSS classes on elements based on component properties or expressions.
+   - Syntax: `[class.className]="expression"`
+   - Purpose: Adds or removes the specified CSS class based on the truthiness of the component property or expression.
+   - Example: `<div [class.highlighted]="isActive">...</div>`
+
+7. Style Binding ([style.]):
+   - Style binding enables you to dynamically set CSS styles on elements based on component properties or expressions.
+   - Syntax: `[style.styleName]="expression"`
+   - Purpose: Sets the value of a CSS style property based on the component property or expression.
+   - Example: `<div [style.backgroundColor]="bgColor">...</div>`
+
+These template bindings provide a declarative and flexible way to interact with and manipulate the HTML template based on the component's data and behavior. By leveraging these bindings, you can create dynamic, interactive, and data-driven Angular applications.
+
+## Built-in Angular directives
+
+Here is a list of some commonly used built-in directives in Angular:
+
+1. **ngIf**: Conditionally renders an element based on a condition.
+   ```html
+   <div *ngIf="condition">Content to be displayed when condition is true</div>
+   ```
+
+2. **ngFor**: Iterates over a collection and generates multiple instances of an element.
+   ```html
+   <ul>
+     <li *ngFor="let item of items">{{ item }}</li>
+   </ul>
+   ```
+
+3. **ngSwitch**: Conditionally renders elements based on a provided value.
+   ```html
+   <div [ngSwitch]="value">
+     <div *ngSwitchCase="'A'">Value is A</div>
+     <div *ngSwitchCase="'B'">Value is B</div>
+     <div *ngSwitchDefault>Value is neither A nor B</div>
+   </div>
+   ```
+
+4. **ngClass**: Adds or removes CSS classes dynamically based on conditions or expressions.
+   ```html
+   <div [ngClass]="{ 'active': isActive, 'disabled': isDisabled }">Content</div>
+   ```
+
+5. **ngStyle**: Sets inline styles dynamically based on component properties or expressions.
+   ```html
+   <div [ngStyle]="{ 'color': textColor, 'background-color': bgColor }">Content</div>
+   ```
+
+6. **ngModel**: Creates a two-way data binding between an input element and a component property.
+   ```html
+   <input [(ngModel)]="property" />
+   ```
+
+7. **ngTemplateOutlet**: Renders a template dynamically based on a provided context.
+   ```html
+   <ng-container *ngTemplateOutlet="templateRef; context: { prop: value }"></ng-container>
+   ```
+
+8. **ngContainer**: A non-rendering element used as a placeholder to group multiple elements.
+   ```html
+   <ng-container>Content</ng-container>
+   ```
+
+9. **ngNonBindable**: Prevents Angular from compiling or evaluating the contents of an element.
+   ```html
+   <div ngNonBindable>{{ someExpression }}</div>
+   ```
+
+10. **ngClass**: Adds or removes CSS classes dynamically based on conditions or expressions.
+    ```html
+    <div [ngClass]="{ 'active': isActive, 'disabled': isDisabled }">Content</div>
+    ```
+
+3. **ngIfElse**: Conditionally renders different content based on a condition.
+   ```html
+   <div *ngIf="condition; else elseBlock">Content to be displayed when condition is true</div>
+   <ng-template #elseBlock>Content to be displayed when condition is false</ng-template>
+   ```
+
+7. **ngTemplateOutlet**: Renders a template dynamically based on a provided context.
+   ```html
+   <ng-container *ngTemplateOutlet="templateRef; context: { prop: value }"></ng-container>
+   ```
+
+8. **ng-content**: Represents the content projection slot for a component.
+   ```html
+   <app-custom-component>
+     <h1>Content to be projected into the component</h1>
+   </app-custom-component>
+   ```
+
+1. **ngNonBindable**: Prevents Angular from compiling or evaluating the contents of an element.
+    ```html
+    <div ngNonBindable>{{ someExpression }}</div>
+    ```
+
+These are just a few examples of the commonly used built-in directives in Angular. Each directive has its own purpose and provides a powerful way to manipulate the DOM, conditionally render elements, and apply dynamic styling. By leveraging these directives, you can create dynamic and interactive user interfaces in your Angular applications.
 
