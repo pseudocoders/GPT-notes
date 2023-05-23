@@ -1,4 +1,4 @@
-# Programming
+# Structured Programming
 
 ## Spaghetti code
 
