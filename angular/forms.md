@@ -26,3 +26,75 @@ Key Differences:
 - Flexibility: Reactive forms provide more flexibility for implementing advanced features like conditional validation, dynamic form controls, and form arrays.
 
 The choice between template-driven forms and reactive forms depends on the complexity and requirements of your form. Template-driven forms offer simplicity and ease of implementation for simple forms, while reactive forms provide more control and flexibility for complex forms with dynamic requirements.
+
+## Reactive forms
+
+## Built-in validators
+
+In Angular's reactive forms, built-in validators are pre-defined functions that allow you to perform common form validations without having to write custom validation logic. These validators are provided by the `Validators` class from `@angular/forms` module. They can be used to validate form controls and apply validation rules to fields such as required, min length, max length, pattern matching, and more. Here are some examples of built-in validators:
+
+1. `required`: Ensures that the form control has a non-empty value.
+```typescript
+import { Validators } from '@angular/forms';
+
+// Example usage
+this.myForm = this.formBuilder.group({
+  name: ['', Validators.required]
+});
+```
+
+2. `minLength`: Specifies the minimum length of the input value.
+```typescript
+import { Validators } from '@angular/forms';
+
+// Example usage
+this.myForm = this.formBuilder.group({
+  password: ['', [Validators.minLength(6)]]
+});
+```
+
+3. `maxLength`: Specifies the maximum length of the input value.
+```typescript
+import { Validators } from '@angular/forms';
+
+// Example usage
+this.myForm = this.formBuilder.group({
+  name: ['', [Validators.maxLength(20)]]
+});
+```
+
+4. `pattern`: Validates the input value against a regular expression pattern.
+```typescript
+import { Validators } from '@angular/forms';
+
+// Example usage
+this.myForm = this.formBuilder.group({
+  email: ['', [Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$')]]
+});
+```
+
+5. `email`: Validates that the input value is a valid email address.
+```typescript
+import { Validators } from '@angular/forms';
+
+// Example usage
+this.myForm = this.formBuilder.group({
+  email: ['', [Validators.email]]
+});
+```
+
+You can combine multiple validators by passing an array of validator functions to the form control or form group.
+
+```typescript
+import { Validators } from '@angular/forms';
+
+// Example usage with multiple validators
+this.myForm = this.formBuilder.group({
+  password: ['', [Validators.required, Validators.minLength(6)]],
+  confirmPassword: ['', Validators.required]
+});
+```
+
+Using these built-in validators simplifies the process of adding basic form validation rules to your reactive forms. However, if you have custom validation requirements, you can create your own custom validators by implementing the `ValidatorFn` interface. Custom validators give you full control over the validation logic for your specific use cases.
+
+
