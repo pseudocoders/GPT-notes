@@ -86,7 +86,7 @@ To create a custom service in Angular and inject it into your components, you ca
    }
    ```
 
-   In the above example, the `@Injectable` decorator is used to make the service injectable. The `providedIn: 'root'` option registers the service at the root level, making it available for injection throughout the application.
+   In the above example, the `@Injectable` decorator is used to make the service injectable. The `providedIn: 'root'` option registers the service at the root level, making it available for injection throughout the application. When the providedIn property is set to "root", the service is registered at the root level. This means that a single instance of the service is shared across the entire application. The service becomes a singleton and is available for injection in any component or service within the application. The providedIn property can also be set to the name of a specific module or any other injectable type. In this case, the service is registered at the level of that specific module or injectable type. This creates a separate instance of the service for each module or injectable type, providing component-level or feature-level scoping.
 
 4. Inject the service into a component:
    - To use the service in a component, you need to inject it. Open the component file where you want to use the service, typically located at `src/app/component-name.component.ts`.
@@ -124,6 +124,8 @@ To create a custom service in Angular and inject it into your components, you ca
    In the above example, the `someMethod()` of the service is called within the component.
 
 By following these steps, you can create a custom service in Angular and inject it into your components. This allows you to encapsulate reusable logic and share data and functionality across multiple components in your application.
+
+
 
 #### Custom injectable services example
 
