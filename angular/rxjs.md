@@ -365,8 +365,16 @@ export class ExampleComponent {
   data: string[] = [];
 
   fetchData(): void {
-    ajax.getJSON('https://api.example.com/data').subscribe((response: any) => {
-      this.data = response;
+    ajax.getJSON('https://api.example.com/data').subscribe({
+      next: (response: any) => {
+        this.data = response;
+      },
+      error: (error: any) => {
+        console.error('An error occurred:', error);
+      },
+      complete: () => {
+        console.log('Request completed.');
+      },
     });
   }
 }
@@ -382,3 +390,68 @@ The template of the component displays the data using `*ngFor` to iterate over t
 
 Please note that in a real-world scenario, you would typically encapsulate the AJAX logic within a service instead of directly making the call from the component. The example above provides a simplified illustration of the concept.
 
+### RxJS AJAX and services
+
+Here's an example of an RxJS AJAX call implemented in an Angular service that is injected into an Angular component:
+
+```typescript
+import { Injectable } from '@angular/core';
+import { ajax, AjaxResponse } from 'rxjs/ajax';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DataService {
+  getData(): Observable<AjaxResponse> {
+    return ajax.getJSON('https://api.example.com/data');
+  }
+}
+```
+
+In this example, we have a `DataService` that provides a method `getData()` to fetch data from an API endpoint. The `ajax.getJSON()` function from RxJS AJAX is used to make the AJAX call and return an Observable of type `AjaxResponse`. The service is decorated with `@Injectable` to allow it to be injected into other Angular components.
+
+Now, let's see how we can use this service in an Angular component:
+
+```typescript
+import { Component, OnInit } from '@angular/core';
+import { DataService } from 'path-to-data-service';
+import { AjaxResponse } from 'rxjs/ajax';
+
+@Component({
+  selector: 'app-example',
+  template: `
+    <button (click)="fetchData()">Fetch Data</button>
+    <ul>
+      <li *ngFor="let item of data">{{ item }}</li>
+    </ul>
+  `,
+})
+export class ExampleComponent implements OnInit {
+  data: any[] = [];
+
+  constructor(private dataService: DataService) { }
+
+  ngOnInit(): void {
+    this.fetchData();
+  }
+
+  fetchData(): void {
+    this.dataService.getData().subscribe({
+      next: (response) => {        
+        this.data = response;
+      },
+      error: (error) => {
+        console.error('Error:', error);
+      },
+      complete: () => {
+        console.log('Request completed');
+      }
+    });
+  }
+}
+```
+
+In the `ExampleComponent`, we inject the `DataService` via the constructor and call the `fetchData()` method in the `ngOnInit()` lifecycle hook to initiate the data retrieval. Inside the `fetchData()` method, we subscribe to the `Observable` returned by the `getData()` method of the service. When the response is received, the `next` callback is invoked, where we assign the response data to the `data` property of the component.
+
+This way, the service encapsulates the AJAX call, and the component is responsible for subscribing to the observable and handling the response, error, and completion events.
