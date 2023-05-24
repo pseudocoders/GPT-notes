@@ -605,7 +605,7 @@ These are just a few examples of commonly used bindable events in Angular. Each 
 
 ### Example
 
-Certainly! Here's an example that demonstrates the use of various input events, including `(change)`, `(submit)`, and key events `(keyup)` and `(keydown)` in Angular:
+Here's an example that demonstrates the use of various input events, including `(change)`, `(submit)`, and key events `(keyup)` and `(keydown)` in Angular:
 
 ```typescript
 import { Component } from '@angular/core';
