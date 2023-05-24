@@ -5,3 +5,4 @@
 3. [Structure of an Angular application](structure.md)
 4. [Components](components.md)
 5. [Services and DI](di.md)
+6. [Routing](routing.md)
