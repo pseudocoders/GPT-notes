@@ -306,7 +306,9 @@ In the above example, the `setTitle()` method is used to set the title of the HT
 By dynamically setting the title using the `Title` service, you can customize the title based on the current state or content of your application. This can be particularly useful for improving SEO, providing context-aware titles, or enhancing the user experience by displaying relevant information in the browser's title area.
 
 
+# Content expansion
 
+* Modules and providedIn option in @Injectable
 
 
 
