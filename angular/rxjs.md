@@ -527,57 +527,6 @@ Finally, we subscribe to the modified `input$` observable and receive the proces
 
 This example demonstrates how RxJS can be used to handle events and user input in a reactive and declarative manner, allowing you to apply various operators to transform and manipulate the data stream emitted by the observable.
 
-### Handling Errors with catchError and retry
-
-Here are the examples of using `catchError` and `retry` operators in RxJS:
-
-1. `catchError` Operator:
-
-```typescript
-import { of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-
-const source$ = of('Data', 'Data', 'Error', 'Data');
-
-source$.pipe(
-  catchError({
-    next: (value) => {
-      console.log('Received:', value);
-      return value;
-    },
-    error: (error) => {
-      console.log('Error occurred:', error);
-      return of('Fallback Data');
-    }
-  })
-).subscribe();
-```
-
-In this example, the `catchError` operator is configured with an object that contains the `next` and `error` properties. The `next` property is used to handle the successful emission of values, and the `error` property is used to handle errors. Inside the `next` and `error` functions, you can perform the desired logic, such as logging the values or errors, and returning appropriate fallback values or observables.
-
-2. `retry` Operator:
-
-```typescript
-import { of, throwError } from 'rxjs';
-import { retry } from 'rxjs/operators';
-
-const source$ = of('Data', 'Data', 'Error', 'Data');
-
-source$.pipe(
-  retry({ attempts: 2 })
-).subscribe({
-  next: (value) => {
-    console.log('Received:', value);
-  },
-  error: (error) => {
-    console.log('Error occurred:', error);
-  }
-});
-```
-
-In this example, the `retry` operator is configured with an object that contains the `attempts` property, specifying the number of retry attempts. When an error occurs, the source observable will be retried for the specified number of attempts. The `next` and `error` functions inside the `subscribe` method handle the successful emission of values and errors, respectively.
-
-By using the object syntax in the `subscribe` method, you can have clearer and more explicit control over the different handlers for success and error cases, while adhering to the requirement of taking only one argument.
 
 #### Example
 
@@ -643,6 +592,58 @@ In this example, we have three separate examples: `mergeMap`, `combineLatest`, a
 In all examples, `subscribe` takes only one argument as an object, where `next` handles the emitted values, and `complete` handles the completion of the observable stream.
 
 Feel free to modify and experiment with these examples to suit your specific use case.
+
+### Handling Errors with catchError and retry
+
+Here are the examples of using `catchError` and `retry` operators in RxJS:
+
+1. `catchError` Operator:
+
+```typescript
+import { of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+
+const source$ = of('Data', 'Data', 'Error', 'Data');
+
+source$.pipe(
+  catchError({
+    next: (value) => {
+      console.log('Received:', value);
+      return value;
+    },
+    error: (error) => {
+      console.log('Error occurred:', error);
+      return of('Fallback Data');
+    }
+  })
+).subscribe();
+```
+
+In this example, the `catchError` operator is configured with an object that contains the `next` and `error` properties. The `next` property is used to handle the successful emission of values, and the `error` property is used to handle errors. Inside the `next` and `error` functions, you can perform the desired logic, such as logging the values or errors, and returning appropriate fallback values or observables.
+
+2. `retry` Operator:
+
+```typescript
+import { of, throwError } from 'rxjs';
+import { retry } from 'rxjs/operators';
+
+const source$ = of('Data', 'Data', 'Error', 'Data');
+
+source$.pipe(
+  retry({ attempts: 2 })
+).subscribe({
+  next: (value) => {
+    console.log('Received:', value);
+  },
+  error: (error) => {
+    console.log('Error occurred:', error);
+  }
+});
+```
+
+In this example, the `retry` operator is configured with an object that contains the `attempts` property, specifying the number of retry attempts. When an error occurs, the source observable will be retried for the specified number of attempts. The `next` and `error` functions inside the `subscribe` method handle the successful emission of values and errors, respectively.
+
+By using the object syntax in the `subscribe` method, you can have clearer and more explicit control over the different handlers for success and error cases, while adhering to the requirement of taking only one argument.
 
 ### Custom operators
 
