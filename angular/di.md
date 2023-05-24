@@ -125,9 +125,7 @@ To create a custom service in Angular and inject it into your components, you ca
 
 By following these steps, you can create a custom service in Angular and inject it into your components. This allows you to encapsulate reusable logic and share data and functionality across multiple components in your application.
 
-#### Custom injectable services examples
-
-##### Example
+#### Custom injectable services example
 
 Let's analyze an example of Dependency Injection (DI) in Angular.
 
@@ -168,8 +166,7 @@ By using DI, we achieve loose coupling between the `UserService` and `HttpServic
 
 Overall, DI in Angular simplifies the management of dependencies, promotes modularity, and enhances testability and maintainability in Angular applications.
 
-
-##### Example
+#### Custom injectable services example
 
 Let's analyze an example of injecting a simple service into a component to understand Dependency Injection (DI) in Angular.
 
