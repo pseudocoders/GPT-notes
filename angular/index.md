@@ -7,3 +7,4 @@
 5. [Services and DI](di.md)
 6. [Routing](routing.md)
 7. [Forms](forms.md)
+8. [RxJS and AJAX](rxjs.md)
