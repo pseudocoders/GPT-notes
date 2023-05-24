@@ -125,6 +125,119 @@ To create a custom service in Angular and inject it into your components, you ca
 
 By following these steps, you can create a custom service in Angular and inject it into your components. This allows you to encapsulate reusable logic and share data and functionality across multiple components in your application.
 
+#### Custom injectable services examples
+
+##### Example
+
+Let's analyze an example of Dependency Injection (DI) in Angular.
+
+Consider the following scenario: We have an Angular component called `UserService` that requires an instance of an `HttpService` to make HTTP requests. Instead of creating an instance of `HttpService` within the `UserService` class, we'll use DI to inject the dependency.
+
+First, we need to register the `HttpService` as a provider in the Angular module or component where it is available. We can do this by providing it in the `providers` array of the module or component decorator.
+
+```typescript
+import { Injectable } from '@angular/core';
+
+@Injectable()
+export class HttpService {
+  // Implementation of HttpService methods
+}
+```
+
+Next, we have the `UserService` component that requires an instance of `HttpService`. We can achieve this by injecting the `HttpService` dependency in the constructor of the `UserService` class.
+
+```typescript
+import { Injectable } from '@angular/core';
+import { HttpService } from './http.service';
+
+@Injectable()
+export class UserService {
+  constructor(private httpService: HttpService) {
+    // ...
+  }
+
+  // UserService methods that use HttpService
+}
+```
+
+In the above code, we see that the `HttpService` is passed as a parameter to the constructor of the `UserService` class. The `private` access modifier indicates that the `httpService` parameter should be assigned as an instance variable of the `UserService` class.
+
+Now, when the `UserService` is instantiated or used elsewhere in the application, Angular's DI mechanism automatically resolves the `HttpService` dependency and provides an instance of it to the `UserService`. This means that the `UserService` can now access and use the methods and properties of the `HttpService` without having to create it explicitly.
+
+By using DI, we achieve loose coupling between the `UserService` and `HttpService`, making it easier to maintain and test the code. Additionally, if we need to replace or modify the behavior of the `HttpService` in the future, we can simply provide a different implementation or mock it without affecting the `UserService`.
+
+Overall, DI in Angular simplifies the management of dependencies, promotes modularity, and enhances testability and maintainability in Angular applications.
+
+
+##### Example
+
+Let's analyze an example of injecting a simple service into a component to understand Dependency Injection (DI) in Angular.
+
+Consider the following example:
+
+1. **SimpleService**
+   ```typescript
+   import { Injectable } from '@angular/core';
+
+   @Injectable()
+   export class SimpleService {
+     getMessage(): string {
+       return 'Hello from SimpleService!';
+     }
+   }
+   ```
+
+   Here, we have a simple service called `SimpleService` with a single method `getMessage()` that returns a greeting message.
+
+2. **AppComponent**
+   ```typescript
+   import { Component } from '@angular/core';
+   import { SimpleService } from './simple.service';
+
+   @Component({
+     selector: 'app-root',
+     template: `
+       <h1>{{ message }}</h1>
+     `,
+   })
+   export class AppComponent {
+     message: string;
+
+     constructor(private simpleService: SimpleService) {
+       this.message = this.simpleService.getMessage();
+     }
+   }
+   ```
+
+   In the `AppComponent`, we import the `SimpleService` and inject it into the component's constructor. The `private` access modifier signifies that the `simpleService` parameter should be assigned as an instance variable of the `AppComponent` class. In the constructor, we use the `simpleService` to retrieve the greeting message and assign it to the `message` property.
+
+3. **AppModule**
+   ```typescript
+   import { NgModule } from '@angular/core';
+   import { BrowserModule } from '@angular/platform-browser';
+   import { AppComponent } from './app.component';
+   import { SimpleService } from './simple.service';
+
+   @NgModule({
+     declarations: [AppComponent],
+     imports: [BrowserModule],
+     providers: [SimpleService],
+     bootstrap: [AppComponent],
+   })
+   export class AppModule {}
+   ```
+
+   In the `AppModule`, we import the `SimpleService` and include it in the `providers` array. This registers `SimpleService` as a provider within the Angular dependency injection system. The provider configuration allows the DI system to create an instance of `SimpleService` when requested by components.
+
+Now, when the `AppComponent` is created, Angular's DI mechanism automatically resolves the `SimpleService` dependency and provides an instance of it to the `AppComponent`. The `getMessage()` method of `SimpleService` is called within the constructor, and the returned message is assigned to the `message` property.
+
+As a result, when the component is rendered, the `message` property value is displayed in the template.
+
+This example demonstrates how DI allows the `AppComponent` to use the functionality of the `SimpleService` without explicitly creating an instance of it. The service is provided to the component through DI, enabling loose coupling and code reusability.
+
+By using DI in Angular, we can easily inject services, manage dependencies, and promote modular and maintainable application development.
+
+
 ### Built-in injectable services
 
 Certainly! Here are the commonly used built-in injectable services in Angular:
@@ -193,117 +306,7 @@ In the above example, the `setTitle()` method is used to set the title of the HT
 
 By dynamically setting the title using the `Title` service, you can customize the title based on the current state or content of your application. This can be particularly useful for improving SEO, providing context-aware titles, or enhancing the user experience by displaying relevant information in the browser's title area.
 
-## DI and services examples
 
-### Example
-
-Let's analyze an example of Dependency Injection (DI) in Angular.
-
-Consider the following scenario: We have an Angular component called `UserService` that requires an instance of an `HttpService` to make HTTP requests. Instead of creating an instance of `HttpService` within the `UserService` class, we'll use DI to inject the dependency.
-
-First, we need to register the `HttpService` as a provider in the Angular module or component where it is available. We can do this by providing it in the `providers` array of the module or component decorator.
-
-```typescript
-import { Injectable } from '@angular/core';
-
-@Injectable()
-export class HttpService {
-  // Implementation of HttpService methods
-}
-```
-
-Next, we have the `UserService` component that requires an instance of `HttpService`. We can achieve this by injecting the `HttpService` dependency in the constructor of the `UserService` class.
-
-```typescript
-import { Injectable } from '@angular/core';
-import { HttpService } from './http.service';
-
-@Injectable()
-export class UserService {
-  constructor(private httpService: HttpService) {
-    // ...
-  }
-
-  // UserService methods that use HttpService
-}
-```
-
-In the above code, we see that the `HttpService` is passed as a parameter to the constructor of the `UserService` class. The `private` access modifier indicates that the `httpService` parameter should be assigned as an instance variable of the `UserService` class.
-
-Now, when the `UserService` is instantiated or used elsewhere in the application, Angular's DI mechanism automatically resolves the `HttpService` dependency and provides an instance of it to the `UserService`. This means that the `UserService` can now access and use the methods and properties of the `HttpService` without having to create it explicitly.
-
-By using DI, we achieve loose coupling between the `UserService` and `HttpService`, making it easier to maintain and test the code. Additionally, if we need to replace or modify the behavior of the `HttpService` in the future, we can simply provide a different implementation or mock it without affecting the `UserService`.
-
-Overall, DI in Angular simplifies the management of dependencies, promotes modularity, and enhances testability and maintainability in Angular applications.
-
-
-### Example
-
-Let's analyze an example of injecting a simple service into a component to understand Dependency Injection (DI) in Angular.
-
-Consider the following example:
-
-1. **SimpleService**
-   ```typescript
-   import { Injectable } from '@angular/core';
-
-   @Injectable()
-   export class SimpleService {
-     getMessage(): string {
-       return 'Hello from SimpleService!';
-     }
-   }
-   ```
-
-   Here, we have a simple service called `SimpleService` with a single method `getMessage()` that returns a greeting message.
-
-2. **AppComponent**
-   ```typescript
-   import { Component } from '@angular/core';
-   import { SimpleService } from './simple.service';
-
-   @Component({
-     selector: 'app-root',
-     template: `
-       <h1>{{ message }}</h1>
-     `,
-   })
-   export class AppComponent {
-     message: string;
-
-     constructor(private simpleService: SimpleService) {
-       this.message = this.simpleService.getMessage();
-     }
-   }
-   ```
-
-   In the `AppComponent`, we import the `SimpleService` and inject it into the component's constructor. The `private` access modifier signifies that the `simpleService` parameter should be assigned as an instance variable of the `AppComponent` class. In the constructor, we use the `simpleService` to retrieve the greeting message and assign it to the `message` property.
-
-3. **AppModule**
-   ```typescript
-   import { NgModule } from '@angular/core';
-   import { BrowserModule } from '@angular/platform-browser';
-   import { AppComponent } from './app.component';
-   import { SimpleService } from './simple.service';
-
-   @NgModule({
-     declarations: [AppComponent],
-     imports: [BrowserModule],
-     providers: [SimpleService],
-     bootstrap: [AppComponent],
-   })
-   export class AppModule {}
-   ```
-
-   In the `AppModule`, we import the `SimpleService` and include it in the `providers` array. This registers `SimpleService` as a provider within the Angular dependency injection system. The provider configuration allows the DI system to create an instance of `SimpleService` when requested by components.
-
-Now, when the `AppComponent` is created, Angular's DI mechanism automatically resolves the `SimpleService` dependency and provides an instance of it to the `AppComponent`. The `getMessage()` method of `SimpleService` is called within the constructor, and the returned message is assigned to the `message` property.
-
-As a result, when the component is rendered, the `message` property value is displayed in the template.
-
-This example demonstrates how DI allows the `AppComponent` to use the functionality of the `SimpleService` without explicitly creating an instance of it. The service is provided to the component through DI, enabling loose coupling and code reusability.
-
-By using DI in Angular, we can easily inject services, manage dependencies, and promote modular and maintainable application development.
 
 
 
