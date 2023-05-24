@@ -888,13 +888,13 @@ Overall, `Subject` provides a flexible and convenient way to create and manage o
 
 In RxJS, multicasting refers to the ability to share a single source observable among multiple subscribers. By default, when you subscribe to an observable, a separate execution context is created for each subscriber. This means that if you have multiple subscribers, the source observable's logic will be executed separately for each subscriber. However, there are scenarios where you may want to share the execution of the source observable among multiple subscribers.
 
-Multicasting can be achieved using the `Subject` and `multicast` operators in RxJS.
+#### Example
 
-1. Using `Subject`:
+Example of using `Subject`:
+
    - Create a `Subject` instance, which acts as both an observable and an observer.
    - Subscribe to the source observable using the `Subject` instance.
    - Multiple subscribers can then subscribe to the `Subject`, and they will receive the same values emitted by the source observable.
-   - Here's an example:
 
    ```typescript
    import { Subject } from 'rxjs';
@@ -916,10 +916,24 @@ Multicasting can be achieved using the `Subject` and `multicast` operators in Rx
    });
    ```
 
-2. Using `multicast` operator:
+### Multicasting
+
+Multicasting can be achieved using the `Subject` and `multicast` operators in RxJS. In RxJS, multicast is used with subjects to share a single source of values among multiple subscribers. Without multicast, each subscriber would receive a separate execution of the source observable, leading to separate and independent streams of values.
+
+When using a subject without multicast, each subscriber will create its own separate subscription to the source observable, resulting in independent processing of the emitted values. This can be useful in some scenarios where you want separate and isolated streams of values for different subscribers. However, in other cases, you may want multiple subscribers to receive and process the same set of values from a single source.
+
+To achieve this, multicast is used with subjects. Multicasting allows you to share the same source observable among multiple subscribers, ensuring that all subscribers receive the same values emitted by the source. This can be particularly useful when you have expensive or side-effectful operations within your observable pipeline, and you want to avoid executing those operations multiple times for each subscriber.
+
+If multicast is not used in a subject, each subscription to the subject will create an independent execution path of the source observable. This means that each subscriber will receive a separate stream of values, effectively creating separate instances of the source observable for each subscriber.
+
+#### Example
+
+Here's an example of using multicast with a subject:
+
+Using `multicast` operator:
+
    - Use the `multicast` operator to multicast the source observable to multiple subscribers.
    - The `multicast` operator takes a `Subject` or a factory function that returns a `Subject` as an argument.
-   - Here's an example:
 
    ```typescript
    import { multicast } from 'rxjs/operators';
@@ -944,7 +958,96 @@ Multicasting can be achieved using the `Subject` and `multicast` operators in Rx
    multicastObservable.connect();
    ```
 
-In both approaches, the `Subject` acts as a bridge between the source observable and multiple subscribers. It allows the source observable's values to be shared and consumed by multiple subscribers simultaneously. This is useful in scenarios where you want to avoid multiple separate executions of the source observable and ensure that all subscribers receive the same values emitted by the source.
 
-####
+#### Example
+
+```typescript
+import { Subject } from 'rxjs';
+import { multicast } from 'rxjs/operators';
+
+// Create a subject
+const subject = new Subject<number>();
+
+// Create an observable source
+const source$ = interval(1000).pipe(take(5));
+
+// Multicast the source with the subject
+const multicasted$ = source$.pipe(multicast(subject));
+
+// Subscribe to the multicasted observable
+multicasted$.subscribe({
+  next: (value) => {
+    console.log('Subscriber 1:', value);
+  }
+});
+
+// Start the multicast by connecting the subject to the source
+multicasted$.connect();
+
+// Subscribe again to the multicasted observable
+multicasted$.subscribe({
+  next: (value) => {
+    console.log('Subscriber 2:', value);
+  }
+});
+```
+
+This example demonstrates the use of the `multicast` operator with a subject to multicast a source observable to multiple subscribers. Let's analyze the example step by step:
+
+1. Import the necessary classes and operators from the `rxjs` library:
+```typescript
+import { Subject } from 'rxjs';
+import { multicast } from 'rxjs/operators';
+```
+
+2. Create a subject:
+```typescript
+const subject = new Subject<number>();
+```
+This creates a subject of type `Subject<number>`. It will act as a multicast source to distribute values to multiple subscribers.
+
+3. Create an observable source:
+```typescript
+const source$ = interval(1000).pipe(take(5));
+```
+This creates an observable `source$` using the `interval` operator, which emits incremental values every 1 second. The `take(5)` operator limits the observable to emit only 5 values.
+
+4. Multicast the source with the subject:
+```typescript
+const multicasted$ = source$.pipe(multicast(subject));
+```
+The `multicast` operator is used to multicast the `source$` observable with the `subject`. This creates a new multicasted observable `multicasted$`.
+
+5. Subscribe to the multicasted observable:
+```typescript
+multicasted$.subscribe({
+  next: (value) => {
+    console.log('Subscriber 1:', value);
+  }
+});
+```
+The first subscriber is created using the `subscribe` method on the `multicasted$` observable. It logs the received values to the console with a prefix of 'Subscriber 1'.
+
+6. Start the multicast by connecting the subject to the source:
+```typescript
+multicasted$.connect();
+```
+The `connect` method is called on the `multicasted$` observable, which connects the subject to the source observable. This triggers the emission of values from the source and allows the subscribers to receive them.
+
+7. Subscribe again to the multicasted observable:
+```typescript
+multicasted$.subscribe({
+  next: (value) => {
+    console.log('Subscriber 2:', value);
+  }
+});
+```
+A second subscriber is created on the `multicasted$` observable. It logs the received values to the console with a prefix of 'Subscriber 2'.
+
+In this example, the `multicast` operator is used to multicast the `source$` observable to multiple subscribers through the `subject`. By connecting the subject to the source using `multicasted$.connect()`, the values emitted by the source are distributed to all subscribers. Both `Subscriber 1` and `Subscriber 2` receive the same sequence of values emitted by the source.
+
+The use of the `multicast` operator with a subject allows for control over when the multicast begins. This is particularly useful when you need to set up multiple subscriptions to the same source and ensure they start receiving values at the desired time.
+
+Note that in the example, the `next` callback is used as the argument for the single-object form of the `subscribe` method, as requested.
+
 
