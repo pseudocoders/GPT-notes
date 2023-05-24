@@ -57,7 +57,145 @@ Here are some key characteristics and purposes of services in Angular:
 
 Overall, services are a key building block in Angular applications. They encapsulate reusable functionality, enable data sharing, promote separation of concerns, and enhance code reusability and maintainability. By using services effectively, you can create modular, scalable, and maintainable Angular applications.
 
-## Example
+### Custom services
+
+To create a custom service in Angular and inject it into your components, you can follow these steps:
+
+1. Generate a new service file:
+   - Use the Angular CLI command `ng generate service service-name` to generate a new service file. Replace `service-name` with the name you want to give your service.
+
+2. Open the generated service file:
+   - Open the generated service file, typically located at `src/app/service-name.service.ts`.
+
+3. Define the service class:
+   - In the service file, define your service class and its methods. For example:
+
+   ```typescript
+   import { Injectable } from '@angular/core';
+
+   @Injectable({
+     providedIn: 'root' // Register the service at the root level
+   })
+   export class ServiceNameService {
+     constructor() { }
+
+     // Define your service methods here
+     public someMethod() {
+       // ...
+     }
+   }
+   ```
+
+   In the above example, the `@Injectable` decorator is used to make the service injectable. The `providedIn: 'root'` option registers the service at the root level, making it available for injection throughout the application.
+
+4. Inject the service into a component:
+   - To use the service in a component, you need to inject it. Open the component file where you want to use the service, typically located at `src/app/component-name.component.ts`.
+   - Import the service and inject it into the component's constructor:
+
+   ```typescript
+   import { Component } from '@angular/core';
+   import { ServiceNameService } from '../service-name.service';
+
+   @Component({
+     // Component configuration
+   })
+   export class ComponentNameComponent {
+     constructor(private serviceName: ServiceNameService) { }
+
+     // Component logic
+   }
+   ```
+
+   In the above example, the `ServiceNameService` is imported and injected into the component's constructor as a private property. This allows the component to access and use the methods provided by the service.
+
+5. Use the service in the component:
+   - With the service injected, you can now use its methods and properties within your component:
+
+   ```typescript
+   export class ComponentNameComponent {
+     constructor(private serviceName: ServiceNameService) { }
+
+     public someMethod() {
+       this.serviceName.someMethod(); // Call the service method
+     }
+   }
+   ```
+
+   In the above example, the `someMethod()` of the service is called within the component.
+
+By following these steps, you can create a custom service in Angular and inject it into your components. This allows you to encapsulate reusable logic and share data and functionality across multiple components in your application.
+
+### Built-in injectable services
+
+Certainly! Here are the commonly used built-in injectable services in Angular:
+
+1. **HttpClient**: The `HttpClient` service is used for making HTTP requests and handling responses. It provides methods like `get()`, `post()`, `put()`, and `delete()` to perform various types of HTTP requests.
+
+2. **HttpInterceptor**: The `HttpInterceptor` interface allows you to intercept and modify HTTP requests and responses. Interceptors are used to add custom headers, handle authentication, modify request/response bodies, and perform other preprocessing or postprocessing tasks related to HTTP communication.
+
+3. **Router**: The `Router` service provides navigation and routing functionality in Angular applications. It allows you to define routes, navigate between different views, and handle URL parameters. The `Router` service is essential for implementing client-side routing.
+
+4. **ActivatedRoute**: The `ActivatedRoute` service provides information about the currently activated route. It gives you access to route parameters, query parameters, and other route-related data. It is typically used within components to access and react to route changes.
+
+5. **FormBuilder**: The `FormBuilder` service provides a convenient way to create and manage Angular forms. It simplifies the process of creating form controls, groups, and arrays, and provides methods for form validation and manipulation.
+
+6. **NgZone**: The `NgZone` service is responsible for handling Angular's change detection mechanism and triggering updates to the application's views. It allows you to run code within a specific zone, ensuring that Angular is aware of any changes made within that zone and performs the necessary change detection and view updates.
+
+7. **Title**: The `Title` service allows you to dynamically set the title of the HTML document. It provides methods to update the title of the page based on the current state or content of your application.
+
+8. **Location**: The `Location` service provides an API for interacting with the browser's URL. It allows you to read the current URL, navigate to different URLs, and listen for URL changes. This service is particularly useful when working with deep linking, bookmarking, or managing browser history.
+
+1. **Renderer2**: The `Renderer2` service provides a way to manipulate the DOM in a platform-independent manner. It allows you to create, modify, and remove DOM elements, apply styles, and listen for events. The `Renderer2` service is commonly used when you need to perform DOM manipulations in Angular.
+
+2. **ElementRef**: The `ElementRef` service provides a reference to the underlying DOM element of a component or directive. It allows you to access and manipulate the properties and methods of the DOM element directly. The `ElementRef` service is often used when you need to work with a specific DOM element within a component or directive.
+
+3. **ChangeDetectorRef**: The `ChangeDetectorRef` service is responsible for triggering change detection manually in Angular. It allows you to mark a component or directive as dirty and initiate the change detection process. The `ChangeDetectorRef` service is useful in scenarios where changes occur outside of Angular's default change detection mechanism.
+
+4. **ErrorHandler**: The `ErrorHandler` service is used to handle errors that occur within an Angular application. It allows you to customize error handling and implement your own error logging, reporting, or recovery logic. By extending the `ErrorHandler` class, you can provide a centralized error handling strategy for your application.
+
+5. **DOCUMENT**: The `DOCUMENT` token represents the global document object in a browser environment. It allows you to access and manipulate the document directly within your Angular application. The `DOCUMENT` token is often used when you need to perform operations on the document that are not covered by other Angular services.
+
+1. **HttpParams**: The `HttpParams` class is used for creating and manipulating HTTP parameters for requests made with the `HttpClient` service. It provides methods to set, append, and delete individual parameters, and to generate a URL-encoded string representation of the parameters.
+
+2. **HttpHeaders**: The `HttpHeaders` class is used for creating and manipulating HTTP headers for requests made with the `HttpClient` service. It allows you to set, append, and delete individual headers, and provides convenience methods for working with common headers like content type, authorization, and cache control.
+
+3. **HttpClientTestingModule**: The `HttpClientTestingModule` is a module provided by Angular's testing framework for mocking HTTP requests and responses during unit testing. It allows you to simulate HTTP interactions and write tests for components and services that use the `HttpClient` service.
+
+4. **TestBed**: The `TestBed` service is used for configuring and creating instances of Angular components and services during unit testing. It provides methods for creating testing modules, compiling components, and injecting dependencies. The `TestBed` service is a key component of Angular's testing infrastructure.
+
+5. **RouterTestingModule**: The `RouterTestingModule` is a module provided by Angular's testing framework for testing components and services that rely on Angular's router. It provides a mock implementation of the router, allowing you to simulate route changes and test navigation-related functionality.
+
+####  Built-in injectable service example
+
+The `Title` service in Angular allows you to dynamically set the title of the HTML document. Here's an example of how to use the `Title` service:
+
+1. Import the `Title` service from `@angular/platform-browser`:
+
+```typescript
+import { Title } from '@angular/platform-browser';
+```
+
+2. Inject the `Title` service into your component's constructor:
+
+```typescript
+constructor(private titleService: Title) { }
+```
+
+3. Set the title using the `setTitle()` method of the `Title` service. You can set the title in the `ngOnInit()` lifecycle hook or any other appropriate place in your component:
+
+```typescript
+ngOnInit() {
+  this.titleService.setTitle('My Angular App');
+}
+```
+
+In the above example, the `setTitle()` method is used to set the title of the HTML document to "My Angular App". This will update the title displayed in the browser's title bar or tab.
+
+By dynamically setting the title using the `Title` service, you can customize the title based on the current state or content of your application. This can be particularly useful for improving SEO, providing context-aware titles, or enhancing the user experience by displaying relevant information in the browser's title area.
+
+## DI and services examples
+
+### Example
 
 Let's analyze an example of Dependency Injection (DI) in Angular.
 
@@ -99,7 +237,7 @@ By using DI, we achieve loose coupling between the `UserService` and `HttpServic
 Overall, DI in Angular simplifies the management of dependencies, promotes modularity, and enhances testability and maintainability in Angular applications.
 
 
-## Example
+### Example
 
 Let's analyze an example of injecting a simple service into a component to understand Dependency Injection (DI) in Angular.
 
@@ -169,70 +307,4 @@ By using DI in Angular, we can easily inject services, manage dependencies, and 
 
 
 
-## Built-in injectable services
 
-Certainly! Here are the commonly used built-in injectable services in Angular:
-
-1. **HttpClient**: The `HttpClient` service is used for making HTTP requests and handling responses. It provides methods like `get()`, `post()`, `put()`, and `delete()` to perform various types of HTTP requests.
-
-2. **HttpInterceptor**: The `HttpInterceptor` interface allows you to intercept and modify HTTP requests and responses. Interceptors are used to add custom headers, handle authentication, modify request/response bodies, and perform other preprocessing or postprocessing tasks related to HTTP communication.
-
-3. **Router**: The `Router` service provides navigation and routing functionality in Angular applications. It allows you to define routes, navigate between different views, and handle URL parameters. The `Router` service is essential for implementing client-side routing.
-
-4. **ActivatedRoute**: The `ActivatedRoute` service provides information about the currently activated route. It gives you access to route parameters, query parameters, and other route-related data. It is typically used within components to access and react to route changes.
-
-5. **FormBuilder**: The `FormBuilder` service provides a convenient way to create and manage Angular forms. It simplifies the process of creating form controls, groups, and arrays, and provides methods for form validation and manipulation.
-
-6. **NgZone**: The `NgZone` service is responsible for handling Angular's change detection mechanism and triggering updates to the application's views. It allows you to run code within a specific zone, ensuring that Angular is aware of any changes made within that zone and performs the necessary change detection and view updates.
-
-7. **Title**: The `Title` service allows you to dynamically set the title of the HTML document. It provides methods to update the title of the page based on the current state or content of your application.
-
-8. **Location**: The `Location` service provides an API for interacting with the browser's URL. It allows you to read the current URL, navigate to different URLs, and listen for URL changes. This service is particularly useful when working with deep linking, bookmarking, or managing browser history.
-
-1. **Renderer2**: The `Renderer2` service provides a way to manipulate the DOM in a platform-independent manner. It allows you to create, modify, and remove DOM elements, apply styles, and listen for events. The `Renderer2` service is commonly used when you need to perform DOM manipulations in Angular.
-
-2. **ElementRef**: The `ElementRef` service provides a reference to the underlying DOM element of a component or directive. It allows you to access and manipulate the properties and methods of the DOM element directly. The `ElementRef` service is often used when you need to work with a specific DOM element within a component or directive.
-
-3. **ChangeDetectorRef**: The `ChangeDetectorRef` service is responsible for triggering change detection manually in Angular. It allows you to mark a component or directive as dirty and initiate the change detection process. The `ChangeDetectorRef` service is useful in scenarios where changes occur outside of Angular's default change detection mechanism.
-
-4. **ErrorHandler**: The `ErrorHandler` service is used to handle errors that occur within an Angular application. It allows you to customize error handling and implement your own error logging, reporting, or recovery logic. By extending the `ErrorHandler` class, you can provide a centralized error handling strategy for your application.
-
-5. **DOCUMENT**: The `DOCUMENT` token represents the global document object in a browser environment. It allows you to access and manipulate the document directly within your Angular application. The `DOCUMENT` token is often used when you need to perform operations on the document that are not covered by other Angular services.
-
-1. **HttpParams**: The `HttpParams` class is used for creating and manipulating HTTP parameters for requests made with the `HttpClient` service. It provides methods to set, append, and delete individual parameters, and to generate a URL-encoded string representation of the parameters.
-
-2. **HttpHeaders**: The `HttpHeaders` class is used for creating and manipulating HTTP headers for requests made with the `HttpClient` service. It allows you to set, append, and delete individual headers, and provides convenience methods for working with common headers like content type, authorization, and cache control.
-
-3. **HttpClientTestingModule**: The `HttpClientTestingModule` is a module provided by Angular's testing framework for mocking HTTP requests and responses during unit testing. It allows you to simulate HTTP interactions and write tests for components and services that use the `HttpClient` service.
-
-4. **TestBed**: The `TestBed` service is used for configuring and creating instances of Angular components and services during unit testing. It provides methods for creating testing modules, compiling components, and injecting dependencies. The `TestBed` service is a key component of Angular's testing infrastructure.
-
-5. **RouterTestingModule**: The `RouterTestingModule` is a module provided by Angular's testing framework for testing components and services that rely on Angular's router. It provides a mock implementation of the router, allowing you to simulate route changes and test navigation-related functionality.
-
-### Example
-
-The `Title` service in Angular allows you to dynamically set the title of the HTML document. Here's an example of how to use the `Title` service:
-
-1. Import the `Title` service from `@angular/platform-browser`:
-
-```typescript
-import { Title } from '@angular/platform-browser';
-```
-
-2. Inject the `Title` service into your component's constructor:
-
-```typescript
-constructor(private titleService: Title) { }
-```
-
-3. Set the title using the `setTitle()` method of the `Title` service. You can set the title in the `ngOnInit()` lifecycle hook or any other appropriate place in your component:
-
-```typescript
-ngOnInit() {
-  this.titleService.setTitle('My Angular App');
-}
-```
-
-In the above example, the `setTitle()` method is used to set the title of the HTML document to "My Angular App". This will update the title displayed in the browser's title bar or tab.
-
-By dynamically setting the title using the `Title` service, you can customize the title based on the current state or content of your application. This can be particularly useful for improving SEO, providing context-aware titles, or enhancing the user experience by displaying relevant information in the browser's title area.
