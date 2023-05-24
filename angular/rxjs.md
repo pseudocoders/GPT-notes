@@ -356,6 +356,58 @@ In the third example, we use the `switchMap` operator to switch to a new observa
 
 You can run this code and observe the output in the console to see how the merge, concat, and switchMap operators combine and transform the observables.
 
+### Handling Errors with catchError and retry
+
+Here are the examples of using `catchError` and `retry` operators in RxJS:
+
+1. `catchError` Operator:
+
+```typescript
+import { of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+
+const source$ = of('Data', 'Data', 'Error', 'Data');
+
+source$.pipe(
+  catchError({
+    next: (value) => {
+      console.log('Received:', value);
+      return value;
+    },
+    error: (error) => {
+      console.log('Error occurred:', error);
+      return of('Fallback Data');
+    }
+  })
+).subscribe();
+```
+
+In this example, the `catchError` operator is configured with an object that contains the `next` and `error` properties. The `next` property is used to handle the successful emission of values, and the `error` property is used to handle errors. Inside the `next` and `error` functions, you can perform the desired logic, such as logging the values or errors, and returning appropriate fallback values or observables.
+
+2. `retry` Operator:
+
+```typescript
+import { of, throwError } from 'rxjs';
+import { retry } from 'rxjs/operators';
+
+const source$ = of('Data', 'Data', 'Error', 'Data');
+
+source$.pipe(
+  retry({ attempts: 2 })
+).subscribe({
+  next: (value) => {
+    console.log('Received:', value);
+  },
+  error: (error) => {
+    console.log('Error occurred:', error);
+  }
+});
+```
+
+In this example, the `retry` operator is configured with an object that contains the `attempts` property, specifying the number of retry attempts. When an error occurs, the source observable will be retried for the specified number of attempts. The `next` and `error` functions inside the `subscribe` method handle the successful emission of values and errors, respectively.
+
+By using the object syntax in the `subscribe` method, you can have clearer and more explicit control over the different handlers for success and error cases, while adhering to the requirement of taking only one argument.
+
 ## AJAX
 
 AJAX (Asynchronous JavaScript and XML) is a web development technique that allows for asynchronous communication between the web browser and the server. It enables the exchange of data between the client-side and server-side without requiring the entire web page to be reloaded.
