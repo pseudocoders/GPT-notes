@@ -199,6 +199,53 @@ These lifecycle hooks provide points of control and flexibility during the compo
 
 It's important to note that the lifecycle hooks are not always required for every component. Use the appropriate hooks based on your component's needs and the tasks you want to perform at different stages of the lifecycle.
 
+###  Example
+
+```typescript
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-example',
+  template: `
+    <h1>{{ message }}</h1>
+  `,
+})
+export class ExampleComponent implements OnInit {
+  message: string = '';
+
+  constructor() {
+    console.log('Constructor executed');
+    // This code runs when the component is instantiated
+    // However, it is not the recommended place for component initialization tasks
+    // Avoid complex initialization or data fetching here
+    // Constructor should be used for dependency injection and basic property initialization
+  }
+
+  ngOnInit(): void {
+    console.log('ngOnInit executed');
+    // This code runs when the component is initialized
+    // It is the recommended place for component initialization tasks
+    // Perform any setup logic, data fetching, or subscription initialization here
+    this.message = 'Hello, Angular!';
+  }
+}
+```
+
+In this example:
+
+- The `ExampleComponent` class implements the `OnInit` interface, indicating that it will use the `ngOnInit()` hook.
+
+- The component has a `message` property that will be displayed in the template using interpolation (`{{ message }}`).
+
+- The constructor is used for basic property initialization and dependency injection. It is executed when the component is instantiated. In the example, we log a message to the console to indicate that the constructor has been executed. However, it is not the recommended place for complex component initialization tasks or data fetching.
+
+- The `ngOnInit()` method is called when the component is initialized. It is the recommended place for component initialization tasks. In the example, we log a message to the console to indicate that `ngOnInit()` has been executed, and we set the `message` property to 'Hello, Angular!'.
+
+The key difference between the constructor and `ngOnInit()` is the timing of their execution. The constructor is executed when the component is instantiated, while `ngOnInit()` is called when the component is being initialized. 
+
+It is generally recommended to perform complex initialization tasks, such as data fetching or subscription initialization, in the `ngOnInit()` method. This allows for better separation of concerns and ensures that the component is fully initialized before executing any additional logic. The constructor, on the other hand, should be used primarily for dependency injection and basic property initialization.
+
+In summary, use the constructor for basic setup and dependency injection, and utilize `ngOnInit()` for more advanced component initialization tasks.
 
 ## Template bindings
 
