@@ -101,7 +101,7 @@ Overall, DI in Angular simplifies the management of dependencies, promotes modul
 
 ## Example
 
-Certainly! Let's analyze an example of injecting a simple service into a component to understand Dependency Injection (DI) in Angular.
+Let's analyze an example of injecting a simple service into a component to understand Dependency Injection (DI) in Angular.
 
 Consider the following example:
 
