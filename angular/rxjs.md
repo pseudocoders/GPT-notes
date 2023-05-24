@@ -480,6 +480,53 @@ Each operator is used within the pipeline to control the execution flow based on
 
 By using the object syntax in the `subscribe` method, you can have clearer and more explicit control over the different handlers for next and complete events while adhering to the requirement of `subscribe` taking only one argument.
 
+#### Example
+
+Here's an example of using RxJS to handle events and user input:
+
+```typescript
+import { fromEvent } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+
+// Get the input element from the DOM
+const input = document.getElementById('input');
+
+// Create an observable from the 'input' event
+const input$ = fromEvent(input, 'input');
+
+// Apply operators to the input$ observable
+input$
+  .pipe(
+    debounceTime(300), // Wait for 300 milliseconds of inactivity
+    map((event: any) => event.target.value), // Extract the input value
+    distinctUntilChanged() // Only emit distinct values
+  )
+  .subscribe({
+    next: (value) => {
+      console.log('Input value:', value);
+      // Perform further operations or update the UI based on the input value
+    },
+    error: (error) => {
+      console.error('An error occurred:', error);
+      // Handle the error
+    },
+    complete: () => {
+      console.log('Observable completed');
+      // Handle the completion
+    }
+  });
+```
+
+In this example, we create an observable `input$` from the `'input'` event of an input element. We then apply several operators to the observable to manipulate the emitted values:
+
+- `debounceTime`: Waits for a specified duration of inactivity before emitting the latest value. In this case, we wait for 300 milliseconds of inactivity after each user input.
+- `map`: Extracts the value from the event object and emits only the input value.
+- `distinctUntilChanged`: Filters out consecutive duplicate values, emitting only distinct values.
+
+Finally, we subscribe to the modified `input$` observable and receive the processed input values. You can perform further operations or update the UI based on the received values.
+
+This example demonstrates how RxJS can be used to handle events and user input in a reactive and declarative manner, allowing you to apply various operators to transform and manipulate the data stream emitted by the observable.
+
 ### Handling Errors with catchError and retry
 
 Here are the examples of using `catchError` and `retry` operators in RxJS:
@@ -531,6 +578,113 @@ source$.pipe(
 In this example, the `retry` operator is configured with an object that contains the `attempts` property, specifying the number of retry attempts. When an error occurs, the source observable will be retried for the specified number of attempts. The `next` and `error` functions inside the `subscribe` method handle the successful emission of values and errors, respectively.
 
 By using the object syntax in the `subscribe` method, you can have clearer and more explicit control over the different handlers for success and error cases, while adhering to the requirement of taking only one argument.
+
+#### Example
+
+Here's another example:
+
+```typescript
+import { of, interval, merge, combineLatest, zip } from 'rxjs';
+import { mergeMap, take, map, combineAll, delay } from 'rxjs/operators';
+
+// Example 1: mergeMap
+const source1$ = of(1, 2, 3);
+const source2$ = interval(1000).pipe(take(3));
+
+merge(source1$, source2$)
+  .pipe(mergeMap(value => of(value).pipe(delay(1000 * value))))
+  .subscribe({
+    next: value => {
+      console.log(value);
+    },
+    complete: () => {
+      console.log('Complete');
+    }
+  });
+
+// Example 2: combineLatest
+const source3$ = interval(1000).pipe(take(3));
+const source4$ = of('A', 'B', 'C');
+
+combineLatest([source3$, source4$])
+  .pipe(
+    map(([value1, value2]) => `${value2} - ${value1}`)
+  )
+  .subscribe({
+    next: value => {
+      console.log(value);
+    },
+    complete: () => {
+      console.log('Complete');
+    }
+  });
+
+// Example 3: zip
+const source5$ = of('A', 'B', 'C');
+const source6$ = interval(1000).pipe(take(3));
+
+zip(source5$, source6$)
+  .subscribe({
+    next: ([value1, value2]) => {
+      console.log(`${value1} - ${value2}`);
+    },
+    complete: () => {
+      console.log('Complete');
+    }
+  });
+```
+
+In this example, we have three separate examples: `mergeMap`, `combineLatest`, and `zip`. Each example demonstrates how to combine multiple streams using the respective operator.
+
+- `mergeMap`: It merges the emissions from two streams (`source1$` and `source2$`), and then applies a delay based on the emitted value using the `mergeMap` operator.
+- `combineLatest`: It combines the latest values from two streams (`source3$` and `source4$`) and maps the combined values into a single value.
+- `zip`: It combines the corresponding values from two streams (`source5$` and `source6$`) into an array.
+
+In all examples, `subscribe` takes only one argument as an object, where `next` handles the emitted values, and `complete` handles the completion of the observable stream.
+
+Feel free to modify and experiment with these examples to suit your specific use case.
+
+### Custom operators
+
+Custom operators in RxJS allow you to create reusable operators by combining existing operators or implementing custom logic. They provide a way to encapsulate common behavior and make your code more modular and reusable. Here's an example of creating a custom operator in RxJS:
+
+```typescript
+import { Observable, OperatorFunction } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+// Custom operator function
+function multiplyBy(factor: number): OperatorFunction<number, number> {
+  return (source: Observable<number>) =>
+    source.pipe(
+      map(value => value * factor)
+    );
+}
+
+// Usage of custom operator
+const source$ = of(1, 2, 3);
+
+source$.pipe(
+  multiplyBy(2)
+).subscribe({
+  next: value => {
+    console.log(value);
+  },
+  complete: () => {
+    console.log('Complete');
+  }
+});
+```
+
+In this example, we define a custom operator function `multiplyBy`, which takes a `factor` as an argument and returns an `OperatorFunction`. The `OperatorFunction` is a function that takes an input `Observable` and returns a transformed output `Observable`. In this case, the operator function uses the `map` operator to multiply each emitted value by the specified `factor`.
+
+We then use the custom operator `multiplyBy(2)` to transform the source observable `source$`. When we subscribe to the resulting observable, each value emitted by `source$` will be multiplied by 2 before being passed downstream to the subscriber.
+
+Note that the `subscribe` method still takes only one argument as an object, with the `next` function handling the emitted values and the `complete` function handling the completion of the observable.
+
+Custom operators are a powerful feature of RxJS that allows you to create reusable transformations and operators tailored to your specific needs. They can be used to encapsulate complex logic, combine existing operators, or introduce entirely new behaviors.
+
+
+
 
 ## AJAX
 
@@ -677,3 +831,86 @@ export class ExampleComponent implements OnInit {
 In the `ExampleComponent`, we inject the `DataService` via the constructor and call the `fetchData()` method in the `ngOnInit()` lifecycle hook to initiate the data retrieval. Inside the `fetchData()` method, we subscribe to the `Observable` returned by the `getData()` method of the service. When the response is received, the `next` callback is invoked, where we assign the response data to the `data` property of the component.
 
 This way, the service encapsulates the AJAX call, and the component is responsible for subscribing to the observable and handling the response, error, and completion events.
+
+## Advanced RxJS
+
+### Subject
+
+In RxJS, a `Subject` is a special type of observable that allows both the ability to subscribe to it and the ability to manually emit values to its subscribers. It acts as both an observable and an observer.
+
+Here are a few key characteristics of a `Subject`:
+
+1. **Multicasting**: When you subscribe to a `Subject`, it will distribute (or multicast) values to all its subscribers simultaneously. This means that multiple subscribers can receive the same value emitted by the `Subject`.
+
+2. **Imperative Emission**: Unlike regular observables that emit values based on a predefined source, a `Subject` allows you to manually emit values to its subscribers using the `next()`, `error()`, and `complete()` methods. This gives you control over when and what values are emitted.
+
+3. **Hot Observable**: A `Subject` is considered a "hot" observable because it starts emitting values as soon as they are available, regardless of whether there are active subscribers. In contrast, a "cold" observable starts emitting values only when a subscriber subscribes to it.
+
+`Subject` is a powerful tool in scenarios where you need to share values among multiple subscribers or manually trigger emission of values. It is commonly used in event handling, inter-component communication, and other cases where you want to share and control the flow of data.
+
+It's worth noting that there are different types of `Subject` available in RxJS, such as `BehaviorSubject`, `ReplaySubject`, and `AsyncSubject`, each with its own specific characteristics and use cases.
+
+Overall, `Subject` provides a flexible and convenient way to create and manage observable streams with both reactive and imperative capabilities.
+
+In RxJS, multicasting refers to the ability to share a single source observable among multiple subscribers. By default, when you subscribe to an observable, a separate execution context is created for each subscriber. This means that if you have multiple subscribers, the source observable's logic will be executed separately for each subscriber. However, there are scenarios where you may want to share the execution of the source observable among multiple subscribers.
+
+Multicasting can be achieved using the `Subject` and `multicast` operators in RxJS.
+
+1. Using `Subject`:
+   - Create a `Subject` instance, which acts as both an observable and an observer.
+   - Subscribe to the source observable using the `Subject` instance.
+   - Multiple subscribers can then subscribe to the `Subject`, and they will receive the same values emitted by the source observable.
+   - Here's an example:
+
+   ```typescript
+   import { Subject } from 'rxjs';
+   import { multicast } from 'rxjs/operators';
+
+   // Create a Subject instance
+   const subject = new Subject();
+
+   // Subscribe to the source observable using the Subject
+   sourceObservable.subscribe(subject);
+
+   // Multiple subscribers
+   subject.subscribe((value) => {
+     console.log('Subscriber 1:', value);
+   });
+
+   subject.subscribe((value) => {
+     console.log('Subscriber 2:', value);
+   });
+   ```
+
+2. Using `multicast` operator:
+   - Use the `multicast` operator to multicast the source observable to multiple subscribers.
+   - The `multicast` operator takes a `Subject` or a factory function that returns a `Subject` as an argument.
+   - Here's an example:
+
+   ```typescript
+   import { multicast } from 'rxjs/operators';
+   import { Subject } from 'rxjs';
+
+   // Create a Subject instance
+   const subject = new Subject();
+
+   // Multicast the source observable using the multicast operator
+   const multicastObservable = sourceObservable.pipe(multicast(subject));
+
+   // Subscribe to the multicastObservable
+   multicastObservable.subscribe((value) => {
+     console.log('Subscriber 1:', value);
+   });
+
+   multicastObservable.subscribe((value) => {
+     console.log('Subscriber 2:', value);
+   });
+
+   // Connect the multicast observable to the source observable
+   multicastObservable.connect();
+   ```
+
+In both approaches, the `Subject` acts as a bridge between the source observable and multiple subscribers. It allows the source observable's values to be shared and consumed by multiple subscribers simultaneously. This is useful in scenarios where you want to avoid multiple separate executions of the source observable and ensure that all subscribers receive the same values emitted by the source.
+
+####
+
