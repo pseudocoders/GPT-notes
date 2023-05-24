@@ -278,7 +278,53 @@ By following these steps, you can receive route parameters in an Angular compone
 
 It's important to note that the terms "route components" and "child components" are not official Angular terminologies but are commonly used in the Angular community to describe these concepts. These terms help differentiate components based on their usage and purpose within the application's structure.
 
+## Route guards
 
+Route guards in Angular are used to control access to routes based on certain conditions or criteria. They allow you to prevent navigation to a route, redirect to a different route, or perform additional checks before allowing access to a route. Route guards are implemented as services and can be attached to individual routes or applied globally to all routes.
+
+There are three types of route guards in Angular:
+
+1. CanActivate: This guard determines whether a user can access a specific route. It is used to check if the user has the necessary permissions, authentication, or any other criteria before allowing access. If the guard returns `true`, navigation to the route is allowed. If it returns `false` or a `UrlTree` object, navigation is canceled or redirected to a different route. Multiple `CanActivate` guards can be applied to a single route, and all guards must return `true` for the route to be accessible.
+
+2. CanActivateChild: This guard is similar to `CanActivate` but is applied to child routes. It checks if the user has permission to access the child routes within a parent route. It works in a similar way to `CanActivate`, allowing or preventing navigation based on the guard's result.
+
+3. CanDeactivate: This guard is used when leaving a route to determine if the user can navigate away from the current route. It can be used to prompt the user for confirmation or perform any necessary checks before allowing navigation. The `CanDeactivate` guard is associated with a component and is triggered when the user attempts to navigate away from that component. It returns a boolean, `Observable<boolean>`, or `Promise<boolean>` to allow or prevent navigation.
+
+To implement route guards, you need to create a service that implements the corresponding guard interface (`CanActivate`, `CanActivateChild`, or `CanDeactivate`). The service can then be attached to the route configuration using the `canActivate`, `canActivateChild`, or `canDeactivate` properties.
+
+Here's an example of a simple `CanActivate` guard:
+
+```typescript
+import { Injectable } from '@angular/core';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthGuard implements CanActivate {
+  constructor(private router: Router) {}
+
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree {
+    // Check if the user is authenticated
+    const isAuthenticated = ... // Perform authentication check
+
+    if (isAuthenticated) {
+      return true; // Allow access to the route
+    } else {
+      // Redirect to the login page
+      return this.router.createUrlTree(['/login'], { queryParams: { returnUrl: state.url } });
+    }
+  }
+}
+```
+
+In the above example, the `AuthGuard` implements the `CanActivate` interface and checks if the user is authenticated. If the user is authenticated, it returns `true`, allowing access to the route. Otherwise, it creates a `UrlTree` object that redirects the user to the login page, passing the current route URL as a query parameter.
+
+Route guards provide a powerful way to control access and perform additional checks before allowing navigation in your Angular application. They can be used to enforce authentication, authorization, or any other custom logic you require.
+
+# Content Expansion 
+
+* Implementing lazy loading of modules.
 
 
 
