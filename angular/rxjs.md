@@ -356,6 +356,123 @@ In the third example, we use the `switchMap` operator to switch to a new observa
 
 You can run this code and observe the output in the console to see how the merge, concat, and switchMap operators combine and transform the observables.
 
+#### Example
+
+Here's an example of controlling the execution flow with operators like `take`, `skip`, and others:
+
+```typescript
+import { interval } from 'rxjs';
+import { take, skip, takeWhile, takeUntil, takeLast, first, last } from 'rxjs/operators';
+
+const source$ = interval(1000);
+
+source$.pipe(
+  take(5),
+).subscribe({
+  next: (value) => {
+    console.log('Next:', value);
+  },
+  complete: () => {
+    console.log('Complete');
+  }
+});
+
+const source2$ = interval(1000);
+
+source2$.pipe(
+  skip(3),
+  take(5),
+).subscribe({
+  next: (value) => {
+    console.log('Next:', value);
+  },
+  complete: () => {
+    console.log('Complete');
+  }
+});
+
+const source3$ = interval(1000);
+
+source3$.pipe(
+  takeWhile((value) => value < 5),
+).subscribe({
+  next: (value) => {
+    console.log('Next:', value);
+  },
+  complete: () => {
+    console.log('Complete');
+  }
+});
+
+const source4$ = interval(1000);
+
+const stop$ = interval(3000);
+
+source4$.pipe(
+  takeUntil(stop$),
+).subscribe({
+  next: (value) => {
+    console.log('Next:', value);
+  },
+  complete: () => {
+    console.log('Complete');
+  }
+});
+
+const source5$ = interval(1000);
+
+source5$.pipe(
+  takeLast(3),
+).subscribe({
+  next: (value) => {
+    console.log('Next:', value);
+  },
+  complete: () => {
+    console.log('Complete');
+  }
+});
+
+const source6$ = interval(1000);
+
+source6$.pipe(
+  first(),
+).subscribe({
+  next: (value) => {
+    console.log('Next:', value);
+  },
+  complete: () => {
+    console.log('Complete');
+  }
+});
+
+const source7$ = interval(1000);
+
+source7$.pipe(
+  last(),
+).subscribe({
+  next: (value) => {
+    console.log('Next:', value);
+  },
+  complete: () => {
+    console.log('Complete');
+  }
+});
+```
+
+In this example, we demonstrate various operators for controlling the execution flow:
+
+- `take`: Emits a specified number of values and then completes the observable.
+- `skip`: Skips a specified number of values before emitting the remaining values.
+- `takeWhile`: Emits values as long as a given condition is true, then completes.
+- `takeUntil`: Emits values until another observable emits a value.
+- `takeLast`: Emits the specified number of values from the end of the source observable.
+- `first`: Emits only the first value emitted by the source observable and then completes.
+- `last`: Emits only the last value emitted by the source observable and then completes.
+
+Each operator is used within the pipeline to control the execution flow based on different criteria, such as the number of values to take, conditions to evaluate, or signals from other observables.
+
+By using the object syntax in the `subscribe` method, you can have clearer and more explicit control over the different handlers for next and complete events while adhering to the requirement of `subscribe` taking only one argument.
+
 ### Handling Errors with catchError and retry
 
 Here are the examples of using `catchError` and `retry` operators in RxJS:
