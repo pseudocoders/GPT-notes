@@ -97,4 +97,19 @@ this.myForm = this.formBuilder.group({
 
 Using these built-in validators simplifies the process of adding basic form validation rules to your reactive forms. However, if you have custom validation requirements, you can create your own custom validators by implementing the `ValidatorFn` interface. Custom validators give you full control over the validation logic for your specific use cases.
 
+Here is a complete list of built-in validators available in Angular's reactive forms:
 
+- `required`: Validates that the control has a non-empty value.
+- `requiredTrue`: Validates that the control has a value of `true`. Typically used for checkbox inputs.
+- `minLength`: Validates that the control value has a minimum length specified.
+- `maxLength`: Validates that the control value has a maximum length specified.
+- `pattern`: Validates that the control value matches a specific regular expression pattern.
+- `email`: Validates that the control value is a valid email address.
+- `min`: Validates that the control value is greater than or equal to a specified minimum value.
+- `max`: Validates that the control value is less than or equal to a specified maximum value.
+- `nullValidator`: Validates that the control value is `null`.
+- `compose`: Combines multiple validators into a single validator function.
+
+These validators are part of the `Validators` class provided by the `@angular/forms` module. They can be used individually or in combination to enforce specific validation rules on form controls.
+
+By using these built-in validators, you can easily add common validation rules to your reactive forms without writing custom validation logic.
