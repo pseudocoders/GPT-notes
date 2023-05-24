@@ -568,7 +568,7 @@ Here is a list of commonly used bindable events in Angular along with their filt
 9. **DoubleClick Event**
    - Event: `(dblclick)`
    - Filter: `.stopPropagation`, `.preventDefault`, `.stopPropagation.preventDefaut`, `.stopPropagation.preventDefaut.self`
-
+   
 10. **Contextmenu Event**
    - Event: `(contextmenu)`
    - Filter: `.stopPropagation`, `.preventDefault`, `.stopPropagation.preventDefaut`, `.stopPropagation.preventDefaut.self`
