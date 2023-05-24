@@ -248,6 +248,57 @@ In Angular projects, template bindings are a powerful feature that allows you to
 
 These template bindings provide a declarative and flexible way to interact with and manipulate the HTML template based on the component's data and behavior. By leveraging these bindings, you can create dynamic, interactive, and data-driven Angular applications.
 
+### Example
+
+Here's an example in Angular:
+
+```typescript
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-binding-example',
+  template: `
+    <h1>Binding Example</h1>
+
+    <!-- Interpolation -->
+    <p>Welcome, {{ name }}!</p>
+
+    <!-- Property Binding -->
+    <img [src]="imageUrl" [alt]="imageAlt">
+
+    <!-- Event Binding -->
+    <button (click)="onButtonClick()">Click Me</button>
+
+    <!-- Two-Way Binding -->
+    <input type="text" [(ngModel)]="inputValue">
+    <p>You entered: {{ inputValue }}</p>
+  `,
+})
+export class BindingExampleComponent {
+  name: string = 'John Doe';
+  imageUrl: string = 'https://example.com/image.jpg';
+  imageAlt: string = 'Example Image';
+  inputValue: string = '';
+
+  onButtonClick(): void {
+    console.log('Button clicked!');
+    // Perform any desired actions here
+  }
+}
+```
+
+In this example:
+
+- Interpolation: The `name` property is displayed within double curly braces (`{{ name }}`). Angular evaluates the expression and replaces it with the corresponding value from the component, resulting in "Welcome, John Doe!" being displayed.
+
+- Property Binding: The `src` and `alt` attributes of the `<img>` element are bound to the `imageUrl` and `imageAlt` properties, respectively. The values of these properties are dynamically bound to the corresponding attributes, allowing the image source and alt text to be set based on the component's values.
+
+- Event Binding: The (click) event of the <button> element is bound to the onButtonClick() method of the component. When the button is clicked, the associated method is called, and in this example, it logs a message to the console. You can perform any desired actions within the event handler method.
+
+- Two-Way Binding: The `<input>` element is bound using the `[(ngModel)]` syntax, which enables two-way data binding. The `inputValue` property serves as the source of the input value, and any changes made to the input will update the `inputValue` property. Similarly, changes to the `inputValue` property will update the value in the input field.
+
+These binding techniques enable dynamic data rendering, property synchronization, and user input updates in an Angular component. Interpolation allows values to be displayed within the template, property binding allows properties to be bound to element attributes, and two-way binding facilitates data synchronization between the component and the template. The event binding syntax (event)="handler()" allows you to bind component methods to various events like click, keypress, mouseover, etc. This enables you to respond to user interactions and trigger specific actions in your component.
+
 ## Built-in Angular directives
 
 Here is a list of some commonly used built-in directives in Angular:
