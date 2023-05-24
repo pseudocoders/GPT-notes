@@ -300,6 +300,13 @@ const inputObservable = fromEvent(inputElement, 'input').pipe(
 const subscription = inputObservable.subscribe((value) => {
   console.log(value);
 });
+
+// Equivalent but better way to subscribe to the input observable
+const subscription2 = inputObservable.subscribe({
+  next: (value) => {
+    console.log(value); 
+  },
+});
 ```
 
 In this example, we create an observable from a user input event, such as an input field. We use the `fromEvent` operator from RxJS to create the observable, which emits values whenever the 'input' event is triggered on the input field.
