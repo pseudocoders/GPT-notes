@@ -409,3 +409,64 @@ Remember to import the necessary modules and dependencies for reactive forms in 
 
 With this example, you have a complete login form with email and password inputs, along with validations and dynamic error messages. The submit button is enabled only when the form inputs are valid.
 
+#### Form data manipulation before sending
+
+In Angular's reactive forms, you can perform data manipulation before sending the form data to the server. This can be done in the `onSubmit` method or any other appropriate method in your component. Here's how you can perform form data manipulation with reactive forms:
+
+1. Set up your form controls and validators in your component:
+
+```typescript
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+// Inside your component class
+myForm: FormGroup;
+
+constructor(private formBuilder: FormBuilder) {}
+
+ngOnInit() {
+  this.myForm = this.formBuilder.group({
+    // Define your form controls and validators
+    firstName: ['', Validators.required],
+    lastName: ['', Validators.required],
+    // Other form controls
+  });
+}
+```
+
+2. Define the `onSubmit` method and perform data manipulation before sending the form data:
+
+```typescript
+onSubmit() {
+  if (this.myForm.valid) {
+    // Perform data manipulation
+    const formData = this.myForm.value;
+    formData.fullName = formData.firstName + ' ' + formData.lastName;
+    // Other data manipulation as needed
+
+    // Send the modified form data to the server or perform other actions
+    this.myService.submitForm(formData).subscribe(
+      response => {
+        // Handle the server response
+      },
+      error => {
+        // Handle the error
+      }
+    );
+  } else {
+    // Handle form errors
+  }
+}
+```
+
+In the `onSubmit` method, you can access the form data using the `value` property of the form group (`this.myForm.value`). This gives you an object containing the form control values. You can then perform any desired data manipulation before sending it to the server.
+
+In the example above, we concatenate the `firstName` and `lastName` form control values to create a `fullName` property in the form data object. This manipulated data can be used for displaying or sending to the server.
+
+After performing the necessary data manipulation, you can then send the modified form data to the server using an HTTP request, or perform any other actions as needed.
+
+Remember to handle form validation and errors before performing the data manipulation to ensure the data is valid and meets the required criteria.
+
+By manipulating the form data before sending it to the server, you can customize and format the data according to your application's requirements.
+
+
+
