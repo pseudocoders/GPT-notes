@@ -310,6 +310,52 @@ After creating the observable and applying the operators, we subscribe to it and
 
 Note that in a real Angular application, you would typically create and handle such observables within the component using Angular's built-in event binding syntax rather than directly accessing the DOM element. This example provides a simplified illustration of the concept using plain JavaScript.
 
+#### Example
+
+Here's an example that demonstrates how to combine observables using merge, concat, and switchMap operators:
+
+```typescript
+import { merge, concat, of, interval } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+
+// Example 1: Merge Observables
+const source1$ = interval(1000);
+const source2$ = interval(1500);
+const merged$ = merge(source1$, source2$);
+
+merged$.subscribe((value) => {
+  console.log('Merge:', value);
+});
+
+// Example 2: Concatenate Observables
+const source3$ = of(1, 2, 3);
+const source4$ = of(4, 5, 6);
+const concatenated$ = concat(source3$, source4$);
+
+concatenated$.subscribe((value) => {
+  console.log('Concat:', value);
+});
+
+// Example 3: SwitchMap to switch between Observables
+const source5$ = of('Hello');
+const source6$ = of('World');
+const switchMap$ = source5$.pipe(
+  switchMap(() => source6$)
+);
+
+switchMap$.subscribe((value) => {
+  console.log('SwitchMap:', value);
+});
+```
+
+In the first example, we use the `merge` operator to combine two observables (`source1$` and `source2$`) that emit values at different intervals. The merged observable `merged$` emits values from both sources concurrently.
+
+In the second example, we use the `concat` operator to concatenate two observables (`source3$` and `source4$`) sequentially. The concatenated observable `concatenated$` emits values from `source3$` first, and once it completes, it emits values from `source4$`.
+
+In the third example, we use the `switchMap` operator to switch to a new observable (`source6$`) every time `source5$` emits a value. The `switchMap$` observable emits values from `source6$` based on the latest value emitted by `source5$`. If a new value is emitted by `source5$` before `source6$` completes, the previous inner observable is unsubscribed and replaced with the new inner observable.
+
+You can run this code and observe the output in the console to see how the merge, concat, and switchMap operators combine and transform the observables.
+
 ## AJAX
 
 AJAX (Asynchronous JavaScript and XML) is a web development technique that allows for asynchronous communication between the web browser and the server. It enables the exchange of data between the client-side and server-side without requiring the entire web page to be reloaded.
