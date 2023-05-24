@@ -568,7 +568,7 @@ Here is a list of commonly used bindable events in Angular along with their filt
 9. **DoubleClick Event**
    - Event: `(dblclick)`
    - Filter: `.stopPropagation`, `.preventDefault`, `.stopPropagation.preventDefaut`, `.stopPropagation.preventDefaut.self`
-   
+ 
 10. **Contextmenu Event**
    - Event: `(contextmenu)`
    - Filter: `.stopPropagation`, `.preventDefault`, `.stopPropagation.preventDefaut`, `.stopPropagation.preventDefaut.self`
@@ -603,3 +603,60 @@ Here is a list of commonly used bindable events in Angular along with their filt
 
 These are just a few examples of commonly used bindable events in Angular. Each event can be filtered using various modifiers to further refine the event handling based on specific conditions. The filters allow you to control event propagation, prevent default behavior, apply time-based delays, and more. By understanding these events and their filtering options, you can effectively handle user interactions and customize event handling behavior in your Angular applications.
 
+### Example
+
+Certainly! Here's an example that demonstrates the use of various input events, including `(change)`, `(submit)`, and key events `(keyup)` and `(keydown)` in Angular:
+
+```typescript
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-example',
+  template: `
+    <form (submit)="onFormSubmit()">
+      <input type="text" (change)="onInputChange($event.target.value)" placeholder="Type something...">
+      <button type="submit">Submit</button>
+    </form>
+
+    <p>Last input value: {{ lastInput }}</p>
+
+    <input type="text" (keyup)="onKeyUp($event)" placeholder="Type something...">
+    <p>Last key: {{ lastKey }}</p>
+  `,
+})
+export class ExampleComponent {
+  lastInput: string = '';
+  lastKey: string = '';
+
+  onInputChange(value: string): void {
+    this.lastInput = value;
+  }
+
+  onFormSubmit(): void {
+    console.log('Form submitted!');
+    // Perform any desired actions when the form is submitted
+  }
+
+  onKeyUp(event: KeyboardEvent): void {
+    this.lastKey = event.key;
+  }
+}
+```
+
+In this example:
+
+- The `ExampleComponent` class includes various input events: `(change)`, `(submit)`, `(keyup)`, and `(keydown)`.
+
+- The `(change)` event is triggered when the input value changes, and the `onInputChange()` method is called, updating the `lastInput` property with the new input value.
+
+- The `(submit)` event is triggered when the form is submitted, and the `onFormSubmit()` method is called. In this example, we log a message to the console indicating that the form has been submitted. You can perform any desired actions within this method.
+
+- The `(keyup)` event is triggered when a key is released, and the `onKeyUp()` method is called, updating the `lastKey` property with the released key value.
+
+The template includes an `<input>` element with the `(change)` event, an associated `<button>` element with the `(submit)` event, and another `<input>` element with the `(keyup)` event.
+
+By utilizing these input events, you can capture and respond to user interactions within your Angular component. Whether it's tracking changes in input values, handling form submissions, or responding to key events, you have the flexibility to implement the desired functionality based on your application's requirements.
+   
+   
+   
+ 
