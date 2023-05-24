@@ -7,5 +7,5 @@
 5. [Arrays](arrays.md)
 6. [Functions](functions.md)
 7. [Object oriented programming](oop.md)
-8. [Asynchronism](javascript/asynchronism.md)
+8. [Asynchronism](asynchronism.md)
 9. [Best practices](bestpractices.md)
