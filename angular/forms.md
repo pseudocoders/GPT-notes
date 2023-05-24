@@ -270,3 +270,142 @@ As the user inputs data and triggers the form control's validation, Angular auto
 
 By following this approach, you can display validation errors in real-time as the user interacts with the form, providing immediate feedback on the input validity.
 
+### Form submission
+
+In Angular's reactive forms, handling form submission involves listening to the form's `submit` event and performing the desired actions, such as submitting data to a server or performing additional logic. Here's how you can handle form submission with reactive forms:
+
+1. Add a submit event handler to your form element in the template:
+
+```html
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+  <!-- Form controls and markup -->
+  <button type="submit">Submit</button>
+</form>
+```
+
+2. In your component class, define the `onSubmit` method and handle the form submission logic:
+
+```typescript
+import { FormGroup } from '@angular/forms';
+
+// Inside your component class
+myForm: FormGroup;
+
+onSubmit() {
+  if (this.myForm.valid) {
+    // Perform actions when the form is valid
+    const formData = this.myForm.value;
+    // Submit data to a server, perform additional logic, etc.
+  } else {
+    // Handle form errors or display validation messages
+  }
+}
+```
+
+In the `onSubmit` method, you can check if the form is valid using the `valid` property of the form group. If the form is valid, you can access the form data using the `value` property of the form group. You can then perform the necessary actions, such as submitting the data to a server or performing additional logic.
+
+If the form is invalid, you can handle form errors or display validation messages to the user. You can access the specific form control errors using the `errors` property of each form control.
+
+By default, when the user clicks the submit button or presses Enter within a form field, the `ngSubmit` event will be triggered, invoking the `onSubmit` method. Ensure that your form controls have the appropriate validators to enforce the desired validation rules before submitting the form.
+
+Remember to import the necessary modules and dependencies for reactive forms in your component file.
+
+With this approach, you can handle form submission with reactive forms in Angular and perform the necessary actions based on the form's validity and the user's input.
+
+#### Example
+
+Here's an example of a login form with email and password inputs, along with validations, using reactive forms in Angular:
+
+**login.component.html:**
+```html
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="email">Email:</label>
+    <input type="email" id="email" formControlName="email" [ngClass]="{ 'is-invalid': isInvalid('email') }">
+    <div *ngIf="isInvalid('email')" class="invalid-feedback">
+      <div *ngIf="loginForm.get('email').errors.required">Email is required.</div>
+      <div *ngIf="loginForm.get('email').errors.email">Please enter a valid email.</div>
+    </div>
+  </div>
+  <div>
+    <label for="password">Password:</label>
+    <input type="password" id="password" formControlName="password" [ngClass]="{ 'is-invalid': isInvalid('password') }">
+    <div *ngIf="isInvalid('password')" class="invalid-feedback">
+      <div *ngIf="loginForm.get('password').errors.required">Password is required.</div>
+      <div *ngIf="loginForm.get('password').errors.minlength">Password should have at least 8 characters.</div>
+      <div *ngIf="loginForm.get('password').errors.maxlength">Password should have at most 20 characters.</div>
+    </div>
+  </div>
+  <div>
+    <button type="submit" [disabled]="loginForm.invalid">Log In</button>
+  </div>
+</form>
+```
+
+**login.component.css:**
+```css
+.is-invalid {
+  border: 1px solid red;
+}
+
+.invalid-feedback {
+  color: red;
+}
+```
+
+**login.component.ts:**
+```typescript
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
+})
+export class LoginComponent implements OnInit {
+  loginForm: FormGroup;
+
+  constructor(private formBuilder: FormBuilder) {}
+
+  ngOnInit() {
+    this.loginForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]]
+    });
+  }
+
+  onSubmit() {
+    if (this.loginForm.valid) {
+      // Perform login logic
+      const email = this.loginForm.value.email;
+      const password = this.loginForm.value.password;
+      // Send login request to server or perform other actions
+    } else {
+      // Handle form errors or display validation messages
+    }
+  }
+
+  isInvalid(controlName: string) {
+    const control = this.loginForm.get(controlName);
+    return control.invalid && (control.dirty || control.touched);
+  }
+}
+```
+
+In this example, the `loginForm` FormGroup is created with two form controls: `email` and `password`. Each form control has associated validators to enforce the required rules, such as `Validators.required`, `Validators.email`, `Validators.minLength`, and `Validators.maxLength`. The form controls are bound to the input fields using the `formControlName` directive.
+
+The `[ngClass]` directive is used to apply the `is-invalid` CSS class to the input fields when they are invalid. The error messages are displayed dynamically based on the form control errors using `*ngIf` directives.
+
+The submit button is disabled when the form is invalid, indicated by `[disabled]="loginForm.invalid"`.
+
+In the component class,
+
+ the `onSubmit` method is invoked when the form is submitted. If the form is valid, the login logic can be performed. Otherwise, you can handle form errors or display validation messages.
+
+The `isInvalid` method is used to check if a specific form control is invalid and has been touched or modified by the user. It returns `true` if the control is invalid and either dirty (modified) or touched (blurred).
+
+Remember to import the necessary modules and dependencies for reactive forms in your component file.
+
+With this example, you have a complete login form with email and password inputs, along with validations and dynamic error messages. The submit button is enabled only when the form inputs are valid.
+
