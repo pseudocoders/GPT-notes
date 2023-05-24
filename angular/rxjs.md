@@ -231,6 +231,8 @@ Here's a list of commonly used RxJS operators:
 
 20. **scan**: Applies an accumulator function to the values emitted by an Observable and emits each intermediate result.
 
+21. **throttleTime**: Throttling is a technique used to control the rate at which values are emitted by an observable. It allows you to limit the frequency of emitted values based on time intervals.
+
 Please note that the importance of operators can vary depending on the specific use case and requirements of your application. It's recommended to refer to the official RxJS documentation for detailed information on each operator and their usage.
 
 #### Example
@@ -316,6 +318,37 @@ We then apply a series of operators to manipulate the emitted values. First, we 
 After creating the observable and applying the operators, we subscribe to it and provide a callback function that receives the transformed values. In this example, we simply log the values to the console.
 
 Note that in a real Angular application, you would typically create and handle such observables within the component using Angular's built-in event binding syntax rather than directly accessing the DOM element. This example provides a simplified illustration of the concept using plain JavaScript.
+
+#### Example
+
+```typescript
+import { fromEvent } from 'rxjs';
+import { throttleTime } from 'rxjs/operators';
+
+// Create an observable from a DOM event (e.g., button click)
+const button = document.querySelector('button');
+const click$ = fromEvent(button, 'click');
+
+// Throttle the click event to emit only one value every 1 second
+click$.pipe(
+  throttleTime(1000)
+).subscribe({
+  next: () => {
+    console.log('Button clicked');
+  },
+  complete: () => {
+    console.log('Complete');
+  }
+});
+```
+
+In this example, we create an observable `click$` from a button click event using `fromEvent` function. We apply the `throttleTime` operator to the `click$` observable, specifying a time interval of 1000 milliseconds (1 second).
+
+The `throttleTime` operator ensures that only one value is emitted from the source observable (`click$`) within the specified time interval. If multiple values are emitted within the interval, only the first value will be passed downstream, and subsequent values will be ignored until the interval elapses.
+
+When we subscribe to the throttled observable, the `next` function will be called only when the button is clicked, and at most, once every 1 second. This helps to control the rate of handling button clicks, preventing excessive or rapid firing of the event.
+
+By using the `throttleTime` operator, you can effectively manage event handling or data emissions based on specific time intervals, ensuring a more controlled and efficient flow of data in your RxJS streams.
 
 #### Example
 
