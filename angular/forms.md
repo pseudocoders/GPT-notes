@@ -171,3 +171,102 @@ this.myForm = this.formBuilder.group({
 ```
 
 Custom validators provide you with the flexibility to define and apply your own validation rules in reactive forms, allowing you to meet specific validation requirements for your application.
+
+### Form condition checks
+
+In Angular's reactive forms, you can perform condition checks on form controls and form groups to determine their state and validity. These condition checks allow you to display or hide specific elements or apply certain styles based on the form's state. Here are some common condition checks you can use:
+
+1. `formControlName.invalid`: Checks if a specific form control is invalid. For example:
+
+```html
+<div *ngIf="myForm.get('name').invalid">
+  <!-- Display error message or apply styles -->
+</div>
+```
+
+2. `formControlName.valid`: Checks if a specific form control is valid.
+
+```html
+<div *ngIf="myForm.get('name').valid">
+  <!-- Display success message or apply styles -->
+</div>
+```
+
+3. `formControlName.dirty`: Checks if a specific form control has been modified (dirty).
+
+```html
+<div *ngIf="myForm.get('name').dirty">
+  <!-- Apply styles or show an indicator -->
+</div>
+```
+
+4. `formControlName.pristine`: Checks if a specific form control has not been modified (pristine).
+
+```html
+<div *ngIf="myForm.get('name').pristine">
+  <!-- Apply styles or show an indicator -->
+</div>
+```
+
+5. `formControlName.touched`: Checks if a specific form control has been touched (interacted with by the user).
+
+```html
+<div *ngIf="myForm.get('name').touched">
+  <!-- Apply styles or show an indicator -->
+</div>
+```
+
+6. `formControlName.untouched`: Checks if a specific form control has not been touched.
+
+```html
+<div *ngIf="myForm.get('name').untouched">
+  <!-- Apply styles or show an indicator -->
+</div>
+```
+
+These condition checks can be used within Angular's template syntax, such as `*ngIf` directives, to conditionally display elements or apply specific styles based on the form's state. By leveraging these condition checks, you can create dynamic and interactive forms that respond to user input and provide visual feedback based on the form's validity and state.
+
+
+### Displaying validation errors dynamically
+
+
+To dynamically display validation errors, you can leverage Angular's form control state and the `errors` property. Here's an example of how you can achieve this:
+
+1. Define your form controls and apply the desired validators. For example, let's assume you have a form control for the name field:
+
+```typescript
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+// Inside your component class
+myForm: FormGroup;
+
+constructor(private formBuilder: FormBuilder) {
+  this.myForm = this.formBuilder.group({
+    name: ['', Validators.required]
+  });
+}
+```
+
+2. In your component's template, bind the form control to an input field and display validation errors dynamically. You can use the `errors` property of the form control to access the validation errors.
+
+```html
+<form [formGroup]="myForm">
+  <div>
+    <label for="name">Name:</label>
+    <input type="text" id="name" formControlName="name">
+
+    <div *ngIf="myForm.get('name').invalid && (myForm.get('name').dirty || myForm.get('name').touched)">
+      <div *ngIf="myForm.get('name').errors.required">Name is required.</div>
+    </div>
+  </div>
+</form>
+```
+
+In the above code, the `*ngIf` directives are used to conditionally display the error messages. The `myForm.get('name').invalid` condition checks if the form control is invalid, while `(myForm.get('name').dirty || myForm.get('name').touched)` ensures that the error is displayed only when the user has interacted with the field.
+
+The nested `*ngIf` checks for the specific validation error. In this case, it checks for the `required` error and displays the corresponding error message.
+
+As the user inputs data and triggers the form control's validation, Angular automatically updates the `errors` property, and the template reacts to those changes by displaying or hiding the validation error message dynamically.
+
+By following this approach, you can display validation errors in real-time as the user interacts with the form, providing immediate feedback on the input validity.
+
