@@ -112,7 +112,7 @@ Once the browser receives a successful response to the preflight request, it pro
 
 By conducting preflight requests, browsers ensure that cross-origin requests comply with CORS policies and enhance security by preventing unauthorized access to sensitive resources. Servers need to handle these preflight requests correctly by returning appropriate CORS headers to allow or deny the actual request based on the defined policies.
 
-## CORS in a filter & withCredentials with prefligt
+## CORS in a filter using withCredentials with preflight
 
 Here's an example of implementing a CORS filter in a Spring Boot application to allow cross-origin requests with credentials (`withCredentials` set to `true`) for an AJAX SB application:
 
