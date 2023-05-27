@@ -30,6 +30,10 @@ subtitle: All you need to be a web developer
 2. [Javascript](javascript/index.md)
 3. [Typescript](typescript/index.md)
 
+# Libraries
+1. JQuery
+2. AngularJS
+
 # Frameworks
 1. [Spring Boot](springboot/index.md)
 2. [Angular](angular/index.md)
