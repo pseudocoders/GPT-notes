@@ -112,7 +112,7 @@ Once the browser receives a successful response to the preflight request, it pro
 
 By conducting preflight requests, browsers ensure that cross-origin requests comply with CORS policies and enhance security by preventing unauthorized access to sensitive resources. Servers need to handle these preflight requests correctly by returning appropriate CORS headers to allow or deny the actual request based on the defined policies.
 
-## CORS in a filter using withCredentials with preflight
+## CORS server implementation in a servlet filter using withCredentials with preflight in Spring Boot
 
 Here's an example of implementing a CORS filter in a Spring Boot application to allow cross-origin requests with credentials (`withCredentials` set to `true`) for an AJAX SB application:
 
@@ -197,3 +197,76 @@ The `FilterRegistrationBean` is used to register the `CorsFilter` in the applica
 With this configuration, your Spring Boot application should allow cross-origin requests from AJAX applications, including requests with credentials (`withCredentials` set to `true`).
 
 Remember to customize the CORS configuration according to your specific requirements, such as allowed methods, headers, and origins. Additionally, ensure that the Spring Boot application is properly secured and handles authentication and authorization as needed.
+
+## Examples of AJAX queries using withcredentials from some frontends
+
+Here are examples of making AJAX requests with `withCredentials` using different JavaScript frameworks.
+
+1. Using ES6 `fetch`:
+```javascript
+fetch('https://example.com/api/endpoint', {
+  method: 'GET',
+  credentials: 'include'
+})
+  .then(response => response.json())
+  .then(data => {
+    // Handle the response data
+  })
+  .catch(error => {
+    // Handle errors
+  });
+```
+
+2. Using jQuery:
+```javascript
+$.ajax({
+  url: 'https://example.com/api/endpoint',
+  type: 'GET',
+  xhrFields: {
+    withCredentials: true
+  },
+  success: function(data) {
+    // Handle the response data
+  },
+  error: function(xhr, textStatus, error) {
+    // Handle errors
+  }
+});
+```
+
+3. Using AngularJS:
+```javascript
+$http({
+  method: 'GET',
+  url: 'https://example.com/api/endpoint',
+  withCredentials: true
+})
+  .then(function(response) {
+    // Handle the response data
+  })
+  .catch(function(error) {
+    // Handle errors
+  });
+```
+
+4. Using Angular:
+```javascript
+import { HttpClient } from '@angular/common/http';
+
+constructor(private http: HttpClient) {}
+
+// Inside a method or function
+this.http.get('https://example.com/api/endpoint', { withCredentials: true })
+  .subscribe(
+    data => {
+      // Handle the response data
+    },
+    error => {
+      // Handle errors
+    }
+  );
+```
+
+In all the examples, the `withCredentials` option is set to `true`, which allows the browser to include authentication credentials (cookies, headers) in the cross-origin request.
+
+Remember to replace `'https://example.com/api/endpoint'` with the actual URL of your Spring Boot API endpoint. Additionally, make sure your backend server is configured to allow cross-origin requests and handle the credentials appropriately.
