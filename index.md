@@ -12,7 +12,7 @@ subtitle: All you need to be a web developer
 3. [Software architecture for web projects](basics/architecture.md)
 4. [Structured Design and Programming](basics/programming.md)
 5. [OOP](basics/oop.md)
-6. [Algoritmics](basics/algoritmics.md)
+6. [Algorithms](basics/algorithms.md)
 7. [Patterns](basics/patterns.md)
 8. [Languages](basics/languages.md)
 9. [Frontend](basics/fontend.md)
