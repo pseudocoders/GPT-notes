@@ -371,6 +371,69 @@ Here are some key characteristics and examples of Divide and Conquer algorithms:
 
 Overall, the Divide and Conquer technique is a powerful strategy for solving a wide range of problems by breaking them down into smaller manageable subproblems. It offers an efficient and elegant way to solve problems and has been widely used in various fields, including computer science, mathematics, and algorithms.
 
+#### Example: the Continuous Knapsack problem
+
+The Continuous Knapsack problem, also known as the Fractional Knapsack problem, can be solved using a greedy strategy rather than dynamic programming. 
+
+Given a set of items, each with a weight and a value, and a knapsack with a maximum weight capacity, the goal is to determine the maximum value that can be obtained by selecting fractions of items to include in the knapsack while respecting the weight constraint.
+
+Here's an implementation in JavaScript that solves the Continuous Knapsack problem:
+
+```javascript
+function knapsack(items, capacity) {
+  // Sort items in descending order of value per unit weight
+  items.sort((a, b) => b.valuePerWeight - a.valuePerWeight);
+
+  const n = items.length;
+  let totalValue = 0;
+  const knapsackItems = [];
+
+  for (let i = 0; i < n; i++) {
+    const currentItem = items[i];
+
+    if (capacity === 0) {
+      // Knapsack is full
+      break;
+    }
+
+    const quantity = Math.min(currentItem.quantity, capacity);
+    const value = quantity * currentItem.valuePerWeight;
+    totalValue += value;
+    knapsackItems.push({ item: currentItem, quantity });
+
+    // Update capacity
+    capacity -= quantity;
+  }
+
+  return { totalValue, items: knapsackItems };
+}
+
+// Example usage:
+const items = [
+  { name: "Item 1", weight: 2, value: 12, quantity: 3 },
+  { name: "Item 2", weight: 1, value: 10, quantity: 5 },
+  { name: "Item 3", weight: 3, value: 20, quantity: 2 },
+  { name: "Item 4", weight: 2, value: 15, quantity: 4 }
+];
+const capacity = 7;
+
+const { totalValue, items: knapsackItems } = knapsack(items, capacity);
+console.log("Total Value:", totalValue);
+console.log("Items and Quantities in the knapsack:");
+knapsackItems.forEach(({ item, quantity }) =>
+  console.log(`${item.name}: ${quantity}`)
+);
+```
+
+In this implementation, the `knapsack` function takes an array of `items`, where each item has a `weight`, `value`, and `quantity`. The function also takes the `capacity` of the knapsack.
+
+The items are sorted in descending order of their value per unit weight, using the `valuePerWeight` property which is calculated as `value / weight`.
+
+The function iterates over the sorted items and adds items to the knapsack until the knapsack is full (capacity becomes 0). For each item, it calculates the maximum quantity that can be added based on the remaining capacity. It then computes the value of the added quantity and updates the total value accordingly. The item and its quantity are added to the `knapsackItems` array.
+
+Finally, the function returns an object with the `totalValue` representing the maximum achievable value and the `items` array containing the items and their quantities in the knapsack for the optimal solution.
+
+The example usage demonstrates how to solve the continuous knapsack problem with the given items and capacity, and then prints the total value achieved as well as the items along with their quantities in the knapsack.
 
 #### Example: the Binary Search algorithm
 
