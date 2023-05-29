@@ -86,63 +86,48 @@ Space complexity analysis helps determine the memory requirements of an algorith
 
 It's worth noting that time complexity and space complexity are independent measures. An algorithm with a better time complexity may not necessarily have a better space complexity, and vice versa. The choice of algorithm depends on the specific requirements, available resources, and trade-offs between time and space efficiency.
 
-
-
 ## Common algorithm design techniques
 
-1. Brute Force:
-   - Naive approach of trying all possible solutions.
-   - Useful for small problem instances or as a baseline for optimization.
-
-2. Greedy Algorithms:
+1. Greedy Algorithms:
    - Make locally optimal choices at each step to achieve a global optimum.
    - Examples include Huffman coding, Kruskal's algorithm, and Dijkstra's algorithm.
+
+2. Approximation Algorithms:
+   - Find an approximate solution that is close to the optimal solution within a certain factor or bound.
+   - Commonly used when finding the exact optimal solution is computationally infeasible.
+   - Examples include the greedy algorithm for the traveling salesman problem and the vertex cover problem.
 
 3. Divide and Conquer:
    - Break down a problem into smaller subproblems, solve them independently, and combine the results.
    - Commonly used in algorithms like merge sort, quicksort, and binary search.
 
-4. Dynamic Programming:
-   - Solve a complex problem by breaking it down into overlapping subproblems and solving each subproblem only once.
-   - Optimal substructure and overlapping subproblems are the key characteristics.
-   - Examples include Fibonacci sequence, knapsack problem, and Bellman-Ford algorithm.
-
-5. Backtracking:
+4. Backtracking:
    - Systematically explore all possible solutions by making choices, backtracking when necessary.
    - Useful for solving problems with constraints or searching through large solution spaces.
    - Examples include N-Queens problem, Sudoku solver, and graph coloring.
+
+5. Brute Force:
+   - Naive approach of trying all possible solutions.
+   - Useful for small problem instances or as a baseline for optimization.
 
 6. Branch and Bound:
    - Divide the problem space into a tree-like structure and explore branches based on promising solutions.
    - Use bounds or heuristics to prune search branches that are unlikely to yield optimal solutions.
    - Often applied to optimization problems like the traveling salesman problem.
 
-7. Randomized Algorithms:
-   - Use randomness to solve problems or improve efficiency.
-   - Examples include randomized quicksort, Monte Carlo algorithms, and randomized primality testing.
-
-8. Approximation Algorithms:
-   - Find an approximate solution that is close to the optimal solution within a certain factor or bound.
-   - Commonly used when finding the exact optimal solution is computationally infeasible.
-   - Examples include the greedy algorithm for the traveling salesman problem and the vertex cover problem.
-
-9. Network Flow Algorithms:
-   - Solve problems involving the flow of resources through a network (e.g., transportation, communication).
-   - Examples include the Ford-Fulkerson algorithm and the maximum flow-minimum cut theorem.
-
-10. Heuristic Algorithms:
+7. Heuristic Algorithms:
     - Use heuristics or rules of thumb to guide the search for solutions.
     - May not guarantee an optimal solution but can be efficient in practice.
     - Examples include hill climbing, simulated annealing, and genetic algorithms.
 
-11. Metaheuristic Algorithms:
-    - High-level strategies for exploring search spaces and finding approximate solutions.
-    - Examples include genetic algorithms, particle swarm optimization, and ant colony optimization.
+8. Dynamic Programming:
+   - Solve a complex problem by breaking it down into overlapping subproblems and solving each subproblem only once.
+   - Optimal substructure and overlapping subproblems are the key characteristics.
+   - Examples include Fibonacci sequence, knapsack problem, and Bellman-Ford algorithm.
 
-12. Online Algorithms:
-    - Make decisions and update solutions incrementally as new input arrives.
-    - Useful when the entire input is not known in advance or when resources are limited.
-    - Examples include online sorting algorithms and caching algorithms.
+9. Randomized Algorithms:
+   - Use randomness to solve problems or improve efficiency.
+   - Examples include randomized quicksort, Monte Carlo algorithms, and randomized primality testing.
 
 Remember that these algorithm design techniques are not mutually exclusive, and many algorithms may combine multiple techniques to achieve desired results. The choice of technique depends on the problem at hand, its characteristics, and the trade-offs between factors such as time complexity, space complexity, and solution optimality.
 
