@@ -145,3 +145,192 @@ It's worth noting that time complexity and space complexity are independent meas
     - Examples include online sorting algorithms and caching algorithms.
 
 Remember that these algorithm design techniques are not mutually exclusive, and many algorithms may combine multiple techniques to achieve desired results. The choice of technique depends on the problem at hand, its characteristics, and the trade-offs between factors such as time complexity, space complexity, and solution optimality.
+
+
+## Searching algorithms
+
+Searching algorithms are fundamental techniques used to find a specific target element or determine the presence or absence of a particular value within a given collection of data. The basis of searching algorithms revolves around systematically examining the data to locate the desired item efficiently. Here are the basic concepts underlying searching algorithms:
+
+1. Sequential Search:
+   - Also known as linear search, sequential search involves checking each element in a collection, one by one, until the target element is found or the end of the collection is reached.
+   - Sequential search has a time complexity of O(n) in the worst case, where n is the number of elements in the collection.
+
+2. Binary Search:
+   - Binary search is applicable to sorted collections and follows a divide-and-conquer approach.
+   - It compares the target value with the middle element of the collection and recursively narrows down the search space by half based on the comparison.
+   - Binary search has a time complexity of O(log n) in the worst case, where n is the number of elements in the collection.
+   - Binary search is significantly faster than sequential search for large collections.
+
+3. Hashing:
+   - Hashing is a technique that uses a hash function to map keys to array indices.
+   - It involves transforming the search key into an array index using a hash function and then directly accessing the corresponding element in the collection.
+   - Hashing can provide constant-time complexity for search operations on average if the hash function and hash table are well-designed.
+   - However, collisions (multiple keys mapping to the same index) need to be handled appropriately for accurate searching.
+
+4. Interpolation Search:
+   - Interpolation search is an improvement over binary search for sorted collections with uniformly distributed elements.
+   - It estimates the position of the target element by using the distribution of values and makes educated guesses for the next search position.
+   - Interpolation search can have better performance than binary search in scenarios where the distribution of elements is not evenly spread.
+
+5. Tree-based Searches:
+   - Tree data structures, such as binary search trees (BSTs) and balanced search trees like AVL trees and red-black trees, can be used for efficient searching.
+   - These trees maintain an ordered structure, allowing for quick searches by comparing the target value with the values stored in the tree nodes.
+   - Tree-based searches often have a time complexity of O(log n) in balanced trees, making them efficient for searching in large collections.
+
+6. Ternary Search:
+   - Ternary search is a divide-and-conquer algorithm similar to binary search but divides the search space into three parts instead of two.
+   - It is applicable to sorted collections and can be used when the target element is likely to be in one of the two-thirds regions.
+   - Ternary search has a time complexity of O(log₃ n) in the worst case, where n is the number of elements in the collection.
+
+These are some of the foundational searching algorithms used in computer science. The choice of algorithm depends on factors such as the nature of the data, whether it is sorted or unsorted, the expected size of the collection, and the performance requirements.
+
+
+## Soting algorithms
+
+When comparing sorting algorithms, several factors come into play, including time complexity, space complexity, stability, and adaptability to different input types and sizes. Here's a comparison of some important sorting algorithms:
+
+1. Bubble Sort:
+   - Time Complexity: Best-case O(n), average-case O(n^2), worst-case O(n^2)
+   - Space Complexity: O(1)
+   - Stability: Stable
+   - Adaptability: Not adaptive
+   - Remarks: Bubble Sort is simple to implement but inefficient for large datasets.
+
+2. Insertion Sort:
+   - Time Complexity: Best-case O(n), average-case O(n^2), worst-case O(n^2)
+   - Space Complexity: O(1)
+   - Stability: Stable
+   - Adaptability: Adaptive
+   - Remarks: Insertion Sort performs well on small or partially sorted lists but becomes inefficient for larger datasets.
+
+3. Selection Sort:
+   - Time Complexity: Best-case O(n^2), average-case O(n^2), worst-case O(n^2)
+   - Space Complexity: O(1)
+   - Stability: Not stable
+   - Adaptability: Not adaptive
+   - Remarks: Selection Sort has poor performance and is mainly used for educational purposes.
+
+4. Merge Sort:
+   - Time Complexity: Best-case O(n log n), average-case O(n log n), worst-case O(n log n)
+   - Space Complexity: O(n)
+   - Stability: Stable
+   - Adaptability: Not adaptive
+   - Remarks: Merge Sort has a consistently good performance and is suitable for handling large datasets efficiently.
+
+5. Quicksort:
+   - Time Complexity: Best-case O(n log n), average-case O(n log n), worst-case O(n^2)
+   - Space Complexity: O(log n)
+   - Stability: Not stable (without additional modifications)
+   - Adaptability: Not adaptive
+   - Remarks: Quicksort is generally fast and widely used but can have poor performance in some cases, particularly with an already sorted or nearly sorted input.
+
+6. Heapsort:
+   - Time Complexity: Best-case O(n log n), average-case O(n log n), worst-case O(n log n)
+   - Space Complexity: O(1)
+   - Stability: Not stable
+   - Adaptability: Not adaptive
+   - Remarks: Heapsort offers a guaranteed O(n log n) time complexity but requires additional space for building a heap.
+
+7. Counting Sort:
+   - Time Complexity: Best-case O(n + k), average-case O(n + k), worst-case O(n + k)
+   - Space Complexity: O(n + k)
+   - Stability: Stable
+   - Adaptability: Not adaptive
+   - Remarks: Counting Sort is efficient when the range of input values (k) is small but can be impractical for large value ranges.
+
+8. Radix Sort:
+   - Time Complexity: Best-case O(d * (n + k)), average-case O(d * (n + k)), worst-case O(d * (n + k))
+   - Space Complexity: O(n + k)
+   - Stability: Stable
+   - Adaptability: Not adaptive
+   - Remarks: Radix Sort is effective for sorting integers or strings with a fixed size or bounded number of digits (d).
+
+The choice of sorting algorithm depends on the specific requirements of the task at hand. Some algorithms, like Merge Sort and Quicksort, offer good average-case performance but may have different worst-case scenarios. Other factors, such as stability and adaptability, play a role when preserving the order of equal elements or sorting partially sorted lists is required. It's important to consider the characteristics of the input data and the trade-offs between time complexity and space complexity
+
+## Algorithm design techniques
+
+### Greedy Algorithms
+
+Greedy algorithm is a design technique used to solve optimization problems by making locally optimal choices at each step, with the hope that these choices will lead to a globally optimal solution. The greedy approach makes the best choice available at each decision point without considering the overall future consequences or considering alternatives.
+
+Here are the key characteristics and steps involved in designing greedy algorithms:
+
+1. Greedy Choice Property:
+   - At each step, a greedy algorithm makes the locally optimal choice without considering the future consequences.
+   - The choice made at each step is the one that seems to be the best at that moment, without reconsidering it later.
+
+2. Optimal Substructure:
+   - A problem exhibits optimal substructure if an optimal solution to the problem contains optimal solutions to its subproblems.
+   - The greedy choice should lead to an optimal solution for the current subproblem, and the subproblems remaining after the choice should also exhibit the same property.
+
+3. Greedy Algorithm Design Steps:
+   - Define the problem as an optimization problem, specifying the objective function and constraints.
+   - Identify the greedy choice that seems to be the best at each step.
+   - Prove that the greedy choice is safe, meaning it doesn't invalidate the optimality of the solution.
+   - Repeat the greedy choice until a complete solution is obtained.
+
+4. Greedy vs. Dynamic Programming:
+   - Greedy algorithms differ from dynamic programming algorithms, as they do not typically revisit or reconsider previous decisions.
+   - Greedy algorithms are simpler and more efficient in terms of time complexity but may not always provide an optimal solution.
+   - Dynamic programming, on the other hand, breaks the problem into overlapping subproblems and computes and stores solutions to avoid redundant computations. It guarantees an optimal solution but may have higher time complexity.
+
+5. Examples of Greedy Algorithms:
+   - Huffman Coding: A compression algorithm that constructs an optimal prefix-free binary code based on the frequency of characters.
+   - Kruskal's Algorithm: Finds the minimum spanning tree in a connected, weighted graph by greedily adding edges with the lowest weight.
+   - Dijkstra's Algorithm: Finds the shortest path from a source vertex to all other vertices in a weighted graph by making greedy choices based on the current shortest distances.
+   - Coin Change: Finds the minimum number of coins needed to make a given amount of change by selecting the largest denomination at each step.
+
+6. Considerations and Limitations:
+   - Greedy algorithms may not always yield the globally optimal solution, and a more exhaustive search or dynamic programming approach might be required.
+   - The greedy choice should be carefully analyzed and proved to be safe to ensure the correctness of the algorithm.
+   - The greedy approach is suitable when the problem exhibits the greedy choice property and optimal substructure.
+
+In summary, greedy algorithms provide a simple and efficient approach to solving optimization problems by making locally optimal choices. While they do not guarantee the globally optimal solution in all cases, they can be effective in a wide range of scenarios and are often used as building blocks or components in more complex algorithms.
+
+#### Example
+
+The coin change problem involves finding the minimum number of coins needed to make a given amount of change. Let's solve it using a greedy strategy in JavaScript:
+
+```javascript
+function coinChange(coins, amount) {
+  // Sort coins in descending order
+  coins.sort((a, b) => b - a);
+  
+  let totalCoins = 0;
+  let remainingAmount = amount;
+
+  for (let i = 0; i < coins.length; i++) {
+    const currentCoin = coins[i];
+
+    // Count how many coins of the current denomination can be used
+    const count = Math.floor(remainingAmount / currentCoin);
+
+    // Update the total count of coins
+    totalCoins += count;
+
+    // Calculate the remaining amount
+    remainingAmount -= count * currentCoin;
+
+    // If the remaining amount becomes zero, we have found the solution
+    if (remainingAmount === 0) {
+      return totalCoins;
+    }
+  }
+
+  // If we can't make the exact amount with the available coins
+  return -1;
+}
+
+// Example usage:
+const coins = [25, 10, 5, 1]; // Available coin denominations
+const amount = 67; // Amount of change needed
+
+const minimumCoins = coinChange(coins, amount);
+console.log("Minimum number of coins:", minimumCoins);
+```
+
+In this solution, we start by sorting the coins in descending order, as it allows us to consider the highest denomination coins first. We then iterate through the coins, starting from the largest denomination, and calculate how many coins of that denomination can be used to make change. We keep track of the total number of coins used and update the remaining amount accordingly.
+
+If we successfully make the exact amount of change, we return the total number of coins. If it's not possible to make the exact amount with the available coins, we return -1.
+
+Please note that while the greedy strategy works for standard coin systems (like the US currency), it may not provide the optimal solution for all coin systems. In such cases, dynamic programming or other techniques may be required.
