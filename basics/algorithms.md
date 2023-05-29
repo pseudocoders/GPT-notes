@@ -287,7 +287,7 @@ Here are the key characteristics and steps involved in designing greedy algorith
 
 In summary, greedy algorithms provide a simple and efficient approach to solving optimization problems by making locally optimal choices. While they do not guarantee the globally optimal solution in all cases, they can be effective in a wide range of scenarios and are often used as building blocks or components in more complex algorithms.
 
-#### Example
+#### Example: the coin change problem
 
 The coin change problem involves finding the minimum number of coins needed to make a given amount of change. Let's solve it using a greedy strategy in JavaScript:
 
@@ -372,7 +372,7 @@ Here are some key characteristics and examples of Divide and Conquer algorithms:
 Overall, the Divide and Conquer technique is a powerful strategy for solving a wide range of problems by breaking them down into smaller manageable subproblems. It offers an efficient and elegant way to solve problems and has been widely used in various fields, including computer science, mathematics, and algorithms.
 
 
-#### Example
+#### Example: the Binary Search algorithm
 
 Here's an implementation of the Binary Search algorithm using the Divide and Conquer strategy in JavaScript:
 
@@ -424,7 +424,7 @@ Backtracking algorithms can be powerful for solving combinatorial problems, but 
 
 The design and implementation of backtracking algorithms require careful consideration of the problem constraints, the candidate construction process, and the termination conditions. The effectiveness of the algorithm heavily relies on the structure of the problem and the ability to efficiently prune the search space.
 
-#### Example
+#### Example: the N-Queens problem
 
 The N-Queens problem involves placing N queens on an NxN chessboard such that no two queens threaten each other. Here's a solution to the N-Queens problem using a backtracking strategy in JavaScript:
 
@@ -515,7 +515,7 @@ Finally, the function returns the `result` array containing all valid solutions.
 
 When you run the code with `n` set to 4, it will display all the solutions for the 4-Queens problem. Each solution shows the placement of queens on the chessboard, with 'Q' representing a queen and '.' representing an empty space.
 
-#### Example
+#### Example: the discrete Knapsack problem
 
 Here's a version of the solution to the Discrete Knapsack problem:
 
@@ -628,7 +628,7 @@ Branch and bound can be applied to a wide range of optimization problems, includ
 
 It's worth noting that the performance of a branch and bound algorithm can vary based on the problem's characteristics, the quality of the bounding function, and the branching strategy chosen. In some cases, sophisticated techniques like dynamic programming or linear programming relaxations can be integrated into the branch and bound framework to further improve its performance.
 
-#### Example
+#### Example: the N-Queens problem using backtracking and branch and bound
 
 Here is the example of solving the N-Queens problem using backtracking and optimized using a "branch and bound" technique. Branch and bound is a method that aims to reduce the search space by intelligently pruning branches that are guaranteed to lead to invalid or suboptimal solutions.
 
@@ -728,6 +728,90 @@ By efficiently tracking the availability of columns and diagonals, we can prune 
 
 Overall, the branch and bound optimization technique enhances the backtracking algorithm for the N-Queens problem by reducing unnecessary exploration of invalid configurations.
 
+#### Example: the Discrete Knapsack problem solved using backtracking and branch and bound
+
+The Discrete Knapsack problem can be solved using a combination of backtracking and branch and bound strategies. Here's an implementation in JavaScript that incorporates both techniques and displays the items included in the knapsack for each solution:
+
+```javascript
+function knapsack(items, capacity) {
+  const n = items.length;
+  let maxProfit = 0;
+  let bestItems = [];
+
+  // Sort items by profit per unit weight in descending order
+  items.sort((a, b) => b.profit / b.weight - a.profit / a.weight);
+
+  // Helper function for backtracking with branch and bound
+  function backtrack(index, currentWeight, currentProfit, selectedItems) {
+    if (index === n || currentWeight === capacity) {
+      if (currentProfit > maxProfit) {
+        maxProfit = currentProfit;
+        bestItems = selectedItems.slice();
+      }
+      return;
+    }
+
+    const currentItem = items[index];
+
+    // Compute the maximum achievable profit using the bound
+    let remainingWeight = capacity - currentWeight;
+    let bound = currentProfit;
+    let j = index;
+    while (j < n && remainingWeight >= items[j].weight) {
+      remainingWeight -= items[j].weight;
+      bound += items[j].profit;
+      j++;
+    }
+    if (j < n) {
+      bound += remainingWeight * (items[j].profit / items[j].weight);
+    }
+
+    // Prune the branch if the bound is lower than the current maximum profit
+    if (bound <= maxProfit) {
+      return;
+    }
+
+    // Try including the current item
+    if (currentWeight + currentItem.weight <= capacity) {
+      backtrack(
+        index + 1,
+        currentWeight + currentItem.weight,
+        currentProfit + currentItem.profit,
+        [...selectedItems, currentItem]
+      );
+    }
+
+    // Try excluding the current item
+    backtrack(index + 1, currentWeight, currentProfit, selectedItems);
+  }
+
+  // Start backtracking from the first item
+  backtrack(0, 0, 0, []);
+
+  return { maxProfit, bestItems };
+}
+
+// Example usage:
+const items = [
+  { name: "Item 1", weight: 2, profit: 12 },
+  { name: "Item 2", weight: 1, profit: 10 },
+  { name: "Item 3", weight: 3, profit: 20 },
+  { name: "Item 4", weight: 2, profit: 15 }
+];
+const capacity = 5;
+
+const { maxProfit, bestItems } = knapsack(items, capacity);
+console.log("Maximum Profit:", maxProfit);
+console.log("Items included in the knapsack:");
+bestItems.forEach(item => console.log(item.name));
+```
+
+In this implementation, the `knapsack` function takes an array of `items`, where each item has a `weight` and a `profit`, along with the `capacity` of the knapsack. It initializes the `maxProfit` variable to keep track of the maximum achievable profit, and the `bestItems` array to store the items included in the knapsack for the optimal solution.
+
+The `items` array is sorted in descending order based on the profit per unit weight ratio. This sorting order helps in applying the branch and bound strategy effectively by exploring more promising branches first.
+
+The `backtrack` function performs the backtracking algorithm with the branch and bound optimization. It takes the current `index`, `currentWeight`, `currentProfit`, and `selectedItems` as parameters. It checks if the current state represents a complete solution (either all items have been considered or the knapsack is full). If it is a complete
+
 ### Dynamic programming
 
 Dynamic programming is a technique used in algorithm design and optimization to solve problems by breaking them down into overlapping subproblems and efficiently solving each subproblem only once. It is especially useful when a problem can be divided into smaller overlapping subproblems, and the solutions to those subproblems can be reused to solve the larger problem.
@@ -753,3 +837,70 @@ Here are the fundamental steps involved in applying dynamic programming to solve
 Dynamic programming is commonly used to solve optimization problems, such as finding the shortest path in a graph, determining the maximum value of a sequence, or minimizing the cost of a certain operation. It can also be applied to problems with recursive structures, such as calculating Fibonacci numbers or solving the knapsack problem.
 
 By breaking down a problem into smaller, solvable subproblems and reusing their solutions, dynamic programming avoids redundant computations and significantly improves the efficiency of algorithms. However, it is essential to carefully design the recursive relationship and identify the overlapping subproblems to ensure the correctness and efficiency of the dynamic programming solution.
+
+#### Example: the discrete knapsack problem using dynamic programming
+
+
+Here's an implementation of the Discrete Knapsack problem using a dynamic programming strategy in JavaScript.
+
+```javascript
+function knapsack(items, capacity) {
+  const n = items.length;
+  
+  // Create a 2D array to store the maximum values for each subproblem
+  const dp = Array(n + 1)
+    .fill(null)
+    .map(() => Array(capacity + 1).fill(0));
+
+  // Fill in the dynamic programming table
+  for (let i = 1; i <= n; i++) {
+    const { weight, value } = items[i - 1];
+    for (let j = 1; j <= capacity; j++) {
+      if (weight > j) {
+        dp[i][j] = dp[i - 1][j];
+      } else {
+        dp[i][j] = Math.max(dp[i - 1][j], value + dp[i - 1][j - weight]);
+      }
+    }
+  }
+
+  // Find the items included in the knapsack
+  const includedItems = [];
+  let remainingCapacity = capacity;
+  for (let i = n; i > 0; i--) {
+    if (dp[i][remainingCapacity] !== dp[i - 1][remainingCapacity]) {
+      const item = items[i - 1];
+      includedItems.push(item);
+      remainingCapacity -= item.weight;
+    }
+  }
+
+  return { maxProfit: dp[n][capacity], items: includedItems };
+}
+
+// Example usage:
+const items = [
+  { name: "Item 1", weight: 2, value: 12 },
+  { name: "Item 2", weight: 1, value: 10 },
+  { name: "Item 3", weight: 3, value: 20 },
+  { name: "Item 4", weight: 2, value: 15 }
+];
+const capacity = 5;
+
+const { maxProfit, items: includedItems } = knapsack(items, capacity);
+console.log("Maximum Profit:", maxProfit);
+console.log("Items included in the knapsack:");
+includedItems.forEach(item => console.log(item.name));
+```
+
+In this solution, the `knapsack` function takes an array of `items`, where each item has a `weight` and a `value`, along with the `capacity` of the knapsack.
+
+The function creates a 2D array called `dp` to store the maximum values for each subproblem. The rows represent the items, and the columns represent the knapsack capacity.
+
+The dynamic programming table is filled iteratively using nested loops. For each item, the function calculates the maximum value that can be achieved for each possible capacity from 1 to the given capacity. The maximum value at each cell (`dp[i][j]`) is either the value of the previous item plus the maximum value achievable with the remaining capacity, or the maximum value achieved without including the current item.
+
+After filling the dynamic programming table, the function finds the items included in the knapsack by tracing back from the last item to the first. It checks if including the current item improves the value compared to the previous row. If it does, the item is added to the `includedItems` array, and the remaining capacity is updated accordingly.
+
+Finally, the function returns an object with the `maxProfit` representing the maximum achievable profit and the `items` array containing the items included in the knapsack for the optimal solution.
+
+The example usage demonstrates how to solve the knapsack problem with the given items and capacity, and then prints the maximum profit achieved as well as the
