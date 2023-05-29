@@ -515,6 +515,90 @@ Finally, the function returns the `result` array containing all valid solutions.
 
 When you run the code with `n` set to 4, it will display all the solutions for the 4-Queens problem. Each solution shows the placement of queens on the chessboard, with 'Q' representing a queen and '.' representing an empty space.
 
+#### Example
+
+Here's a version of the solution to the Discrete Knapsack problem:
+
+```javascript
+function knapsack(items, capacity) {
+  const n = items.length;
+  const memo = {};
+
+  // Helper function for backtracking
+  function backtrack(index, remainingCapacity, selectedItems) {
+    if (index === n || remainingCapacity === 0) {
+      return { value: 0, items: selectedItems };
+    }
+
+    // Check memoization table
+    if (memo[index] && memo[index][remainingCapacity]) {
+      return memo[index][remainingCapacity];
+    }
+
+    const currentItem = items[index];
+    let maxValue = 0;
+    let maxItems = [];
+
+    // Try including the current item
+    if (currentItem.weight <= remainingCapacity) {
+      const included = backtrack(
+        index + 1,
+        remainingCapacity - currentItem.weight,
+        [...selectedItems, currentItem]
+      );
+      const includedValue = currentItem.value + included.value;
+
+      if (includedValue > maxValue) {
+        maxValue = includedValue;
+        maxItems = included.items;
+      }
+    }
+
+    // Try excluding the current item
+    const excluded = backtrack(index + 1, remainingCapacity, selectedItems);
+    const excludedValue = excluded.value;
+
+    if (excludedValue > maxValue) {
+      maxValue = excludedValue;
+      maxItems = excluded.items;
+    }
+
+    // Update memoization table
+    if (!memo[index]) {
+      memo[index] = {};
+    }
+    memo[index][remainingCapacity] = { value: maxValue, items: maxItems };
+
+    return { value: maxValue, items: maxItems };
+  }
+
+  // Start backtracking from the first item
+  return backtrack(0, capacity, []);
+}
+
+// Example usage:
+const items = [
+  { name: "Item 1", weight: 2, value: 12 },
+  { name: "Item 2", weight: 1, value: 10 },
+  { name: "Item 3", weight: 3, value: 20 },
+  { name: "Item 4", weight: 2, value: 15 }
+];
+const capacity = 5;
+
+const { value, itemsIncluded } = knapsack(items, capacity);
+console.log("Maximum value:", value);
+console.log("Items included in the knapsack:");
+itemsIncluded.forEach(item => console.log(item.name));
+```
+
+The `backtrack` function now keeps track of the selected items in the `selectedItems` array. When a better solution is found (higher value), the `selectedItems` array is updated accordingly.
+
+After the backtracking process is complete, the `knapsack` function returns an object with the `value` representing the maximum value achieved and the `itemsIncluded` array containing the items that were included in the knapsack for the optimal solution.
+
+In the example usage, the maximum value and the items included in the knapsack are printed to the console.
+
+Please note that while backtracking can provide a solution to the Discrete Knapsack problem, it may not be the most efficient approach for larger problem instances. Dynamic programming or other optimization techniques can provide better performance in such cases.
+
 
 ### Branch and bound
 
