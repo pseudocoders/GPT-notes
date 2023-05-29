@@ -644,3 +644,28 @@ By efficiently tracking the availability of columns and diagonals, we can prune 
 
 Overall, the branch and bound optimization technique enhances the backtracking algorithm for the N-Queens problem by reducing unnecessary exploration of invalid configurations.
 
+### Dynamic programming
+
+Dynamic programming is a technique used in algorithm design and optimization to solve problems by breaking them down into overlapping subproblems and efficiently solving each subproblem only once. It is especially useful when a problem can be divided into smaller overlapping subproblems, and the solutions to those subproblems can be reused to solve the larger problem.
+
+The key idea behind dynamic programming is to store the solutions to subproblems in a table or an array so that they can be referenced and reused later. This avoids redundant computation of the same subproblems and leads to significant improvements in efficiency.
+
+Here are the fundamental steps involved in applying dynamic programming to solve a problem:
+
+1. Characterize the structure of an optimal solution: Understand how an optimal solution to the problem can be constructed using solutions to smaller subproblems.
+
+2. Define the recursive relationship: Express the problem in terms of the solutions to smaller subproblems. This is typically done using a recurrence relation or recursive formula.
+
+3. Identify the overlapping subproblems: Determine which subproblems are solved multiple times and can benefit from memoization (storing the solutions).
+
+4. Formulate a memoization table or array: Create a data structure to store the solutions to subproblems. The size of the table is usually determined by the input parameters of the problem.
+
+5. Determine the order of computation: Decide on the order in which subproblems should be solved to ensure that the solutions to the required subproblems are available when needed.
+
+6. Fill in the memoization table: Solve the subproblems in a bottom-up or top-down manner, filling in the table with the solutions as they are computed.
+
+7. Construct the final solution: Once the table is filled, retrieve the solution to the original problem from the table. This may involve tracing back through the table or using additional information stored during the computation.
+
+Dynamic programming is commonly used to solve optimization problems, such as finding the shortest path in a graph, determining the maximum value of a sequence, or minimizing the cost of a certain operation. It can also be applied to problems with recursive structures, such as calculating Fibonacci numbers or solving the knapsack problem.
+
+By breaking down a problem into smaller, solvable subproblems and reusing their solutions, dynamic programming avoids redundant computations and significantly improves the efficiency of algorithms. However, it is essential to carefully design the recursive relationship and identify the overlapping subproblems to ensure the correctness and efficiency of the dynamic programming solution.
