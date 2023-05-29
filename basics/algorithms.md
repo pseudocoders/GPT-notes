@@ -295,9 +295,10 @@ The coin change problem involves finding the minimum number of coins needed to m
 function coinChange(coins, amount) {
   // Sort coins in descending order
   coins.sort((a, b) => b - a);
-  
+
   let totalCoins = 0;
   let remainingAmount = amount;
+  const usedCoins = [];
 
   for (let i = 0; i < coins.length; i++) {
     const currentCoin = coins[i];
@@ -308,12 +309,15 @@ function coinChange(coins, amount) {
     // Update the total count of coins
     totalCoins += count;
 
+    // Update the usedCoins array with the coins used
+    usedCoins.push(...Array(count).fill(currentCoin));
+
     // Calculate the remaining amount
     remainingAmount -= count * currentCoin;
 
     // If the remaining amount becomes zero, we have found the solution
     if (remainingAmount === 0) {
-      return totalCoins;
+      return { totalCoins, usedCoins };
     }
   }
 
@@ -325,12 +329,15 @@ function coinChange(coins, amount) {
 const coins = [25, 10, 5, 1]; // Available coin denominations
 const amount = 67; // Amount of change needed
 
-const minimumCoins = coinChange(coins, amount);
-console.log("Minimum number of coins:", minimumCoins);
+const result = coinChange(coins, amount);
+
+if (result === -1) {
+  console.log("Cannot make exact change with the available coins.");
+} else {
+  console.log("Minimum number of coins:", result.totalCoins);
+  console.log("Coins used:", result.usedCoins);
+}
+
 ```
 
-In this solution, we start by sorting the coins in descending order, as it allows us to consider the highest denomination coins first. We then iterate through the coins, starting from the largest denomination, and calculate how many coins of that denomination can be used to make change. We keep track of the total number of coins used and update the remaining amount accordingly.
 
-If we successfully make the exact amount of change, we return the total number of coins. If it's not possible to make the exact amount with the available coins, we return -1.
-
-Please note that while the greedy strategy works for standard coin systems (like the US currency), it may not provide the optimal solution for all coin systems. In such cases, dynamic programming or other techniques may be required.
