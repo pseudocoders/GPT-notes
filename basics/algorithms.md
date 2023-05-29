@@ -249,7 +249,7 @@ The choice of sorting algorithm depends on the specific requirements of the task
 
 ## Algorithm design techniques
 
-### Greedy Algorithms
+### Greedy design technique
 
 Greedy algorithm is a design technique used to solve optimization problems by making locally optimal choices at each step, with the hope that these choices will lead to a globally optimal solution. The greedy approach makes the best choice available at each decision point without considering the overall future consequences or considering alternatives.
 
@@ -340,4 +340,71 @@ if (result === -1) {
 
 ```
 
+### Divide and conquer design technique
+
+The Divide and Conquer algorithm design technique involves breaking down a complex problem into smaller, more manageable subproblems, solving them recursively, and then combining the solutions to obtain the final result. It follows a top-down approach where a problem is divided into smaller subproblems until they become simple enough to be solved directly.
+
+The key steps involved in designing a Divide and Conquer algorithm are as follows:
+
+1. Divide: The problem is divided into smaller subproblems. This step involves breaking down the problem into smaller instances of the same problem or dividing it into unrelated subproblems.
+
+2. Conquer: Each subproblem is solved independently, either by applying the same divide-and-conquer technique recursively or by using a different approach if the subproblem is simple enough.
+
+3. Combine: The solutions of the subproblems are combined or merged to obtain the final solution to the original problem.
+
+4. Base Case: A stopping condition is defined to handle the simplest and smallest subproblems directly. It serves as the base case for the recursive algorithm.
+
+Here are some key characteristics and examples of Divide and Conquer algorithms:
+
+1. Recursive Structure: Divide and Conquer algorithms typically follow a recursive structure, where a problem is broken down into smaller instances of the same problem. The recursive calls continue until the base case is reached.
+
+2. Examples of Divide and Conquer Algorithms:
+   - Merge Sort: It divides an array into two halves, recursively sorts them, and then merges the sorted halves to obtain a fully sorted array.
+   - Quick Sort: It selects a pivot element, partitions the array into two subarrays based on the pivot, and recursively applies quicksort to the subarrays.
+   - Binary Search: It repeatedly divides a sorted array in half and narrows down the search range until the target element is found or determined to be absent.
+   - Strassen's Algorithm for Matrix Multiplication: It divides matrices into smaller submatrices and recursively multiplies them using a set of matrix operations.
+   - Karatsuba Algorithm for Multiplication: It divides large numbers into smaller digits and recursively multiplies them using a specific mathematical formula.
+
+3. Efficiency Considerations: Divide and Conquer algorithms can be highly efficient for solving complex problems, but the efficiency often depends on the subproblem size and the merging or combination step. Some algorithms, such as Merge Sort and Quick Sort, have efficient time complexities of O(n log n) on average.
+
+4. Trade-offs: The Divide and Conquer approach may require additional memory for recursive function calls and merging intermediate results. However, it often provides a more intuitive and structured way to solve complex problems compared to iterative approaches.
+
+Overall, the Divide and Conquer technique is a powerful strategy for solving a wide range of problems by breaking them down into smaller manageable subproblems. It offers an efficient and elegant way to solve problems and has been widely used in various fields, including computer science, mathematics, and algorithms.
+
+
+#### Example
+
+Here's an implementation of the Binary Search algorithm using the Divide and Conquer strategy in JavaScript:
+
+```javascript
+function binarySearch(arr, target) {
+  let left = 0;
+  let right = arr.length - 1;
+
+  while (left <= right) {
+    const mid = Math.floor((left + right) / 2);
+
+    if (arr[mid] === target) {
+      return mid; // Found the target element
+    } else if (arr[mid] < target) {
+      left = mid + 1; // Search the right half of the array
+    } else {
+      right = mid - 1; // Search the left half of the array
+    }
+  }
+
+  return -1; // Target element not found
+}
+
+// Example usage:
+const sortedArray = [1, 3, 5, 7, 9, 11, 13];
+const target = 9;
+
+const resultIndex = binarySearch(sortedArray, target);
+if (resultIndex !== -1) {
+  console.log(`Target ${target} found at index ${resultIndex}.`);
+} else {
+  console.log(`Target ${target} not found in the array.`);
+}
+```
 
