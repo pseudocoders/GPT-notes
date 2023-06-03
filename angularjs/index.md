@@ -1,4 +1,4 @@
-# Angularjs for no-routing SPA
+# Angularjs for non-routed SPA
 
 ## Angularjs
 
