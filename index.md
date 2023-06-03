@@ -32,7 +32,7 @@ subtitle: All you need to be a web developer
 
 # Libraries
 1. JQuery
-2. AngularJS
+2. [angularjs](AngularJS)
 
 # Frameworks
 1. [Spring Boot](springboot/index.md)
