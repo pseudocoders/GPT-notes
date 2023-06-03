@@ -204,3 +204,149 @@ In this example, we create a closure that encapsulates the Singleton logic. The 
 When we invoke `Singleton.getInstance()`, it returns the same instance every time it is called. The `instance1` and `instance2` variables reference the same object, demonstrating that only one instance is created and used throughout the application.
 
 It's important to note that in modern JavaScript, the Singleton pattern is not as commonly used as in other languages, mainly because JavaScript is a highly dynamic and flexible language that allows for alternative approaches to managing global state and object creation. Nonetheless, the Singleton pattern can still be employed in JavaScript when a single instance is explicitly desired and necessary.
+
+
+## Factory
+
+The Factory pattern is a creational design pattern that provides an interface for creating objects without specifying the exact class of the object being instantiated. It encapsulates the object creation logic within a separate method or class, called the factory, which is responsible for creating and returning instances of different classes based on specific conditions or parameters.
+
+The main goal of the Factory pattern is to promote loose coupling between the client code and the objects it needs to create. Instead of directly instantiating objects using the `new` operator or knowing the specific implementation classes, the client code delegates the object creation responsibility to the factory. This allows for flexibility in changing or extending the object creation process without modifying the client code.
+
+Key elements of the Factory pattern:
+
+1. Factory Interface/Class: This defines the interface or abstract class that declares the factory methods responsible for creating objects. The factory methods can have different variations based on the specific conditions or parameters.
+
+2. Concrete Implementations: These are the actual classes that implement the factory interface and provide the implementation logic for creating objects. Each concrete factory class is responsible for creating a specific type of object.
+
+3. Client: The client code interacts with the factory through the factory interface, without knowing the specific class of the objects being created. It requests objects from the factory, which handles the creation and returns the appropriate instances.
+
+Benefits of using the Factory pattern:
+
+- Encapsulation: The client code is decoupled from the object creation process and does not need to know the specific implementation details of the objects it uses.
+
+- Flexibility and Extensibility: It's easy to introduce new object types by creating additional concrete factory classes or modifying the existing ones, without affecting the client code.
+
+- Code Reusability: The factory logic can be reused across different parts of the application, allowing for centralized object creation and promoting code maintenance and consistency.
+
+- Dependency Injection: The factory pattern can be combined with dependency injection techniques to manage object creation and resolve dependencies in a more modular and flexible manner.
+
+### Java example
+
+Here's an example of the Factory pattern implemented in Java:
+
+```java
+// Factory interface
+interface AnimalFactory {
+    Animal createAnimal();
+}
+
+// Concrete implementations of the factory
+class DogFactory implements AnimalFactory {
+    public Animal createAnimal() {
+        return new Dog();
+    }
+}
+
+class CatFactory implements AnimalFactory {
+    public Animal createAnimal() {
+        return new Cat();
+    }
+}
+
+// Product interface
+interface Animal {
+    void speak();
+}
+
+// Concrete product classes
+class Dog implements Animal {
+    public void speak() {
+        System.out.println("Woof!");
+    }
+}
+
+class Cat implements Animal {
+    public void speak() {
+        System.out.println("Meow!");
+    }
+}
+
+// Client code
+public class Main {
+    public static void main(String[] args) {
+        AnimalFactory dogFactory = new DogFactory();
+        Animal dog = dogFactory.createAnimal();
+        dog.speak();  // Output: Woof!
+
+        AnimalFactory catFactory = new CatFactory();
+        Animal cat = catFactory.createAnimal();
+        cat.speak();  // Output: Meow!
+    }
+}
+```
+
+In this example, we have the `AnimalFactory` interface that declares the `createAnimal` method, which serves as the factory method for creating animal objects. The `DogFactory` and `CatFactory` classes implement the `AnimalFactory` interface and provide the specific object creation logic for dogs and cats, respectively.
+
+The `Animal` interface defines the common behavior of animals, and the `Dog` and `Cat` classes implement this interface with their respective `speak` methods.
+
+In the client code (`Main` class), we create instances of animals using the appropriate factory. We create a `Dog` instance using `DogFactory` and a `Cat` instance using `CatFactory`. Then, we invoke the `speak` method on each object, which outputs the corresponding animal sound.
+
+By using the Factory pattern, the client code is decoupled from the specific classes of animals and relies on the factory to create the appropriate objects. This promotes flexibility, modularity, and easier maintenance of the codebase.
+
+### Javascript example
+
+Example of the Factory pattern in JavaScript:
+
+```javascript
+// Factory interface
+class AnimalFactory {
+  createAnimal() {
+    throw new Error('createAnimal() method must be implemented');
+  }
+}
+
+// Concrete implementations of the factory
+class DogFactory extends AnimalFactory {
+  createAnimal() {
+    return new Dog();
+  }
+}
+
+class CatFactory extends AnimalFactory {
+  createAnimal() {
+    return new Cat();
+  }
+}
+
+// Product classes
+class Dog {
+  speak() {
+    console.log('Woof!');
+  }
+}
+
+class Cat {
+  speak() {
+    console.log('Meow!');
+  }
+}
+
+// Client code
+function performAnimalSound(factory) {
+  const animal = factory.createAnimal();
+  animal.speak();
+}
+
+// Usage
+const dogFactory = new DogFactory();
+performAnimalSound(dogFactory); // Output: Woof!
+
+const catFactory = new CatFactory();
+performAnimalSound(catFactory); // Output: Meow!
+```
+
+In this example, we have an abstract `AnimalFactory` class that defines the factory interface with a `createAnimal` method. The concrete factory classes `DogFactory` and `CatFactory` implement the factory interface and provide their own object creation logic.
+
+The client code uses the factory interface to create instances of animals without directly knowing the specific classes. It calls the `performAnimalSound` function, passing the appropriate factory object, which in turn creates the specific animal instance and invokes the `speak` method.
+
+The Factory pattern allows for easy extension by adding new concrete factory classes for different types of animals without modifying the client code. It promotes flexibility and modularity in object creation, making it a powerful tool for managing complex object creation scenarios.
