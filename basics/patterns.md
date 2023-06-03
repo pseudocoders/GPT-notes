@@ -232,27 +232,7 @@ Benefits of using the Factory pattern:
 
 ### Java example
 
-Here's an example of the Factory pattern implemented in Java:
-
 ```java
-// Factory interface
-interface AnimalFactory {
-    Animal createAnimal();
-}
-
-// Concrete implementations of the factory
-class DogFactory implements AnimalFactory {
-    public Animal createAnimal() {
-        return new Dog();
-    }
-}
-
-class CatFactory implements AnimalFactory {
-    public Animal createAnimal() {
-        return new Cat();
-    }
-}
-
 // Product interface
 interface Animal {
     void speak();
@@ -271,82 +251,91 @@ class Cat implements Animal {
     }
 }
 
-// Client code
+// Factory class
+class AnimalFactory {
+    public static Animal createAnimal(String animalType) {
+        if (animalType.equalsIgnoreCase("dog")) {
+            return new Dog();
+        } else if (animalType.equalsIgnoreCase("cat")) {
+            return new Cat();
+        } else {
+            throw new IllegalArgumentException("Invalid animal type");
+        }
+    }
+}
+
+// Main program
 public class Main {
     public static void main(String[] args) {
-        AnimalFactory dogFactory = new DogFactory();
-        Animal dog = dogFactory.createAnimal();
-        dog.speak();  // Output: Woof!
+        String animalType = java.util.Arrays.asList("dog", "cat").get(new java.util.Random().nextInt(2));
 
-        AnimalFactory catFactory = new CatFactory();
-        Animal cat = catFactory.createAnimal();
-        cat.speak();  // Output: Meow!
+        // Create animal based on the parameter using the factory method
+        Animal animal = AnimalFactory.createAnimal(animalType);
+        animal.speak(); // Output: Woof! or Meow! depending on the animalType
     }
 }
 ```
 
-In this example, we have the `AnimalFactory` interface that declares the `createAnimal` method, which serves as the factory method for creating animal objects. The `DogFactory` and `CatFactory` classes implement the `AnimalFactory` interface and provide the specific object creation logic for dogs and cats, respectively.
+In this example, the `AnimalFactory` class contains a static factory method called `createAnimal`. This method takes an `animalType` parameter to determine the type of animal to create.
 
-The `Animal` interface defines the common behavior of animals, and the `Dog` and `Cat` classes implement this interface with their respective `speak` methods.
+The main program receives an `animalType` parameter, and it calls the `createAnimal` factory method of the `AnimalFactory` class to create an animal object. The factory method handles the creation logic based on the parameter and returns an instance of the appropriate concrete animal class (`Dog` or `Cat`).
 
-In the client code (`Main` class), we create instances of animals using the appropriate factory. We create a `Dog` instance using `DogFactory` and a `Cat` instance using `CatFactory`. Then, we invoke the `speak` method on each object, which outputs the corresponding animal sound.
-
-By using the Factory pattern, the client code is decoupled from the specific classes of animals and relies on the factory to create the appropriate objects. This promotes flexibility, modularity, and easier maintenance of the codebase.
+The program assigns the returned animal object to the `Animal` interface, allowing the program to interact with the animal without knowing its specific type. Finally, the program invokes the `speak` method on the animal object, which will output "Woof!" if the `animalType` is "dog" or "Meow!" if the `animalType` is "cat". This demonstrates how the Factory pattern with a factory method allows for dynamic creation of objects and interaction with them through a common interface, without explicitly knowing their specific types.
 
 ### Javascript example
 
-Example of the Factory pattern in JavaScript:
-
 ```javascript
-// Factory interface
-class AnimalFactory {
-  createAnimal() {
-    throw new Error('createAnimal() method must be implemented');
-  }
-}
 
-// Concrete implementations of the factory
-class DogFactory extends AnimalFactory {
-  createAnimal() {
-    return new Dog();
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
   }
-}
-
-class CatFactory extends AnimalFactory {
-  createAnimal() {
-    return new Cat();
-  }
+  return array;
 }
 
 // Product classes
-class Dog {
+class Animal {
+  speak() {
+    throw new Error('speak() method must be implemented');
+  }
+}
+
+class Dog extends Animal {
   speak() {
     console.log('Woof!');
   }
 }
 
-class Cat {
+class Cat extends Animal {
   speak() {
     console.log('Meow!');
   }
 }
 
-// Client code
-function performAnimalSound(factory) {
-  const animal = factory.createAnimal();
-  animal.speak();
+// Factory function
+function createAnimal(animalType) {
+  if (animalType.toLowerCase() === 'dog') {
+    return new Dog();
+  } else if (animalType.toLowerCase() === 'cat') {
+    return new Cat();
+  } else {
+    throw new Error('Invalid animal type');
+  }
 }
 
-// Usage
-const dogFactory = new DogFactory();
-performAnimalSound(dogFactory); // Output: Woof!
+// Main program
+const animalType = shuffle(['dog', 'cat'])[0];
 
-const catFactory = new CatFactory();
-performAnimalSound(catFactory); // Output: Meow!
+// Create animal based on the parameter using the factory function
+const animal = createAnimal(animalType);
+animal.speak(); // Output: Woof! or Meow! depending on the animalType
 ```
 
-In this example, we have an abstract `AnimalFactory` class that defines the factory interface with a `createAnimal` method. The concrete factory classes `DogFactory` and `CatFactory` implement the factory interface and provide their own object creation logic.
+In this JavaScript example, we have the `Animal` class as the base class for different animal types. The `Dog` and `Cat` classes extend the `Animal` class and provide their own implementations of the `speak` method.
 
-The client code uses the factory interface to create instances of animals without directly knowing the specific classes. It calls the `performAnimalSound` function, passing the appropriate factory object, which in turn creates the specific animal instance and invokes the `speak` method.
+The `createAnimal` function serves as the factory function. It takes an `animalType` parameter and returns an instance of the appropriate animal class based on the parameter.
 
-The Factory pattern allows for easy extension by adding new concrete factory classes for different types of animals without modifying the client code. It promotes flexibility and modularity in object creation, making it a powerful tool for managing complex object creation scenarios.
+In the main program, we receive an `animalType` parameter and call the `createAnimal` factory function to create an animal object. The factory function handles the creation logic based on the parameter and returns an instance of the appropriate animal class.
+
+Finally, we invoke the `speak` method on the animal object, which will output "Woof!" if the `animalType` is "dog" or "Meow!" if the `animalType` is "cat". This demonstrates how the Factory pattern with a factory function allows for dynamic creation of objects and interaction with them through a common interface, without explicitly knowing their specific types.
