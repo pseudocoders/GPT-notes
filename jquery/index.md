@@ -416,3 +416,221 @@ By wrapping your code inside the document ready event handler, you can be confid
 
 In summary, waiting for the document to be loaded in jQuery is essential to ensure that the DOM is fully available and ready for manipulation. It helps prevent errors, guarantees element availability, and can improve overall performance.
 
+## AJAX calls
+
+Making AJAX (Asynchronous JavaScript and XML) calls using jQuery is a common approach to retrieve data from a server and update parts of a web page dynamically. jQuery provides a simple and powerful set of methods for handling AJAX requests. Here's a step-by-step guide on how to make AJAX calls using jQuery:
+
+1. Prepare the jQuery AJAX request:
+   Start by creating a jQuery AJAX request using the `$.ajax()` method or one of its shorthand methods (`$.get()`, `$.post()`, `$.getJSON()`, etc.). Specify the URL of the server-side script or API endpoint you want to communicate with, and optionally provide additional settings as needed.
+
+   ```javascript
+   $.ajax({
+     url: 'https://example.com/api/data',
+     method: 'GET',
+     dataType: 'json',
+     data: { key: 'value' },
+     success: function(response) {
+       // Handle the successful response
+     },
+     error: function(xhr, status, error) {
+       // Handle the error response
+     }
+   });
+   ```
+
+   In this example, we use the `$.ajax()` method with the URL, method, data type, data payload, and success/error callbacks.
+
+2. Handle the AJAX response:
+   Specify the `success` and `error` callbacks in the AJAX request. The `success` callback is executed when the request is successful and returns a response from the server. The `error` callback is triggered if an error occurs during the request.
+
+   ```javascript
+   success: function(response) {
+     // Handle the successful response
+     console.log(response);
+   },
+   error: function(xhr, status, error) {
+     // Handle the error response
+     console.log(error);
+   }
+   ```
+
+   Inside the success or error callback functions, you can process the returned data, update the DOM, or perform any other necessary operations based on the response received.
+
+3. Send the AJAX request:
+   Finally, trigger the AJAX request by sending it to the server using the specified settings.
+
+   ```javascript
+   $.ajax({ /* AJAX settings */ });
+   ```
+
+   Alternatively, you can use the shorthand methods like `$.get()`, `$.post()`, or `$.getJSON()` to make specific types of requests.
+
+   ```javascript
+   $.get('https://example.com/api/data', function(response) {
+     // Handle the successful response
+   });
+   ```
+
+   This example uses the `$.get()` method to send a GET request to the specified URL.
+
+That's it! With these steps, you can make AJAX calls using jQuery. Remember to handle the response appropriately in the success and error callbacks, and utilize the data returned from the server as needed. AJAX requests allow you to fetch and update data dynamically without requiring a full page reload, enabling more interactive and responsive web applications.
+
+### CORS
+
+CORS (Cross-Origin Resource Sharing) is a mechanism that allows web browsers to make AJAX requests to a different domain than the one hosting the web page. By default, web browsers enforce the same-origin policy, which restricts AJAX requests to the same domain for security reasons. However, CORS provides a way to relax this policy and enable cross-origin requests.
+
+When making AJAX calls using jQuery, you can configure CORS behavior and handle cross-origin requests using the `xhrFields` and `crossDomain` options. Additionally, you can include the `withCredentials` option to support sending and receiving cookies or authentication headers with the requests. Here's how it works:
+
+1. Enabling CORS:
+   To enable CORS in jQuery AJAX requests, you need to set the `crossDomain` option to `true`. This informs the browser that the request is intended for a different domain.
+
+   ```javascript
+   $.ajax({
+     url: 'https://example.com/api/data',
+     method: 'GET',
+     crossDomain: true,
+     success: function(response) {
+       // Handle the successful response
+     },
+     error: function(xhr, status, error) {
+       // Handle the error response
+     }
+   });
+   ```
+
+   By setting `crossDomain` to `true`, jQuery adds the necessary headers to the request to support cross-origin communication.
+
+2. Sending credentials:
+   If you need to send or receive cookies or authentication headers with the requests, you can include the `withCredentials` option.
+
+   ```javascript
+   $.ajax({
+     url: 'https://example.com/api/data',
+     method: 'GET',
+     crossDomain: true,
+     xhrFields: {
+       withCredentials: true
+     },
+     success: function(response) {
+       // Handle the successful response
+     },
+     error: function(xhr, status, error) {
+       // Handle the error response
+     }
+   });
+   ```
+
+   By setting `withCredentials` to `true`, the browser includes any relevant credentials with the request, allowing the server to authorize and respond accordingly.
+
+It's important to note that CORS support is a server-side configuration. The server must respond with appropriate CORS headers (`Access-Control-Allow-Origin`, `Access-Control-Allow-Methods`, etc.) to allow cross-origin requests. Without proper server-side configuration, the browser may block the request.
+
+Using CORS and `withCredentials` in AJAX calls allows you to interact with APIs or resources hosted on different domains, enabling cross-origin communication. However, it's essential to ensure proper security measures and configure the server accordingly to prevent unauthorized access or data leakage.
+
+### Synchronizing two or more calls
+
+To combine two or more AJAX calls to the server and wait for all responses to process before executing further code, you can use jQuery's `$.when()` method in combination with the `$.ajax()` method. Here's how you can achieve this:
+
+1. Define your AJAX calls:
+   Start by defining your individual AJAX calls using the `$.ajax()` method. Each call should have its own success callback to handle the response.
+
+   ```javascript
+   var request1 = $.ajax({
+     url: 'https://example.com/api/data1',
+     method: 'GET'
+   });
+
+   var request2 = $.ajax({
+     url: 'https://example.com/api/data2',
+     method: 'GET'
+   });
+   ```
+
+   In this example, we have defined two AJAX calls, `request1` and `request2`, targeting different URLs.
+
+2. Combine and wait for responses:
+   Use the `$.when()` method to combine the AJAX requests and wait for all responses to complete.
+
+   ```javascript
+   $.when(request1, request2).done(function(response1, response2) {
+     // Handle the responses
+     var data1 = response1[0];
+     var data2 = response2[0];
+
+     // Process the data or perform further actions
+   });
+   ```
+
+   The `$.when()` method takes multiple Deferred objects (which include AJAX requests) as arguments. The `.done()` function will be executed when all the requests have completed successfully.
+
+3. Handle response data:
+   Inside the `.done()` callback, you can access the responses using the `response1` and `response2` arguments. The responses are returned as arrays, so you can access the actual data using indexing (`response1[0]`, `response2[0]`).
+
+   You can then process the data or perform further actions based on the received responses.
+
+By using `$.when()` in combination with `$.ajax()`, you can effectively combine multiple AJAX calls and ensure that further code execution occurs only when all responses are received and processed. This approach is particularly useful when you need to synchronize multiple asynchronous requests and perform actions based on the combined result.
+
+### Promises to synchronize n calls
+
+To combine an arbitrary number of AJAX calls to the server and wait for all responses to process using Promises in jQuery, you can utilize the `$.ajax()` method along with `Promise.all()`. Here's how you can achieve this:
+
+1. Define your AJAX calls as Promises:
+   Start by creating an array of Promises, where each Promise represents an AJAX call using the `$.ajax()` method. Each Promise should handle the AJAX request and resolve or reject based on the response.
+
+   ```javascript
+   var promises = [];
+
+   // Create Promises for each AJAX call
+   promises.push(new Promise(function(resolve, reject) {
+     $.ajax({
+       url: 'https://example.com/api/data1',
+       method: 'GET',
+       success: resolve,
+       error: reject
+     });
+   }));
+
+   promises.push(new Promise(function(resolve, reject) {
+     $.ajax({
+       url: 'https://example.com/api/data2',
+       method: 'GET',
+       success: resolve,
+       error: reject
+     });
+   }));
+
+   // Add more Promises as needed
+   ```
+
+   In this example, we have defined two Promises representing two AJAX calls. Each Promise wraps the corresponding `$.ajax()` call and resolves or rejects based on the response.
+
+2. Combine and wait for all responses:
+   Use `Promise.all()` to combine the Promises and wait for all responses to resolve or reject. Pass the array of Promises to `Promise.all()`.
+
+   ```javascript
+   Promise.all(promises)
+     .then(function(responses) {
+       // Handle the responses
+       // responses is an array containing the resolved responses
+     })
+     .catch(function(error) {
+       // Handle the error
+     });
+   ```
+
+   The `Promise.all()` method takes an array of Promises and returns a new Promise. The `.then()` function will be executed when all the Promises are resolved successfully. The `.catch()` function will be executed if any of the Promises are rejected.
+
+3. Handle response data:
+   Inside the `.then()` callback, the `responses` parameter will contain an array of the resolved responses in the order they were requested. You can iterate over the `responses` array to access each response individually.
+
+   ```javascript
+   responses.forEach(function(response) {
+     // Process each response
+   });
+   ```
+
+   You can then process the data or perform further actions based on the received responses.
+
+By using Promises and `Promise.all()`, you can combine an arbitrary number of AJAX calls and wait for all responses to process. This approach allows for more structured and manageable asynchronous code, providing a clean way to handle multiple AJAX calls and their corresponding responses.
+
+
+
