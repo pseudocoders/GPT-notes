@@ -31,7 +31,7 @@ subtitle: All you need to be a web developer
 3. [Typescript](typescript/index.md)
 
 # Libraries
-1. JQuery
+1. [JQuery](jquery/index.md)
 2. [AngularJS](angularjs/index.md)
 
 # Frameworks
