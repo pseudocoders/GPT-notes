@@ -210,6 +210,179 @@ DOM manipulation refers to the process of dynamically modifying the structure, c
    $('#toBeRemoved').remove();
    ```
 
-These examples demonstrate some of the core DOM manipulation capabilities of jQuery. With jQuery, you can easily select elements, modify their content, attributes, styles, and classes, create or remove elements, and handle various events. It simplifies the process of working with the DOM, making it more efficient and concise.
+These examples demonstrate some of the core DOM manipulation capabilities of jQuery. With jQuery, you can easily select elements, modify their content, attributes, styles, and classes, create or remove elements. It simplifies the process of working with the DOM, making it more efficient and concise.
 
+## Handling events
 
+jQuery allows you to respond to user interactions, such as clicks, mouse movements, keyboard input, and more. jQuery provides a variety of methods and functions to simplify event handling and make it cross-browser compatible. Here's a deeper explanation of handling events using jQuery:
+
+1. Attaching event handlers:
+   To attach an event handler to an element, you can use jQuery's `on()` method or a shorthand method like `click()`, `hover()`, etc.
+
+   - Using `on()` method:
+     ```javascript
+     $('selector').on('event', handler);
+     ```
+
+   - Using shorthand methods:
+     ```javascript
+     $('selector').click(handler);
+     $('selector').hover(handlerIn, handlerOut);
+     ```
+
+   Here, `'selector'` represents the element(s) you want to attach the event handler to, `'event'` is the event type (e.g., 'click', 'hover', 'keydown', etc.), and `handler` refers to the function that will be executed when the event occurs.
+
+2. Event delegation:
+   Event delegation allows you to handle events on dynamically added or removed elements, or elements that are not present when the page is loaded. It works by attaching the event handler to a parent element and specifying the target element using a selector.
+
+   ```javascript
+   $(document).on('event', 'selector', handler);
+   ```
+
+   In this case, `document` represents the parent element that exists from the beginning, `'event'` is the event type, `'selector'` specifies the target element, and `handler` is the function to execute.
+
+3. Event object:
+   When an event occurs, jQuery passes an event object to the event handler function. This object contains information about the event and provides methods to interact with it. The event object can be accessed as a parameter in the event handler function.
+
+   ```javascript
+   $('selector').on('event', function(event) {
+     // Access event object properties and methods
+     var target = event.target;
+     var keyCode = event.which;
+
+     // Prevent default behavior
+     event.preventDefault();
+   });
+   ```
+
+   By using the event object, you can access properties like `target` (the element that triggered the event), `which` (the key code of a keyboard event), `type` (the event type), and more.
+
+4. Event propagation:
+   jQuery provides methods to control event propagation, which determines the order in which events are triggered on nested elements. The methods are `stopPropagation()`, which stops the event from bubbling up the DOM tree, and `stopImmediatePropagation()`, which stops the event from triggering other handlers on the same element.
+
+   ```javascript
+   $('selector').on('event', function(event) {
+     // Stop event propagation
+     event.stopPropagation();
+
+     // Stop event propagation and other handlers on the same element
+     event.stopImmediatePropagation();
+   });
+   ```
+
+   These methods are useful when you want to prevent an event from triggering parent or sibling element event handlers.
+
+5. Event delegation and dynamic elements:
+   Event delegation is especially useful when working with dynamically added or removed elements. By attaching the event handler to a parent element that exists from the beginning, you can handle events on dynamically generated child elements.
+
+   ```javascript
+   $(document).on('event', 'selector', function() {
+     // Handle event on dynamically generated elements
+   });
+   ```
+
+   In this way, even if elements matching the selector are added or removed dynamically, the event handler will still work.
+
+6. Unbinding events:
+   To remove event handlers from elements, jQuery provides the `off()` method.
+
+   ```javascript
+   $('selector').off('event', handler);
+   ```
+
+   This removes
+
+ the specified event handler from the selected element(s).
+
+These are some key concepts and techniques for handling events using jQuery. By utilizing these methods, you can easily attach event handlers, delegate events, access event objects, control event propagation, and handle dynamically generated elements with ease.
+
+### Most popular events
+
+Here is a list of some commonly used events in jQuery:
+
+1. `click`: Triggered when an element is clicked.
+   ```javascript
+   $('selector').click(function() {
+     // Handle click event
+   });
+   ```
+
+2. `mouseenter` and `mouseleave`: Triggered when the mouse enters or leaves an element.
+   ```javascript
+   $('selector').mouseenter(function() {
+     // Handle mouse enter event
+   });
+
+   $('selector').mouseleave(function() {
+     // Handle mouse leave event
+   });
+   ```
+
+3. `keydown`, `keyup`, and `keypress`: Triggered when a key is pressed, released, or both while the element has focus.
+   ```javascript
+   $('input').keydown(function(event) {
+     // Handle keydown event
+   });
+
+   $('input').keyup(function(event) {
+     // Handle keyup event
+   });
+
+   $('input').keypress(function(event) {
+     // Handle keypress event
+   });
+   ```
+
+4. `submit`: Triggered when a form is submitted.
+   ```javascript
+   $('form').submit(function(event) {
+     // Handle form submission event
+     event.preventDefault(); // Prevent the default form submission
+   });
+   ```
+
+5. `focus` and `blur`: Triggered when an element gains or loses focus.
+   ```javascript
+   $('input').focus(function() {
+     // Handle focus event
+   });
+
+   $('input').blur(function() {
+     // Handle blur event
+   });
+   ```
+
+6. `change`: Triggered when the value of an input element changes (for checkboxes, radio buttons, and select dropdowns).
+   ```javascript
+   $('input[type="checkbox"]').change(function() {
+     // Handle change event for checkboxes
+   });
+
+   $('input[type="radio"]').change(function() {
+     // Handle change event for radio buttons
+   });
+
+   $('select').change(function() {
+     // Handle change event for select dropdowns
+   });
+   ```
+
+7. `scroll`: Triggered when an element is scrolled.
+   ```javascript
+   $('selector').scroll(function() {
+     // Handle scroll event
+   });
+   ```
+
+8. `load`: Triggered when an element or the entire page finishes loading.
+   ```javascript
+   $(window).load(function() {
+     // Handle load event
+   });
+
+   $('img').load(function() {
+     // Handle image load event
+   });
+   ```
+
+These are just a few examples of the most commonly used events in jQuery. By attaching event handlers to these events, you can create interactive web applications and respond to user interactions effectively.
