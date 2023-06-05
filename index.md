@@ -15,7 +15,7 @@ subtitle: All you need to be a web developer
 6. [Algorithms](basics/algorithms.md)
 7. [Patterns](basics/patterns.md)
 8. [Languages](basics/languages.md)
-9. [Frontend](basics/fontend.md)
+9. [Frontend](basics/frontend.md)
 10. [Backend](basics/backend.md)
 11. [Databases](basics/databases.md)
 12. [Testing](basics/testing.md)
