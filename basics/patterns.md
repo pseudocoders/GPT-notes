@@ -339,3 +339,226 @@ The `createAnimal` function serves as the factory function. It takes an `animalT
 In the main program, we receive an `animalType` parameter and call the `createAnimal` factory function to create an animal object. The factory function handles the creation logic based on the parameter and returns an instance of the appropriate animal class.
 
 Finally, we invoke the `speak` method on the animal object, which will output "Woof!" if the `animalType` is "dog" or "Meow!" if the `animalType` is "cat". This demonstrates how the Factory pattern with a factory function allows for dynamic creation of objects and interaction with them through a common interface, without explicitly knowing their specific types.
+
+
+## Decorator
+
+The Decorator pattern is a structural design pattern that allows you to dynamically add new behaviors or functionalities to an object without modifying its underlying structure. It follows the principle of open-closed design, where classes are open for extension but closed for modification.
+
+The pattern involves two main components: the base component (also known as the component interface) and the decorator classes. The base component defines the common interface or behavior that both the original object and its decorators implement.
+
+Decorators are classes that wrap the base component and provide additional functionalities by adding new behavior before or after the execution of the base component's methods. Decorators have the same interface as the base component, allowing them to be used interchangeably.
+
+The key idea behind the Decorator pattern is that the decorators maintain a reference to the base component and enhance its behavior by adding their own functionality. They delegate calls to the base component's methods and may perform additional actions before or after the delegation.
+
+By stacking multiple decorators on top of each other, it is possible to combine and compose various functionalities dynamically. This allows for flexible and fine-grained behavior customization of objects at runtime.
+
+The Decorator pattern offers several benefits, including:
+
+1. Enhanced flexibility: Decorators allow for the dynamic addition of behaviors, making it easy to extend the functionality of an object without modifying its code.
+2. Simplified customization: With decorators, you can add or remove functionalities as needed, providing a more flexible and customizable approach compared to subclassing.
+3. Better code reusability: Decorators can be combined and reused to create new combinations of behaviors, promoting code reuse and modularity.
+4. Preserved interface: Both the base component and decorators implement the same interface, ensuring that the clients can interact with them uniformly.
+
+Overall, the Decorator pattern provides a way to add or modify functionalities of objects at runtime while preserving code flexibility and adhering to the open-closed principle.
+
+### Java Example
+
+Here's an example of the Decorator pattern in Java:
+
+```java
+// Component interface
+interface Beverage {
+    double getCost();
+    String getDescription();
+}
+
+// Concrete component
+class DarkRoast implements Beverage {
+    public double getCost() {
+        return 2.0;
+    }
+
+    public String getDescription() {
+        return "Dark Roast Coffee";
+    }
+}
+
+class HouseBlend implements Beverage {
+    public double getCost() {
+        return 1.5;
+    }
+
+    public String getDescription() {
+        return "House Blend Coffee";
+    }
+}
+
+// Decorator
+abstract class Addon implements Beverage {
+    protected Beverage beverage;
+
+    public Addon(Beverage beverage) {
+        this.beverage = beverage;
+    }
+}
+
+// Concrete decorators
+class Milk extends Addon {
+    public Milk(Beverage beverage) {
+        super(beverage);
+    }
+
+    public double getCost() {
+        return beverage.getCost() + 0.5;
+    }
+
+    public String getDescription() {
+        return beverage.getDescription() + ", Milk";
+    }
+}
+
+class Sugar extends Addon {
+    public Sugar(Beverage beverage) {
+        super(beverage);
+    }
+
+    public double getCost() {
+        return beverage.getCost() + 0.3;
+    }
+
+    public String getDescription() {
+        return beverage.getDescription() + ", Sugar";
+    }
+}
+
+// Client code
+public class Main {
+    public static void main(String[] args) {
+        Beverage darkRoast = new DarkRoast();
+        System.out.println("Dark Roast Coffee: " + darkRoast.getDescription() + ", Cost: $" + darkRoast.getCost());
+
+        Beverage houseBlendWithMilk = new Milk(new HouseBlend());
+        System.out.println("House Blend Coffee with Milk: " + houseBlendWithMilk.getDescription() + ", Cost: $" + houseBlendWithMilk.getCost());
+
+        Beverage darkRoastWithMilkAndSugar = new Sugar(new Milk(new DarkRoast()));
+        System.out.println("Dark Roast Coffee with Milk and Sugar: " + darkRoastWithMilkAndSugar.getDescription() + ", Cost: $" + darkRoastWithMilkAndSugar.getCost());
+    }
+}
+```
+
+In this example, we have a `Beverage` interface that defines the `getCost` and `getDescription` methods. The `DarkRoast` and `HouseBlend` classes are concrete implementations of the `Beverage` interface representing different coffee varieties.
+
+The `Addon` class is the abstract decorator class that implements the `Beverage` interface and maintains a reference to the decorated beverage object.
+
+The `Milk` and `Sugar` classes are concrete decorators that extend the `Addon` class. They add additional functionalities by overriding the `getCost` and `getDescription` methods and calling the base implementation.
+
+In the client code, we create instances of different coffee varieties and wrap them with decorators to add addons. The addons modify the cost and description of the coffee accordingly.
+
+When we run the `main` method, it outputs the description and cost of each coffee with the specified addons. For example, "Dark Roast Coffee with Milk and Sugar: Dark Roast Coffee, Milk, Sugar, Cost: $3.3".
+
+### Javascript Example
+
+Here's the example of the Decorator pattern in JavaScript:
+
+```javascript
+// Component interface
+class Beverage {
+  getCost() {
+    throw new Error("Method 'getCost()' must be implemented.");
+  }
+
+  getDescription() {
+    throw new Error("Method 'getDescription()' must be implemented.");
+  }
+}
+
+// Concrete component
+class DarkRoast extends Beverage {
+  getCost() {
+    return 2.0;
+  }
+
+  getDescription() {
+    return "Dark Roast Coffee";
+  }
+}
+
+class HouseBlend extends Beverage {
+  getCost() {
+    return 1.5;
+  }
+
+  getDescription() {
+    return "House Blend Coffee";
+  }
+}
+
+// Decorator
+class Addon extends Beverage {
+  constructor(beverage) {
+    super();
+    this.beverage = beverage;
+  }
+
+  getCost() {
+    return this.beverage.getCost();
+  }
+
+  getDescription() {
+    return this.beverage.getDescription();
+  }
+}
+
+// Concrete decorators
+class Milk extends Addon {
+  constructor(beverage) {
+    super(beverage);
+  }
+
+  getCost() {
+    return this.beverage.getCost() + 0.5;
+  }
+
+  getDescription() {
+    return this.beverage.getDescription() + ", Milk";
+  }
+}
+
+class Sugar extends Addon {
+  constructor(beverage) {
+    super(beverage);
+  }
+
+  getCost() {
+    return this.beverage.getCost() + 0.3;
+  }
+
+  getDescription() {
+    return this.beverage.getDescription() + ", Sugar";
+  }
+}
+
+// Client code
+const darkRoast = new DarkRoast();
+console.log("Dark Roast Coffee: " + darkRoast.getDescription() + ", Cost: $" + darkRoast.getCost());
+
+const houseBlendWithMilk = new Milk(new HouseBlend());
+console.log("House Blend Coffee with Milk: " + houseBlendWithMilk.getDescription() + ", Cost: $" + houseBlendWithMilk.getCost());
+
+const darkRoastWithMilkAndSugar = new Sugar(new Milk(new DarkRoast()));
+console.log("Dark Roast Coffee with Milk and Sugar: " + darkRoastWithMilkAndSugar.getDescription() + ", Cost: $" + darkRoastWithMilkAndSugar.getCost());
+```
+
+In this example, we use JavaScript classes to represent the component, concrete components, decorators, and concrete decorators. The syntax and structure of the code are adjusted accordingly.
+
+When we run the code, it outputs the description and cost of each coffee with the specified addons, similar to the Java example. For example:
+```
+Dark Roast Coffee: Dark Roast Coffee, Cost: $2
+House Blend Coffee with Milk: House Blend Coffee, Milk, Cost: $2.5
+Dark Roast Coffee with Milk and Sugar: Dark Roast Coffee, Milk, Sugar, Cost: $3.3
+```
+
+The Decorator pattern is implemented in a similar manner as in Java, but with the appropriate syntax for JavaScript classes and method definitions.
+
+
