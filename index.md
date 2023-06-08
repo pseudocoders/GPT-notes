@@ -22,21 +22,25 @@ subtitle: All you need to be a web developer
 13. [Testing](basics/testing.md)
 14. [Deployment](basics/deployment.md)
 
+# Markups
+1. [JSON](markups/json.md)
+2. [HTML](markups/html.md)
+3. [CSS](markups/css.md)
+
 # Tools
 1. [Git](git/index.md)
 2. [nvm](nvm/index.md)
 
-# Languages
+# Backend
 1. [Java](java/index.md)
-2. [Javascript](javascript/index.md)
-3. [Typescript](typescript/index.md)
+2. [Java for the backend](java4backend/index.md)
+3. [Spring Boot](springboot/index.md)
 
-# Libraries
-1. [JQuery](jquery/index.md)
-2. [AngularJS](angularjs/index.md)
-
-# Frameworks
-1. [Spring Boot](springboot/index.md)
-2. [Angular](angular/index.md)
+# Frontend
+1. [Javascript](javascript/index.md)
+2. [JQuery](jquery/index.md)
+3. [AngularJS](angularjs/index.md)
+4. [Typescript](typescript/index.md)
+5. [Angular](angular/index.md)
 
 
