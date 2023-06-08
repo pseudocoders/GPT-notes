@@ -17,10 +17,9 @@ subtitle: All you need to be a web developer
 8. [Languages](basics/languages.md)
 9. [Frontend](basics/frontend.md)
 10. [Backend](basics/backend.md)
-11. [Java Backend](basics/javabackend.md)
-12. [Databases](basics/databases.md)
-13. [Testing](basics/testing.md)
-14. [Deployment](basics/deployment.md)
+11. [Databases](basics/databases.md)
+12. [Testing](basics/testing.md)
+13. [Deployment](basics/deployment.md)
 
 # Markups
 1. [JSON](markups/json.md)
