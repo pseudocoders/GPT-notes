@@ -4,7 +4,7 @@
 
 ### Compilers
 
-Certainly! Let's explain the differences between a compiler, an interpreter, a linter, and a transpiler, along with some examples:
+Let's explain the differences between a compiler, an interpreter, a linter, and a transpiler, along with some examples:
 
 1. Compiler:
 A compiler is a program that translates the entire source code of a programming language into an executable form or another target language. It performs a series of steps, including lexical analysis, parsing, semantic analysis, optimization, and code generation. The output of a compiler is usually a standalone executable or a binary file that can be executed directly by the operating system. Examples of compilers include GCC (GNU Compiler Collection) for C/C++, Java Compiler for Java, and Swift Compiler for Swift.
