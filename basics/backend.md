@@ -567,3 +567,94 @@ For Clojure:
 5. Toucan
 
 These are just some of the popular ORM frameworks available for each backend language. Each ORM has its own features, syntax, and level of abstraction, so you can choose the one that best fits your project requirements and coding style.
+
+## Dependency management systems
+
+A dependency management system is a tool or mechanism used in software development to manage and track the dependencies of a project. Dependencies refer to external libraries, modules, or packages that a project relies on to function properly.
+
+The primary purpose of a dependency management system is to simplify the process of handling and resolving dependencies, ensuring that all required components are available and compatible with each other. It helps developers avoid manual downloading, configuring, and tracking of dependencies, making the development process more efficient and manageable.
+
+Here are some key aspects and features of a dependency management system:
+
+1. Dependency Declaration: A dependency management system allows developers to declare the external dependencies required by their project. Typically, dependencies are specified in a configuration file or a manifest file, which includes details such as the name, version, and any additional constraints or requirements.
+
+2. Dependency Resolution: Once the dependencies are declared, the dependency management system takes care of resolving them. It analyzes the declared dependencies and their respective versions, checks for compatibility, and determines the most appropriate versions to use. It resolves conflicts and ensures that all required dependencies and their transitive dependencies are available.
+
+3. Dependency Retrieval: The dependency management system is responsible for automatically retrieving the required dependencies from remote repositories or local caches. It handles the downloading, caching, and storing of the dependencies, making them available for the project's use.
+
+4. Versioning and Compatibility: Dependency management systems handle versioning of dependencies and ensure compatibility between different components. They provide mechanisms to specify version constraints, such as minimum and maximum version ranges or specific version numbers. This helps in maintaining the stability and compatibility of the project's dependencies.
+
+5. Dependency Lifecycle: A dependency management system can handle the lifecycle of dependencies throughout the development process. It can assist in updating dependencies to newer versions, managing different versions for different projects, and handling the installation or removal of dependencies as needed.
+
+6. Dependency Conflict Resolution: In cases where multiple dependencies have conflicting requirements or versions, the dependency management system resolves these conflicts by choosing the most appropriate versions or providing mechanisms to manually resolve conflicts.
+
+7. Integration with Build Systems: Dependency management systems often integrate with build systems and development tools. They seamlessly integrate with the build process, ensuring that the necessary dependencies are available during compilation, testing, and deployment.
+
+Some examples of popular dependency management systems are:
+
+- Maven (Java)
+- Gradle (Java, Android)
+- npm (Node.js, JavaScript)
+- pip (Python)
+- Composer (PHP)
+- Bundler (Ruby)
+- NuGet (C#/.NET)
+- Leiningen (Clojure)
+- sbt (Scala)
+
+By utilizing a dependency management system, developers can easily manage and resolve external dependencies, streamline the development workflow, and ensure that the project is built on a solid foundation of reliable and compatible components.
+
+### Implementations
+
+Here's a list of popular dependency management systems grouped by backend development language:
+
+For Java:
+- Maven
+- Gradle
+- Apache Ivy
+
+For JavaScript/Node.js:
+- npm (Node Package Manager)
+- Yarn
+- pnpm
+
+For Python:
+- pip (Python Package Installer)
+- Anaconda (Conda)
+
+For PHP:
+- Composer
+
+For Ruby:
+- Bundler
+- RubyGems
+
+For C#/.NET:
+- NuGet
+- Paket
+
+For Go:
+- Go Modules
+
+For Rust:
+- Cargo
+
+For Elixir:
+- Hex (Elixir Package Manager)
+- Mix
+
+For Haskell:
+- Cabal
+- Stack
+
+For Swift:
+- Swift Package Manager
+
+For Clojure:
+- Leiningen
+- Boot
+- Deps.edn
+
+These are some of the widely used dependency management systems for different backend development languages. Each system has its own features, conventions, and ecosystem, so it's important to choose the one that best fits your specific language and project requirements.
+
+
