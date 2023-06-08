@@ -151,3 +151,25 @@ In the bytecode representation, each line of Java bytecode corresponds to an ins
 
 Please note that the complete bytecode representation includes additional instructions and metadata, but the provided snippet gives you an idea of how bytecode represents the Java program's logic and instructions.
 
+## Classpath
+
+In Java, the classpath is an environment variable or a command-line option that specifies the locations where the Java Virtual Machine (JVM) should look for classes and resources required by a Java program at runtime. It is a list of directories, JAR files, and other locations that contain compiled Java bytecode.
+
+When a Java program is executed, the JVM needs to locate and load the necessary classes referenced by the program. The classpath provides a way for the JVM to find these classes by specifying the directories or JAR files where they are located.
+
+The classpath can be set in several ways:
+
+1. Command-line option: You can set the classpath using the `-classpath` or `-cp` option when executing the `java` command. For example:
+   ```
+   java -classpath /path/to/classes:/path/to/lib/library.jar MyProgram
+   ```
+
+2. Environment variable: You can set the `CLASSPATH` environment variable to specify the classpath. This can be done either globally or for a specific command session.
+
+3. Manifest file: When creating a JAR file, you can specify the classpath in the JAR's manifest file. The manifest file contains metadata about the JAR and can include a `Class-Path` entry specifying the locations of dependent classes.
+
+The classpath can include multiple entries separated by platform-specific path separators (e.g., `:` on Unix-like systems and `;` on Windows). Each entry in the classpath can be a directory, a JAR file, or an archive containing compiled Java bytecode.
+
+When the JVM encounters a class reference during program execution, it searches for the required class in the directories and JAR files specified in the classpath. If the class is found, it is loaded and used by the JVM. If the class is not found in the classpath, a `ClassNotFoundException` is thrown at runtime.
+
+By configuring the classpath correctly, you ensure that the JVM can locate all the necessary classes and resources required by your Java program. It allows you to use external libraries, custom classes, and other dependencies in your application, making it more flexible and modular.
