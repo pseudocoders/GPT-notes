@@ -1,0 +1,12 @@
+# Basics
+1. [The Internet, HTTP and the world wide web](http.md)
+2. [Software Production Engineering](production.md)
+3. [Software architecture for web projects](architecture.md)
+4. [Structured Design and Programming](programming.md)
+6. [Algorithms](algorithms.md)
+7. [Patterns](patterns.md)
+8. [Languages](languages.md)
+9. [Frontend](frontend.md)
+10. [Backend](backend.md)
+11. [Databases](databases.md)
+13. [Deployment](deployment.md)
