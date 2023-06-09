@@ -145,7 +145,7 @@ It's important to note that SLF4J itself does not perform any logging. It delega
 
 ### Log4j with SLF4J example
 
-Certainly! Here's an example of how you can configure and use Log4j with the SLF4J facade in a Java web project:
+Here's an example of how you can configure and use Log4j with the SLF4J facade in a Java web project:
 
 1. Add Dependencies: Include the SLF4J and Log4j dependencies in your project's build file (e.g., Maven, Gradle) to make them available in your project's classpath.
 
