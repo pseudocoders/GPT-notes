@@ -21,8 +21,8 @@ subtitle: All you need to be a web developer
 
 # Markups
 1. [JSON](markups/json.md)
-2. [HTML](markups/html.md)
-3. [CSS](markups/css.md)
+2. HTML
+3. CSS
 
 # Tools
 1. [Git](git/index.md)
