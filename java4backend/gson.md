@@ -65,6 +65,36 @@ In this example, the JSON string is deserialized into a `MyClass` object, allowi
 
 Overall, Gson is a powerful and widely used library for working with JSON data in Java, providing a convenient way to convert between Java objects and JSON representations.
 
+## Maven dependency
+
+To include the Google Gson dependency in a Maven project, you need to add the appropriate Maven dependency configuration in your project's `pom.xml` file. Here's an example of how to include Gson as a dependency in Maven:
+
+```xml
+<dependencies>
+    <!-- Other dependencies -->
+    <dependency>
+        <groupId>com.google.code.gson</groupId>
+        <artifactId>gson</artifactId>
+        <version>2.8.9</version>
+    </dependency>
+    <!-- Other dependencies -->
+</dependencies>
+```
+
+In your `pom.xml` file, locate the `<dependencies>` section, and within it, add the `<dependency>` element as shown above.
+
+Explanation of the `<dependency>` elements:
+
+- `groupId`: Specifies the group or organization that provides the dependency. For Google Gson, it is `com.google.code.gson`.
+- `artifactId`: Specifies the name of the artifact, which is the library or module you want to include. For Gson, it is `gson`.
+- `version`: Specifies the version of the artifact you want to use. Replace `2.8.9` with the desired version of Gson.
+
+Once you have added the dependency configuration, save the `pom.xml` file. Maven will automatically download the Gson library from the Maven Central Repository when you build your project or resolve dependencies.
+
+After including the Gson dependency, you can use the Gson library in your Java code by importing the required classes and using its functionalities.
+
+Note: Make sure you have Maven installed and configured properly in your development environment.
+
 ## Selective serialization / deserialization
 
 To configure Google Gson to selectively serialize or deserialize a field while excluding it from the opposite operation, you can combine the `@Expose` and `@SerializedName` annotations along with custom serialization and deserialization strategies. This approach allows you to have fine-grained control over field serialization and deserialization.
