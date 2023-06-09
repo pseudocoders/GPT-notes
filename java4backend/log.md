@@ -40,6 +40,85 @@ Log4j has evolved over the years, and as of my knowledge cutoff in September 202
 
 It's worth noting that while Log4j is widely used, other logging frameworks like SLF4J (Simple Logging Facade for Java) are also popular. SLF4J provides a simple facade or abstraction layer, allowing developers to use different logging frameworks, including Log4j, behind the scenes. This enables flexibility in logging implementations without requiring changes to the application code.
 
+### Example 
+
+Here's an example of how you can configure and use Log4j in a Java web project:
+
+1. Add Log4j Dependency: Include the Log4j dependency in your project's build file (e.g., Maven, Gradle) to make Log4j available in your project's classpath.
+
+2. Configure Log4j: Create a Log4j configuration file (e.g., log4j2.xml) to define the logging behavior. Here's a basic example:
+
+```xml
+<!-- log4j2.xml -->
+<Configuration>
+  <Appenders>
+    <Console name="ConsoleAppender" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+    </Console>
+  </Appenders>
+  <Loggers>
+    <Root level="info">
+      <AppenderRef ref="ConsoleAppender"/>
+    </Root>
+  </Loggers>
+</Configuration>
+```
+
+In this example, we configure Log4j to log messages to the console with a specific pattern layout.
+
+3. Initialize Log4j: In your web application, you need to initialize Log4j to load the configuration file and start logging. Here's an example of initializing Log4j in a servlet context listener:
+
+```java
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+public class Log4jInitializer implements ServletContextListener {
+
+    private static final Logger logger = LogManager.getLogger(Log4jInitializer.class);
+
+    @Override
+    public void contextInitialized(ServletContextEvent event) {
+        String configFile = "/path/to/log4j2.xml"; // Path to your log4j2.xml configuration file
+        System.setProperty("log4j.configurationFile", configFile);
+        logger.info("Log4j initialized with configuration file: " + configFile);
+    }
+
+    @Override
+    public void contextDestroyed(ServletContextEvent event) {
+        // Clean up resources if needed
+    }
+}
+```
+
+In this example, we set the `log4j.configurationFile` system property to specify the path to the Log4j configuration file. Adjust the `configFile` variable to the appropriate path for your project.
+
+4. Use Log4j in your Web Application: Now, you can use Log4j to log messages in your web application's code. Here's an example:
+
+```java
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+public class MyClass {
+    private static final Logger logger = LogManager.getLogger(MyClass.class);
+
+    public void doSomething() {
+        logger.info("Doing something...");
+        // Perform your logic
+        logger.debug("Debug message");
+        logger.error("Error occurred");
+    }
+}
+```
+
+In this example, we obtain a logger instance using `LogManager.getLogger()` and log messages at different log levels using the logger.
+
+Remember to import the necessary Log4j classes (`LogManager` and `Logger`) and adjust the logger name (`MyClass.class`) to match the appropriate class in your project.
+
+That's a basic example of configuring and using Log4j in a web Java project. You can customize the Log4j configuration and use additional features based on your logging requirements.
+
 ## SLF4J
 
 SLF4J (Simple Logging Facade for Java) is a logging abstraction framework for Java applications. It serves as a simple and flexible facade or API that allows developers to plug in various logging implementations without modifying their application code. SLF4J provides a unified logging interface, making it easier to switch or use multiple logging frameworks interchangeably.
