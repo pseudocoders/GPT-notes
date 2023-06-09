@@ -7,6 +7,5 @@
 5. [Tomcat](tomcat.md)
 6. [Hibernate](hibernate.md)
 7. [JPA](jpa.md)
-8. [Spring](spring.md)
-9. [Logging](log.md)
-10. [Testing](test.md)
+8. [Logging](log.md)
+9. [Testing](test.md)
