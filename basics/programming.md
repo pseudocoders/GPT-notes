@@ -604,4 +604,112 @@ In the main program, we create an instance of the `ConsoleLogger` and pass it as
 
 By using Dependency Injection, we decouple the `SampleClass` from the specific implementation of the logger (`ConsoleLogger`). The logger dependency is provided externally, allowing for easy substitution with other implementations of the `Logger` interface. This promotes modularity, testability, and flexibility in the codebase.
 
+### DI vs IoC
+
+Dependency Injection (DI) and Inversion of Control (IoC) are closely related concepts, often used together in software development. While they are related, there are differences between the two:
+
+1. Dependency Injection (DI):
+DI is a design pattern that focuses on managing dependencies between classes. It is a form of IoC that specifically deals with how dependencies are provided to a class. In DI, the responsibility of creating and providing dependencies is shifted to an external entity, typically a dependency injector or container. Dependencies are "injected" into a class from the outside, often through constructors, setter methods, or properties.
+
+DI promotes loose coupling between classes, as the dependent class doesn't directly create its dependencies. Instead, it relies on an external entity to supply them. DI improves code modularity, testability, and flexibility by allowing easy replacement of dependencies, promoting code reuse, and separating concerns.
+
+2. Inversion of Control (IoC):
+IoC is a broader concept that encompasses the idea of inverting the control flow in a software system. It is a principle that states that the control flow and management of resources should be delegated to a higher-level framework or container. In IoC, the responsibility of managing the flow and lifecycle of objects is transferred to a container or framework.
+
+IoC is a more general concept that includes DI as one of its techniques. It promotes a modular and extensible design by allowing components to be loosely coupled and by facilitating the configuration and management of dependencies. IoC frameworks or containers handle the creation, wiring, and lifecycle management of objects, often using techniques such as dependency injection.
+
+In summary, Dependency Injection (DI) is a specific technique within Inversion of Control (IoC) that focuses on managing dependencies between classes. DI is concerned with how dependencies are provided to a class, while IoC is a broader concept that encompasses the delegation of control flow and resource management to a higher-level framework or container. DI is a common implementation strategy used to achieve IoC in software development.
+
+#### Example
+
+Let's consider an example to demonstrate the differences between Dependency Injection (DI) and Inversion of Control (IoC):
+
+Suppose we have a simple application that involves a `UserService` and a `UserRepository` to manage user data. The `UserService` depends on the `UserRepository` for data access.
+
+1. Dependency Injection (DI) Example:
+In DI, the dependencies are explicitly provided to the dependent class, typically through the constructor, setter methods, or properties. Here's an example using constructor injection:
+
+```plaintext
+// Dependency Injection Example
+
+// UserService depends on UserRepository
+class UserService {
+    private userRepository: UserRepository;
+
+    constructor(userRepository: UserRepository) {
+        this.userRepository = userRepository;
+    }
+
+    // UserService methods using UserRepository
+    // ...
+}
+
+// UserRepository implementation
+class UserRepository {
+    // UserRepository implementation details
+}
+
+// Main program
+function main() {
+    // Create instances of UserService and UserRepository
+    const userRepository = new UserRepository();
+    const userService = new UserService(userRepository);
+
+    // Use the userService methods
+    // ...
+}
+```
+
+In this example, the `UserService` explicitly depends on the `UserRepository` through constructor injection. The `UserRepository` instance is created outside the `UserService` and passed to it when constructing the `UserService` object.
+
+2. Inversion of Control (IoC) Example:
+In IoC, the control flow and management of dependencies are delegated to an IoC container or framework. The container is responsible for creating and managing the objects and their dependencies. Here's an example using an IoC container:
+
+```plaintext
+// Inversion of Control (IoC) Example
+
+// UserService depends on UserRepository
+class UserService {
+    private userRepository: UserRepository;
+
+    constructor() {
+        // The UserRepository is obtained from the IoC container
+        this.userRepository = IoCContainer.resolve(UserRepository);
+    }
+
+    // UserService methods using UserRepository
+    // ...
+}
+
+// UserRepository implementation
+class UserRepository {
+    // UserRepository implementation details
+}
+
+// IoC container
+class IoCContainer {
+    static resolve<T>(dependency: { new (): T }): T {
+        // Resolve and return the dependency from the container
+        // ...
+    }
+}
+
+// Main program
+function main() {
+    // Create an instance of UserService from the IoC container
+    const userService = new IoCContainer.resolve(UserService);
+
+    // Use the userService methods
+    // ...
+}
+```
+
+In this example, the `UserService` relies on the IoC container to resolve its dependency, the `UserRepository`. The `UserService` constructor does not explicitly receive the `UserRepository` instance. Instead, it requests the `UserRepository` from the IoC container using the `IoCContainer.resolve()` method.
+
+The IoC container is responsible for creating and managing instances of the dependencies, allowing the `UserService` to be decoupled from the concrete implementation of `UserRepository`.
+
+In summary, the key difference between DI and IoC is in how the dependencies are provided to a class. DI involves explicitly injecting the dependencies into the class, while IoC delegates the responsibility of dependency resolution to an IoC container or framework. DI is a specific technique used to achieve IoC in practice.
+
+
+
 
