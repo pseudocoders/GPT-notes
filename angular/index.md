@@ -8,3 +8,5 @@
 6. [Routing](routing.md)
 7. [Forms](forms.md)
 8. [RxJS and AJAX](rxjs.md)
+9. Filters
+10. Interceptors
