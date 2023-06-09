@@ -710,6 +710,171 @@ The IoC container is responsible for creating and managing instances of the depe
 
 In summary, the key difference between DI and IoC is in how the dependencies are provided to a class. DI involves explicitly injecting the dependencies into the class, while IoC delegates the responsibility of dependency resolution to an IoC container or framework. DI is a specific technique used to achieve IoC in practice.
 
+## Functional programming
 
+Functional programming is a programming paradigm that focuses on writing programs using pure functions and immutable data. It treats computation as the evaluation of mathematical functions and avoids changing state or mutable data. Functional programming emphasizes the use of higher-order functions, recursion, and declarative programming style.
 
+Here are some key concepts and characteristics of functional programming:
 
+1. Pure Functions:
+In functional programming, functions are treated as first-class citizens and are expected to be pure. A pure function is a function that, given the same inputs, always produces the same output and has no side effects. It does not modify state or variables outside its scope, making it easier to reason about, test, and debug. Pure functions only depend on their input parameters, ensuring referential transparency.
+
+2. Immutable Data:
+Functional programming promotes immutability, meaning that data structures and values are not modified after they are created. Instead, new values are created when transformations or operations are applied to existing data. Immutable data reduces the chance of bugs related to shared mutable state and makes programs more thread-safe and parallelizable.
+
+3. Higher-Order Functions:
+Functional programming encourages the use of higher-order functions, which are functions that can take other functions as arguments or return functions as results. Higher-order functions enable composition and abstraction, allowing for more concise and modular code. They enable the building of powerful abstractions and support functional programming concepts such as mapping, filtering, and reducing over collections.
+
+4. Recursion:
+Recursion is often preferred over iterative loops in functional programming. Instead of using mutable variables and explicit looping constructs, problems are solved by breaking them down into smaller sub-problems, often using recursion. Recursion leverages the concept of self-reference and allows for elegant and concise code.
+
+5. Declarative Programming:
+Functional programming emphasizes a declarative style of programming, where the focus is on what should be achieved rather than how it should be achieved. Programs are expressed in terms of transformations and operations on data, rather than a step-by-step sequence of instructions. Declarative programming promotes code readability, modularity, and reusability.
+
+6. Avoiding Side Effects:
+Functional programming aims to minimize or eliminate side effects, which are changes or interactions with the outside world that occur during the execution of a program. By minimizing side effects, functional programs become more predictable and easier to reason about.
+
+Functional programming languages include Haskell, Lisp, Scala, Clojure, and parts of languages like JavaScript, Python, and Java support functional programming concepts.
+
+Functional programming provides benefits such as improved code maintainability, testability, and parallelism. It encourages a more declarative and expressive style of programming and facilitates reasoning about program behavior by reducing the complexity of mutable state and side effects.
+
+### Example
+
+Here's an example of functional programming using JavaScript:
+
+```javascript
+// Example: Calculate the sum of even numbers in an array
+
+// Imperative approach
+function sumOfEvenNumbersImperative(numbers) {
+  let sum = 0;
+  for (let i = 0; i < numbers.length; i++) {
+    if (numbers[i] % 2 === 0) {
+      sum += numbers[i];
+    }
+  }
+  return sum;
+}
+
+// Functional approach using higher-order functions
+function sumOfEvenNumbersFunctional(numbers) {
+  return numbers
+    .filter(num => num % 2 === 0) // Filter even numbers
+    .reduce((acc, curr) => acc + curr, 0); // Sum the filtered numbers
+}
+
+// Usage
+const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+console.log(sumOfEvenNumbersImperative(numbers)); // Output: 30
+console.log(sumOfEvenNumbersFunctional(numbers)); // Output: 30
+```
+
+In the above example, we have an array of numbers `[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]`. The goal is to calculate the sum of the even numbers in the array.
+
+The `sumOfEvenNumbersImperative` function demonstrates an imperative approach to solve the problem. It iterates over the array using a `for` loop, checks if each number is even, and accumulates the sum accordingly.
+
+The `sumOfEvenNumbersFunctional` function demonstrates a functional approach using higher-order functions. It utilizes two higher-order functions: `filter` and `reduce`. The `filter` function is used to filter out the even numbers from the array, and the `reduce` function is used to sum the filtered numbers. The functions `filter` and `reduce` are pure functions that take a function as an argument.
+
+The functional approach is more concise and expressive. It treats the problem as a series of transformations on the data rather than explicitly controlling the flow of iteration and mutation of variables.
+
+Note that this example only demonstrates a small portion of functional programming in JavaScript. Functional programming encompasses more advanced concepts such as immutability, function composition, currying, and more.
+
+### Example
+
+Here's another example that demonstrates functional programming concepts in JavaScript:
+
+```javascript
+// Example: Calculating Fibonacci sequence using recursion and memoization
+
+// Imperative approach
+function fibonacciImperative(n) {
+  if (n <= 1) {
+    return n;
+  }
+
+  let prev = 0;
+  let curr = 1;
+
+  for (let i = 2; i <= n; i++) {
+    const temp = curr;
+    curr = prev + curr;
+    prev = temp;
+  }
+
+  return curr;
+}
+
+// Functional approach using recursion and memoization
+function fibonacciFunctional(n, memo = {}) {
+  if (n <= 1) {
+    return n;
+  }
+
+  if (memo[n]) {
+    return memo[n];
+  }
+
+  const result = fibonacciFunctional(n - 1, memo) + fibonacciFunctional(n - 2, memo);
+  memo[n] = result;
+
+  return result;
+}
+
+// Usage
+console.log(fibonacciImperative(6)); // Output: 8
+console.log(fibonacciFunctional(6)); // Output: 8
+```
+
+In this example, we calculate the Fibonacci sequence up to a given number `n`.
+
+The `fibonacciImperative` function demonstrates an imperative approach using a `for` loop to iteratively calculate the Fibonacci sequence. It maintains two variables (`prev` and `curr`) to track the previous and current Fibonacci numbers.
+
+The `fibonacciFunctional` function demonstrates a functional approach using recursion and memoization. It uses the concept of memoization to store already computed Fibonacci numbers in an object (`memo`). Before computing a Fibonacci number, it checks if it has already been computed and retrieves it from the `memo` object if available. This approach avoids redundant calculations and improves performance.
+
+The functional approach focuses on expressing the problem in terms of recursion and immutability. It avoids mutable state and side effects, making the code more declarative and easier to reason about.
+
+Note that this example showcases recursion and memoization, which are common techniques in functional programming. Functional programming also encompasses other concepts like higher-order functions, function composition, and more.
+
+### Example
+
+Here's another example that demonstrates functional programming using JavaScript:
+
+```javascript
+// Example: Calculating the sum of the squared even numbers from an array
+
+// Imperative approach
+function sumOfSquaredEvenNumbersImperative(numbers) {
+  let sum = 0;
+  for (let i = 0; i < numbers.length; i++) {
+    if (numbers[i] % 2 === 0) {
+      sum += numbers[i] * numbers[i];
+    }
+  }
+  return sum;
+}
+
+// Functional approach using map, filter, and reduce
+function sumOfSquaredEvenNumbersFunctional(numbers) {
+  return numbers
+    .filter(num => num % 2 === 0) // Filter even numbers
+    .map(num => num * num) // Square each number
+    .reduce((acc, curr) => acc + curr, 0); // Sum the squared numbers
+}
+
+// Usage
+const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+console.log(sumOfSquaredEvenNumbersImperative(numbers)); // Output: 220
+console.log(sumOfSquaredEvenNumbersFunctional(numbers)); // Output: 220
+```
+
+In this example, we have an array of numbers `[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]`. The goal is to calculate the sum of the squared even numbers in the array.
+
+The `sumOfSquaredEvenNumbersImperative` function demonstrates an imperative approach to solve the problem. It iterates over the array using a `for` loop, checks if each number is even, squares the even numbers, and accumulates the sum.
+
+The `sumOfSquaredEvenNumbersFunctional` function demonstrates a functional approach using `filter`, `map`, and `reduce`. It filters out the even numbers from the array using the `filter` function, squares each even number using the `map` function, and finally sums the squared numbers using the `reduce` function.
+
+The functional approach is more declarative and expressive, expressing the problem as a series of transformations on the data. It avoids mutable state and promotes immutability, making the code more concise and easier to reason about.
+
+The use of `map`, `filter`, and `reduce` allows for a functional and concise solution, emphasizing the transformation and processing of the data rather than explicit control flow and mutation of variables.
