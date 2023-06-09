@@ -240,3 +240,88 @@ In this example, the `CustomFieldAdapter` is registered with Gson using `registe
 During serialization, the custom adapter removes the "custom:" prefix from the `customField` value. During deserialization, the custom adapter adds the "custom:" prefix to the `customField` value.
 
 By using a custom adapter, you can selectively apply serialization and deserialization logic to specific fields, allowing you to handle them differently as per your requirements.
+
+### Customization with Dates example
+
+To customize Google Gson for serializing and deserializing a date field, you can use Gson's `JsonSerializer` and `JsonDeserializer` interfaces to define your custom logic for date conversion. Here's an example:
+
+```java
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonDeserializationContext;
+import java.lang.reflect.Type;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class MyClass {
+    private Date date;
+
+    public MyClass(Date date) {
+        this.date = date;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public static void main(String[] args) {
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Date.class, new DateSerializer())
+                .registerTypeAdapter(Date.class, new DateDeserializer())
+                .create();
+
+        // Serialization
+        Date currentDate = new Date();
+        MyClass obj = new MyClass(currentDate);
+        String json = gson.toJson(obj);
+        System.out.println(json);
+
+        // Deserialization
+        String jsonInput = "{\"date\":\"2023-06-09\"}";
+        MyClass deserializedObj = gson.fromJson(jsonInput, MyClass.class);
+        System.out.println(deserializedObj.getDate()); // Output: Fri Jun 09 00:00:00 UTC 2023
+    }
+}
+
+class DateSerializer implements JsonSerializer<Date> {
+    private static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+    @Override
+    public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext context) {
+        String formattedDate = dateFormat.format(src);
+        return new JsonPrimitive(formattedDate);
+    }
+}
+
+class DateDeserializer implements JsonDeserializer<Date> {
+    private static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+    @Override
+    public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
+        String dateString = json.getAsString();
+        try {
+            return dateFormat.parse(dateString);
+        } catch (ParseException e) {
+            // Handle parsing exception
+            e.printStackTrace();
+        }
+        return null;
+    }
+}
+```
+
+In this example, the `MyClass` contains a `date` field of type `java.util.Date`. We define two custom classes, `DateSerializer` and `DateDeserializer`, to handle the serialization and deserialization of the `Date` field, respectively.
+
+The `DateSerializer` class implements the `JsonSerializer<Date>` interface and overrides the `serialize` method. It formats the `Date` object using a `DateFormat` and returns a `JsonPrimitive` containing the formatted date string.
+
+The `DateDeserializer` class implements the `JsonDeserializer<Date>` interface and overrides the `deserialize` method. It retrieves the date string from the JSON input, parses it using the same `DateFormat`, and returns the resulting `Date` object.
+
+In the `main` method, we create a `Gson` instance using `GsonBuilder` and register the custom serializer and deserializer for the `Date` type. We then perform serialization and deserialization operations on a `MyClass` object containing a `Date` field.
+
+By customizing the serializer and deserializer for the `Date` field, you can control the format and behavior of date serialization and deserialization in Gson according to your specific requirements.
