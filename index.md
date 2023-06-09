@@ -7,19 +7,11 @@ subtitle: All you need to be a web developer
 -->
 
 # Basics
-1. [The Internet, HTTP and the world wide web](basics/http.md)
-2. [Software Production Engineering](basics/production.md)
-3. [Software architecture for web projects](basics/architecture.md)
-4. [Structured Design and Programming](basics/programming.md)
-6. [Algorithms](basics/algorithms.md)
-7. [Patterns](basics/patterns.md)
-8. [Languages](basics/languages.md)
-9. [Frontend](basics/frontend.md)
-10. [Backend](basics/backend.md)
-11. [Databases](basics/databases.md)
-13. [Deployment](basics/deployment.md)
+
+1. [The key concepts](basics/index.md)
 
 # Markups
+
 1. [JSON](markups/json.md)
 2. HTML
 3. CSS
