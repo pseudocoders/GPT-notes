@@ -358,6 +358,32 @@ DML statements are primarily used by application developers and end-users to per
 
 In summary, DDL is concerned with defining and managing the structure of the database objects, while DML is focused on manipulating and retrieving the data within those objects. Both DDL and DML are essential components of SQL and work together to facilitate efficient database management and data manipulation.
 
+### Relational managers
+
+Here is a list of popular Relational Database Management Systems (RDBMS):
+
+1. MySQL: An open-source RDBMS widely used for web applications. It is known for its ease of use, scalability, and strong community support.
+
+2. PostgreSQL: An open-source RDBMS known for its advanced features, extensibility, and support for various data types. It offers robustness, reliability, and SQL compliance.
+
+3. Oracle Database: A commercial RDBMS known for its high performance, scalability, and enterprise-level features. It is widely used in large organizations for mission-critical applications.
+
+4. Microsoft SQL Server: A commercial RDBMS developed by Microsoft. It provides a comprehensive set of features, scalability, and integration with other Microsoft technologies.
+
+5. IBM Db2: A commercial RDBMS with a long history. It offers strong performance, scalability, and advanced data management features. It is commonly used in enterprise environments.
+
+6. SQLite: A lightweight, file-based RDBMS that does not require a separate server process. It is widely used in embedded systems, mobile applications, and small-scale deployments.
+
+7. MariaDB: An open-source RDBMS that originated as a fork of MySQL. It aims to be a drop-in replacement for MySQL while adding new features and enhancements.
+
+8. Microsoft Access: A desktop-based RDBMS included in the Microsoft Office suite. It is commonly used for small-scale applications and data management on Windows systems.
+
+9. IBM Informix: A commercial RDBMS known for its high performance, scalability, and reliability. It offers features for real-time analytics, IoT, and high-volume transaction processing.
+
+10. SAP HANA: An in-memory RDBMS developed by SAP. It provides fast data processing, real-time analytics, and advanced features for handling large datasets.
+
+These are just a few examples of popular RDBMS. Each RDBMS has its own strengths, features, and use cases. The choice of RDBMS depends on factors such as the application requirements, scalability needs, performance expectations, and integration with existing technologies.
+
 ## Transactions
 
 A transaction is a logical unit of work that consists of one or more database operations. It represents a sequence of actions that need to be executed as a single, indivisible unit. The purpose of a transaction is to ensure data integrity and consistency within a database.
@@ -385,3 +411,56 @@ A transaction typically follows a sequence of steps:
 5. Rollback: If any part of the transaction fails or violates constraints, the changes made by the transaction are undone, and the database is rolled back to its state before the transaction started.
 
 Transactions provide reliability, data integrity, and consistency in multi-user database environments. They ensure that data modifications are handled in a controlled and reliable manner, allowing concurrent access to the database while preserving its integrity.
+
+
+## NoSQL
+
+NoSQL (Not Only SQL) databases are a category of databases that provide a flexible and scalable approach to storing and retrieving data. Unlike traditional Relational Database Management Systems (RDBMS), NoSQL databases do not rely on the rigid structure of tables, rows, and columns. Instead, they offer a more dynamic and schema-less data model, allowing for the storage and retrieval of unstructured, semi-structured, and structured data.
+
+NoSQL databases are suitable for a range of applications, including web applications, real-time analytics, content management systems, and IoT platforms. They excel in scenarios requiring high scalability, flexible data models, and efficient handling of large and rapidly changing datasets. However, it's important to note that NoSQL databases may sacrifice some ACID properties (Atomicity, Consistency, Isolation, Durability) offered by traditional RDBMS in favor of scalability and performance optimizations.
+
+### advantages
+
+NoSQL databases offer several advantages that make them suitable for certain use cases and provide benefits over traditional relational databases. Here are some advantages of using NoSQL databases:
+
+1. Flexible Data Model: NoSQL databases allow for flexible data models, accommodating unstructured, semi-structured, and structured data. This flexibility is beneficial when dealing with evolving data requirements or handling complex and diverse data types.
+
+2. Scalability: NoSQL databases are designed for scalability. They can handle large volumes of data and high-velocity workloads by distributing data across multiple servers in a horizontal scaling approach. This enables them to easily accommodate growing data demands and provide high availability and fault tolerance.
+
+3. High Performance: NoSQL databases are optimized for specific use cases and data models. They provide efficient data retrieval and storage mechanisms tailored to the specific needs of applications. This can result in improved performance for operations such as reads, writes, and queries, especially in scenarios with massive data sets or high-speed data ingestion.
+
+4. Agile Development and Schema Evolution: With NoSQL databases, developers have more flexibility in evolving the data model and making schema changes. This agility is particularly useful in Agile development environments where requirements can change rapidly. NoSQL databases do not require rigid schema definitions and support dynamic schema modifications, allowing for easier and faster iterations during development.
+
+5. Horizontal Scalability: NoSQL databases excel at horizontal scaling, meaning they can distribute data across multiple servers or nodes. This enables seamless expansion of the database infrastructure as data volume and workload increase. Horizontal scaling allows for improved performance, load balancing, and elasticity without the need for complex sharding techniques.
+
+6. Availability and Fault Tolerance: NoSQL databases often provide built-in replication and data redundancy features. This ensures high availability of data even in the event of server failures or network disruptions. With data replication across multiple nodes, NoSQL databases can continue to operate and serve requests, reducing the impact of potential downtime.
+
+7. Support for Big Data and Real-time Analytics: NoSQL databases are well-suited for handling large volumes of data, making them a popular choice for big data and real-time analytics scenarios. They can efficiently process and analyze massive datasets, enabling real-time insights and decision-making.
+
+It's important to note that the suitability of NoSQL databases depends on specific use cases and requirements. While they offer advantages in certain scenarios, traditional relational databases may still be more appropriate for applications with well-defined schemas, complex relationships, and the need for strong transactional support.
+
+### Managers
+
+Here is a list of popular NoSQL databases:
+
+1. MongoDB: A document database that stores data in flexible, JSON-like documents. It offers rich querying capabilities, high scalability, and supports horizontal scaling.
+
+2. Cassandra: A columnar database designed for high scalability and fault tolerance. It provides linear scalability and is well-suited for handling large amounts of structured and semi-structured data.
+
+3. Redis: A key-value store that provides high-performance in-memory data storage. It supports various data structures and offers features like caching, pub/sub messaging, and distributed data structures.
+
+4. Couchbase: A document database with a distributed architecture. It combines the flexibility of JSON documents with the scalability and performance required for modern applications.
+
+5. Neo4j: A graph database that stores and manages data as nodes, relationships, and properties. It excels in handling complex relationships and is widely used for social networks, recommendation engines, and network analysis.
+
+6. Amazon DynamoDB: A fully managed NoSQL database service provided by Amazon Web Services (AWS). It offers high scalability, low latency, and automatic data replication across multiple availability zones.
+
+7. Apache HBase: A distributed columnar database built on top of Hadoop. It provides random real-time read/write access to large datasets and is often used for big data applications.
+
+8. CouchDB: A document-oriented database that uses JSON documents for data storage. It provides a replication protocol, enabling offline availability and synchronization across devices.
+
+9. Riak: A distributed key-value database designed for high availability and fault tolerance. It offers scalable data storage and distribution across multiple nodes.
+
+10. Google Cloud Firestore: A serverless, NoSQL document database offered by Google Cloud Platform (GCP). It provides automatic scaling, real-time synchronization, and offline support for web, mobile, and server applications.
+
+These are just a few examples of popular NoSQL databases. There are many other NoSQL databases available, each with its own strengths and use cases. The choice of NoSQL database depends on factors such as the nature of the data, scalability requirements, performance needs, and specific use case considerations.
