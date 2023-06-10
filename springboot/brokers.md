@@ -127,3 +127,97 @@ public class KafkaConsumerExample {
 4. **Run the Producer and Consumer**: Compile and run both the producer and consumer Java classes. The producer will send a message to the specified Kafka topic, and the consumer will consume and print the received messages.
 
 This is a basic example of using Apache Kafka as a message broker in Java. Apache Kafka offers many more advanced features and configurations, such as partitioning, message retention policies, and fault tolerance. You can explore the official Apache Kafka documentation and additional resources to learn more about its capabilities and how to use it in your Java applications.
+
+### Spring example
+
+Sure! Here's an example of implementing a message broker using Spring for Apache Kafka in Java:
+
+1. **Add Dependencies**: Include the necessary dependencies in your Maven or Gradle project configuration file. For a Spring Boot application, you can add the following dependencies to your `pom.xml` file:
+
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter</artifactId>
+</dependency>
+<dependency>
+    <groupId>org.springframework.kafka</groupId>
+    <artifactId>spring-kafka</artifactId>
+</dependency>
+```
+
+2. **Configure Kafka Properties**: In your Spring Boot application, configure the properties required to connect to your Kafka broker. This can be done in the `application.properties` file or through Java configuration. Here's an example:
+
+```properties
+spring.kafka.bootstrap-servers=localhost:9092
+spring.kafka.consumer.group-id=my-consumer-group
+```
+
+3. **Create a Kafka Producer**: Use Spring Kafka's `KafkaTemplate` to create a Kafka message producer. Here's an example:
+
+```java
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.stereotype.Service;
+
+@Service
+public class KafkaProducerService {
+    private final KafkaTemplate<String, String> kafkaTemplate;
+
+    @Autowired
+    public KafkaProducerService(KafkaTemplate<String, String> kafkaTemplate) {
+        this.kafkaTemplate = kafkaTemplate;
+    }
+
+    public void sendMessage(String topic, String message) {
+        kafkaTemplate.send(topic, message);
+    }
+}
+```
+
+4. **Create a Kafka Consumer**: Use Spring Kafka's `@KafkaListener` annotation to create a Kafka message consumer. Here's an example:
+
+```java
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.stereotype.Service;
+
+@Service
+public class KafkaConsumerService {
+    @KafkaListener(topics = "my-topic")
+    public void consumeMessage(String message) {
+        System.out.println("Received message: " + message);
+        // Process the received message
+    }
+}
+```
+
+5. **Test the Message Broker**: In your application, you can now use the `KafkaProducerService` to send messages to Kafka, and the `KafkaConsumerService` will automatically receive and process the messages.
+
+```java
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
+
+@SpringBootApplication
+public class KafkaExampleApplication {
+    public static void main(String[] args) {
+        ConfigurableApplicationContext context = SpringApplication.run(KafkaExampleApplication.class, args);
+
+        KafkaProducerService producerService = context.getBean(KafkaProducerService.class);
+        KafkaConsumerService consumerService = context.getBean(KafkaConsumerService.class);
+
+        // Send a message
+        producerService.sendMessage("my-topic", "Hello, Kafka!");
+
+        // The consumer will receive and process the message
+
+        // Close the application context
+        context.close();
+    }
+}
+```
+
+Make sure you have a running Kafka broker on the specified bootstrap servers (e.g., `localhost:9092`) before running your application.
+
+This example demonstrates a basic setup of a message broker using Spring for Apache Kafka in Java. Spring provides many features and abstractions to simplify the configuration and usage of Kafka in your applications. You can explore the Spring for Apache Kafka documentation for more advanced topics like error handling, message serialization, and custom configurations.
+
+
