@@ -107,9 +107,9 @@ Let's consider two microservices: "Order Service" and "Email Service." The Order
 
 To install Kafka and start a Kafka cluster with a ZooKeeper instance, follow these steps:
 
-a. **Download Kafka**: Visit the Apache Kafka website (https://kafka.apache.org/) and navigate to the "Downloads" section. Download the latest stable version of Apache Kafka suitable for your operating system.
+1.1. **Download Kafka**: Visit the Apache Kafka website (https://kafka.apache.org/) and navigate to the "Downloads" section. Download the latest stable version of Apache Kafka suitable for your operating system.
 
-b. **Extract the Kafka package**: Once the download is complete, extract the Kafka package to a directory of your choice.
+1.2. **Extract the Kafka package**: Once the download is complete, extract the Kafka package to a directory of your choice.
 
 c. **Start ZooKeeper**: Kafka relies on ZooKeeper for coordination and configuration management. Open a terminal or command prompt and navigate to the Kafka directory. Start a ZooKeeper server by running the following command:
 
@@ -119,7 +119,7 @@ c. **Start ZooKeeper**: Kafka relies on ZooKeeper for coordination and configura
 
    ZooKeeper will start running on the default port 2181.
 
-d. **Start Kafka brokers**: In a new terminal or command prompt, navigate to the Kafka directory. Start one or more Kafka brokers by running the following command:
+1.3. **Start Kafka brokers**: In a new terminal or command prompt, navigate to the Kafka directory. Start one or more Kafka brokers by running the following command:
 
    ```bash
    bin/kafka-server-start.sh config/server.properties
@@ -129,7 +129,7 @@ d. **Start Kafka brokers**: In a new terminal or command prompt, navigate to the
 
    You can start multiple Kafka brokers on different ports to create a Kafka cluster. Each broker should have a unique `broker.id` and should point to the same ZooKeeper instance. Modify the `server.properties` file for each broker to specify a different `broker.id` and ensure the `zookeeper.connect` property points to the ZooKeeper instance.
 
-e. **Create a Kafka topic**: To create the "order-events" topic, open a new terminal or command prompt and navigate to the Kafka directory. Run the following command:
+1.4. **Create a Kafka topic**: To create the "order-events" topic, open a new terminal or command prompt and navigate to the Kafka directory. Run the following command:
 
    ```bash
    bin/kafka-topics.sh --create --topic order-events --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
@@ -141,7 +141,7 @@ e. **Create a Kafka topic**: To create the "order-events" topic, open a new term
 
    Note: If you are running a multi-broker Kafka cluster, you should specify more than one broker address in the `--bootstrap-server` option, separated by commas.
 
-f. **Verify topic creation**: You can verify that the topic was created successfully by running the following command:
+1.5. **Verify topic creation**: You can verify that the topic was created successfully by running the following command:
 
    ```bash
    bin/kafka-topics.sh --list --bootstrap-server localhost:9092
