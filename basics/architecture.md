@@ -106,6 +106,110 @@ Here are the key concepts and features of GraphQL:
 
 GraphQL has gained popularity due to its flexibility, efficiency, and ability to address common challenges in traditional RESTful APIs, such as over-fetching and versioning. However, it is important to note that adopting GraphQL involves additional complexity compared to RESTful APIs, especially on the server-side where resolving and handling GraphQL queries require specific infrastructure and development practices.
 
+##### Example
+
+Here's a simple example that demonstrates how to perform a GraphQL query from a web browser to a server using JavaScript:
+
+1. HTML file (index.html):
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GraphQL Example</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    function makeGraphQLQuery() {
+      const query = `
+        query {
+          book(id: 1) {
+            title
+            author
+          }
+        }
+      `;
+
+      axios.post('http://localhost:4000/graphql', {
+        query: query
+      })
+      .then(function (response) {
+        console.log('Response:', response.data.data.book);
+      })
+      .catch(function (error) {
+        console.error('Error:', error);
+      });
+    }
+  </script>
+</head>
+<body>
+  <h1>GraphQL Example</h1>
+  <button onclick="makeGraphQLQuery()">Make GraphQL Query</button>
+</body>
+</html>
+```
+
+2. Server (using Node.js and Express with `express-graphql` package):
+```javascript
+const express = require('express');
+const { graphqlHTTP } = require('express-graphql');
+const { buildSchema } = require('graphql');
+
+// Define a schema
+const schema = buildSchema(`
+  type Book {
+    id: Int
+    title: String
+    author: String
+  }
+
+  type Query {
+    book(id: Int): Book
+  }
+`);
+
+// Define resolvers
+const root = {
+  book: ({ id }) => {
+    // Fetch book details based on ID from a database or another source
+    // For simplicity, we'll return hardcoded data here
+    return { id: id, title: 'Book Title', author: 'Book Author' };
+  }
+};
+
+// Create an Express server
+const app = express();
+
+// Set up GraphQL endpoint
+app.use('/graphql', graphqlHTTP({
+  schema: schema,
+  rootValue: root,
+  graphiql: true // Enable GraphiQL tool for testing the API in the browser
+}));
+
+// Start the server
+app.listen(4000, () => {
+  console.log('Server started on http://localhost:4000/graphql');
+});
+```
+
+In this example, the HTML file (`index.html`) contains a button that triggers the `makeGraphQLQuery()` JavaScript function when clicked. This function sends a GraphQL query to the server using the Axios library.
+
+The server code is written using Node.js and Express. It defines a GraphQL schema using the `buildSchema()` function, which specifies the available types and queries. The resolver function (`book`) retrieves the book details based on the provided ID (in this case, using hardcoded data).
+
+When the button is clicked, the JavaScript function sends a GraphQL query to `http://localhost:4000/graphql` (assuming the server is running on that URL). The server processes the query using the defined schema and resolver, and returns the result as a JSON response. The response is logged to the browser's console.
+
+To run this example, you need to have Node.js and npm (Node Package Manager) installed. Then, follow these steps:
+
+1. Create a new directory and navigate to it in your terminal.
+2. Create a package.json file by running `npm init -y`.
+3. Install the required dependencies by running `npm install express express-graphql graphql axios`.
+4. Create the `index.html` and server JavaScript files with the respective content mentioned above.
+5. Start the server by running `node server.js` in the terminal.
+6. Open the HTML file (`index.html`) in a web browser.
+7. Click the "Make GraphQL Query" button, and you
+
+ should see the response in the browser's console.
+
+This example demonstrates a basic implementation of sending a GraphQL query from a web browser to a server using JavaScript. It showcases how to define a schema, create resolvers, and use Axios to make HTTP requests to the GraphQL endpoint.
 
 #### gRPC
 
@@ -255,6 +359,8 @@ Here are the key components and considerations in building a webhook API archite
 8. Documentation: Provide comprehensive documentation for the webhook API, including endpoint details, payload structure, authentication requirements, and any additional guidelines or best practices for integration.
 
 Webhook API architecture enables real-time communication and event-driven interactions between applications, allowing for seamless integration and data synchronization. It provides a scalable and efficient way to trigger actions and exchange information between different systems in a timely manner.
+
+
 
 
 ## Software architecture for web projects
