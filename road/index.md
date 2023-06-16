@@ -11,4 +11,6 @@
    - Dealing with dates
    - Reports
    - Uploading images
-   - Registering users and recovering passwords
+   - Registering users
+   - Recovering passwords
+   - Captchas
