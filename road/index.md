@@ -9,5 +9,6 @@
 7. [Improving CRUDS](icruds.md)
 8. Improving applications
    - Dealing with dates
+   - Reports
    - Uploading images
    - Registering users and recovering passwords
