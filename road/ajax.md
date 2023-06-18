@@ -809,9 +809,7 @@ public class S3 extends HttpServlet {
 
     int result = calculateResult(operator1, operator2, operation);
 
-    OperationRequest operationResult =
-
- new OperationRequest();
+    OperationRequest operationResult = new OperationRequest();
     operationResult.setOperator1(operator1);
     operationResult.setOperator2(operator2);
     operationResult.setOperation(operation);
