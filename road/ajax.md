@@ -143,5 +143,6 @@ Asynchronous programming in JavaScript allows for the execution of time-consumin
 
 
 > [**Revise asynchronism javascript notes in GPT-notes**](../javascript/asynchronism.md)
+> 
 > [**Revise RxJs AJAX notes in GPT-notes**](../angular/rxjs.md)
 
