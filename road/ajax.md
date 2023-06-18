@@ -684,7 +684,7 @@ Please make sure to configure your servlet container (e.g., Apache Tomcat) prope
 
 Note: This example assumes you have the necessary server-side setup and configuration in place to run the servlets.
 
-## Example: Synchronizing AJAX from 3 server requests:
+## Example: Synchronizing AJAX from 3 server requests: ES6
 
 
 Here's an example of an AJAX calculator with three servlets (S1, S2, and S3) and ES6 JavaScript on the frontend:
@@ -854,3 +854,127 @@ public class OperationRequest {
 In this example, when the "Calculate" button is clicked, the JavaScript code makes AJAX requests to the servlets S1, S2, and S3 in sequence. The responses from S1 and S2 are used to display the operation on the page, and the response from S3 is used to display the result. The JSON data is serialized using the Gson library in the servlets.
 
 Make sure to configure your servlet container (e.g., Apache Tomcat) properly and map the servlets in the web.xml file.
+
+### Example: Synchronizing AJAX from 3 server requests: jQuery
+
+Here's the frontend code rewritten using jQuery:
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AJAX Calculator</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <h2>AJAX Calculator</h2>
+  <button id="calculate">Calculate</button>
+  <div id="operation"></div>
+  <div id="response"></div>
+
+  <script>
+    $(document).ready(function() {
+      $("#calculate").click(function() {
+        $.getJSON("S1", function(data) {
+          const operator1 = data.operator1;
+          const operator2 = data.operator2;
+
+          $.get("S2", function(operation) {
+            $("#operation").text(`${operator1} ${operation} ${operator2}`);
+
+            const requestParams = {
+              operator1: operator1,
+              operator2: operator2,
+              operation: operation
+            };
+
+            $.getJSON("S3", requestParams, function(result) {
+              const response = `Result: ${result.operator1} ${result.operation} ${result.operator2} = ${result.result}`;
+              $("#response").text(response);
+            }).fail(function(error) {
+              console.log(error);
+            });
+          }).fail(function(error) {
+            console.log(error);
+          });
+        }).fail(function(error) {
+          console.log(error);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
+```
+
+This code utilizes the jQuery library to handle AJAX requests. When the "Calculate" button is clicked, the code sends requests to the servlets S1, S2, and S3 sequentially using `$.getJSON` and `$.get` methods. The responses from S1 and S2 are used to display the operation on the page, and the response from S3 is used to display the result.
+
+Make sure to include the jQuery library by adding the `<script>` tag in the `<head>` section of your HTML code.
+
+### Example: Synchronizing AJAX from 3 server requests: AngularJS
+
+
+Here's the frontend code rewritten using AngularJS:
+
+```html
+<!DOCTYPE html>
+<html ng-app="ajaxCalculatorApp">
+<head>
+  <title>AJAX Calculator</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-controller="CalculatorController">
+  <h2>AJAX Calculator</h2>
+  <button ng-click="calculate()">Calculate</button>
+  <div>{{operation}}</div>
+  <div>{{response}}</div>
+
+  <script>
+    angular.module('ajaxCalculatorApp', [])
+      .controller('CalculatorController', function($scope, $http) {
+        $scope.calculate = function() {
+          $http.get('S1')
+            .then(function(response) {
+              const operator1 = response.data.operator1;
+              const operator2 = response.data.operator2;
+
+              $http.get('S2')
+                .then(function(response) {
+                  const operation = response.data;
+                  $scope.operation = operator1 + ' ' + operation + ' ' + operator2;
+
+                  const requestParams = {
+                    operator1: operator1,
+                    operator2: operator2,
+                    operation: operation
+                  };
+
+                  $http.get('S3', { params: requestParams })
+                    .then(function(response) {
+                      const result = response.data;
+                      $scope.response = 'Result: ' + result.operator1 + ' ' + result.operation + ' ' + result.operator2 + ' = ' + result.result;
+                    })
+                    .catch(function(error) {
+                      console.log(error);
+                    });
+                })
+                .catch(function(error) {
+                  console.log(error);
+                });
+            })
+            .catch(function(error) {
+              console.log(error);
+            });
+        };
+      });
+  </script>
+</body>
+</html>
+```
+
+In this code, AngularJS is used to handle the functionality. The `ng-app` directive declares the AngularJS module, and the `ng-controller` directive associates the controller with the HTML element.
+
+The `CalculatorController` controller handles the logic for the button click event. It uses the `$http` service to send AJAX requests to the servlets S1, S2, and S3. The responses from the servlets are assigned to the scope variables `operation` and `response`, which are then displayed in the HTML using the `{{}}` expression.
+
+Make sure to include the AngularJS library by adding the `<script>` tag in the `<head>` section of your HTML code.
+
