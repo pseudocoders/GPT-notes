@@ -1,11 +1,39 @@
 # Process
 
-Let's break down the differences between these concepts:
+Let's break down the differences between these concepts Static Pages and Dynamic Pages:
 
-1. Static Pages:
+## Static Pages
 Static pages are pre-built web pages that are delivered to the user's browser exactly as they were created. They are typically written in HTML, CSS, and JavaScript. The content of static pages remains the same unless manually updated. When a user requests a static page, the server simply retrieves and sends the requested file to the user's browser without any processing or manipulation.
 
-2. Dynamic Pages:
+Here's an example of a simple "Hello, World!" static page:
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hello, World!</title>
+</head>
+<body>
+  <h1>Hello, World!</h1>
+  <p>This is a simple static page.</p>
+</body>
+</html>
+```
+
+In this example, we have a basic HTML structure. The `<title>` tag sets the title of the web page, which will appear in the browser's title bar or tab. Inside the `<body>` tag, we have an `<h1>` heading that displays the "Hello, World!" message and a `<p>` paragraph that provides some additional text.
+
+When you save this code as an HTML file (e.g., `hello.html`) and open it in a web browser, you will see the "Hello, World!" message displayed on the page. This is a classic example used to introduce beginners to web development and serves as a starting point for more complex web applications.
+
+This page is a static page because its content remains the same regardless of user interactions or external factors. The HTML markup and the "Hello, World!" message are predefined and fixed within the HTML file itself. When the file is served to a user's browser, it is displayed exactly as it was created, without any changes or modifications.
+
+Static pages are typically used for content that doesn't require frequent updates or real-time interactions. They are useful for displaying information that doesn't need to be generated dynamically or personalized for each user. Since static pages don't involve server-side processing or dynamic data retrieval, they are relatively simple and can be served quickly to users.
+
+In contrast, dynamic web pages involve executing code to generate customized content based on user requests. These pages can change their content dynamically based on various factors. Dynamic web pages can involve both server-side processing, where the server generates dynamic content before sending it to the browser, and front-end processing, where JavaScript code running in the browser manipulates the page's content and interacts with the user in real-time. Both server-side and front-end processing contribute to the dynamic nature of a web page.
+
+
+
+
+## Dynamic Pages:
 
 A dynamic page is a web page whose content can change or be customized based on various factors, such as user input, database queries, or real-time data updates. Unlike static pages, which have fixed content that remains the same for all users, dynamic pages adapt and display different content based on specific conditions or user interactions.
 
@@ -33,34 +61,9 @@ Dynamic pages offer several advantages:
 Dynamic pages are widely used in various web applications, including e-commerce websites, social media platforms, news portals, and collaborative tools, where content needs to be constantly updated and personalized to enhance the user experience.
 
 
-## Static Pages
 
-Here's an example of a simple "Hello, World!" static page:
 
-```html
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Hello, World!</title>
-</head>
-<body>
-  <h1>Hello, World!</h1>
-  <p>This is a simple static page.</p>
-</body>
-</html>
-```
-
-In this example, we have a basic HTML structure. The `<title>` tag sets the title of the web page, which will appear in the browser's title bar or tab. Inside the `<body>` tag, we have an `<h1>` heading that displays the "Hello, World!" message and a `<p>` paragraph that provides some additional text.
-
-When you save this code as an HTML file (e.g., `hello.html`) and open it in a web browser, you will see the "Hello, World!" message displayed on the page. This is a classic example used to introduce beginners to web development and serves as a starting point for more complex web applications.
-
-This page is a static page because its content remains the same regardless of user interactions or external factors. The HTML markup and the "Hello, World!" message are predefined and fixed within the HTML file itself. When the file is served to a user's browser, it is displayed exactly as it was created, without any changes or modifications.
-
-Static pages are typically used for content that doesn't require frequent updates or real-time interactions. They are useful for displaying information that doesn't need to be generated dynamically or personalized for each user. Since static pages don't involve server-side processing or dynamic data retrieval, they are relatively simple and can be served quickly to users.
-
-In contrast, dynamic web pages involve executing code to generate customized content based on user requests. These pages can change their content dynamically based on various factors. Dynamic web pages can involve both server-side processing, where the server generates dynamic content before sending it to the browser, and front-end processing, where JavaScript code running in the browser manipulates the page's content and interacts with the user in real-time. Both server-side and front-end processing contribute to the dynamic nature of a web page.
-
-## Server Processed Web Pages
+### Server Processed Web Pages
 
 Server Processed Web Pages, also known as server-side rendering (SSR), refer to the process of generating and serving web pages on the server before sending them to the client's browser. In server-side rendering, the server executes code and processes data to dynamically generate the HTML content of a web page.
 
@@ -88,7 +91,7 @@ However, server-side rendering also has some limitations. It can put a heavier l
 
 Overall, Server Processed Web Pages are a fundamental approach to generating dynamic content on the server before sending it to the client's browser, providing advantages such as SEO benefits and faster initial page loading.
 
-### PHP example
+#### PHP example
 
 Certainly! Here's an example of a simple web page generated using PHP:
 
@@ -123,9 +126,9 @@ When a user accesses this PHP file on a server, the resulting web page will disp
 
 Please note that in order to execute PHP code on a server, you would need a server environment with PHP installed and configured.
 
-### JSP example
+#### JSP example
 
-Certainly! Here's an example of a web page generated using JSP (JavaServer Pages):
+Here's an example of a web page generated using JSP (JavaServer Pages):
 
 ```jsp
 <!DOCTYPE html>
@@ -156,6 +159,9 @@ When a user accesses this JSP file on a server, the server processes the JSP cod
 Please note that to run JSP code, you need a server environment that supports Java servlets and JSP, such as Apache Tomcat.
 
 ### Front-End Processed Web Pages
+
+> :red_circle: Explore and learn: [**Javascript ES6 notes in GPT-notes**](../javascript/index.md)
+
 
 Front-End Processed Web Pages refer to web pages where the majority of processing and rendering tasks are performed on the client-side, within the user's browser. In this approach, the web page's interactivity and content updates are primarily handled by JavaScript code running in the browser.
 
@@ -191,7 +197,7 @@ However, Front-End Processed Web Pages also have some considerations:
 
 Front-End Processed Web Pages are commonly used for building web applications, where interactivity, real-time updates, and a rich user experience are desired.
 
-### Example
+#### Example
 
 Here's an example of front-end processing in a web page using JavaScript:
 
@@ -234,9 +240,11 @@ Inside the event listener, the JavaScript code retrieves the button element with
 
 It then adds an event listener to the button element, listening for the click event. When the button is clicked, the event listener function is executed, and it updates the content of the paragraph by modifying the `textContent` property, changing the message to "The message has been changed!".
 
-## AJAX
+### Introduction to AJAX
 
 AJAX (Asynchronous JavaScript and XML) is a technique used in web development to send and receive data from a server asynchronously without requiring a full page reload. It enables the dynamic updating of web content, providing a smoother and more interactive user experience.
+
+Ajax mixes Back-End and Front-End process.
 
 Here's a step-by-step explanation of how AJAX (Asynchronous JavaScript and XML) works:
 
@@ -260,8 +268,7 @@ Here's a step-by-step explanation of how AJAX (Asynchronous JavaScript and XML) 
 
 By following these steps, AJAX enables the exchange of data between the client and server asynchronously, without requiring a full page reload. This allows for dynamic updates, real-time interactions, and a more responsive user experience in web applications.
 
-### AJAX PHP example
-
+#### AJAX PHP example
 
 Here's a very simple example of AJAX using PHP and the Fetch API:
 
@@ -339,7 +346,7 @@ Upon clicking the "Load Data" button, an AJAX request is made to `data.php`. Aft
 
 This example demonstrates a simple implementation of AJAX using the Fetch API in JavaScript and PHP. It showcases how you can use the Fetch API to make asynchronous requests and handle responses in a concise and readable manner.
 
-### AJAX JSP example
+#### AJAX JSP example
 
 Here's a very simple example of AJAX using JSP (JavaServer Pages) and the Fetch API:
 
