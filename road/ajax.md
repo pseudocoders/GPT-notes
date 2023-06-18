@@ -141,13 +141,13 @@ Asynchronous programming in JavaScript allows for the execution of time-consumin
 
 ## 
 
-> [**Revise JSON notation notes in GPT-notes**](../markups/json.md)
+> :red_circle: Explore and learn: [**JSON notation notes in GPT-notes**](../markups/json.md)
 > 
-> [**Revise asynchronism javascript notes in GPT-notes**](../javascript/asynchronism.md)
+> :red_circle: Explore and learn: [**Asynchronism javascript notes in GPT-notes**](../javascript/asynchronism.md)
 
 ## Example: AJAX calculator with jQuery and servlets
 
-> [**Revise jQuery notes in GPT-notes**](../jquery/index.md)
+> :red_circle: Explore and learn: [**Revise jQuery notes in GPT-notes**](../jquery/index.md)
 
 Here's an example of an Ajax calculator using jQuery on the client-side and Servlets on the server-side. This example performs basic arithmetic operations (addition, subtraction, multiplication, and division) asynchronously without reloading the entire page.
 
