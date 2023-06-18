@@ -60,7 +60,13 @@ The asynchronous nature of Ajax allows web applications to provide real-time upd
 
 By combining HTML, CSS, JavaScript, the XMLHttpRequest object, and server-side technologies, Ajax empowers web developers to build dynamic, responsive, and interactive applications that closely resemble desktop applications.
 
+> :red_circle: Explore and learn: [**Javascript ES6 notes in GPT-notes**](../javascript/index.md)
+
 ## Asynchrony
+
+> :red_circle: Explore and learn: [**JSON notation notes in GPT-notes**](../markups/json.md)
+> 
+> :red_circle: Explore and learn: [**Asynchronism javascript notes in GPT-notes**](../javascript/asynchronism.md)
 
 In JavaScript programming, asynchronism refers to the ability of the code to execute tasks concurrently or non-blockingly, without waiting for a previous task to complete before moving on to the next one. This allows for efficient handling of time-consuming operations such as network requests, file I/O, or database queries, without blocking the execution of other code.
 
@@ -139,11 +145,9 @@ Here are the key concepts related to asynchronism in JavaScript:
 
 Asynchronous programming in JavaScript allows for the execution of time-consuming tasks without blocking the main execution thread, ensuring that other parts of the code or the user interface remain responsive. It enables the handling of I/O operations, network requests, and other
 
-## 
 
-> :red_circle: Explore and learn: [**JSON notation notes in GPT-notes**](../markups/json.md)
-> 
-> :red_circle: Explore and learn: [**Asynchronism javascript notes in GPT-notes**](../javascript/asynchronism.md)
+
+
 
 ## Example: AJAX calculator with jQuery and servlets
 
