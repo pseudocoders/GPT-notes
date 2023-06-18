@@ -60,7 +60,7 @@ The asynchronous nature of Ajax allows web applications to provide real-time upd
 
 By combining HTML, CSS, JavaScript, the XMLHttpRequest object, and server-side technologies, Ajax empowers web developers to build dynamic, responsive, and interactive applications that closely resemble desktop applications.
 
-> :red_circle: Explore and learn: [**Javascript ES6 notes in GPT-notes**](../javascript/index.md)
+
 
 ## Asynchrony
 
