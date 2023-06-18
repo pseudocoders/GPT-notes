@@ -684,3 +684,175 @@ Please make sure to configure your servlet container (e.g., Apache Tomcat) prope
 
 Note: This example assumes you have the necessary server-side setup and configuration in place to run the servlets.
 
+## Example: Synchronizing AJAX from 3 server requests:
+
+
+Here's an example of an AJAX calculator with three servlets (S1, S2, and S3) and ES6 JavaScript on the frontend:
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AJAX Calculator</title>
+</head>
+<body>
+  <h2>AJAX Calculator</h2>
+  <button id="calculate">Calculate</button>
+  <div id="operation"></div>
+  <div id="response"></div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const calculateBtn = document.getElementById("calculate");
+      const operationDiv = document.getElementById("operation");
+      const responseDiv = document.getElementById("response");
+
+      calculateBtn.addEventListener("click", function() {
+        fetch("S1")
+          .then(response => response.json())
+          .then(data => {
+            const operator1 = data.operator1;
+            const operator2 = data.operator2;
+
+            fetch("S2")
+              .then(response => response.text())
+              .then(operation => {
+                operationDiv.textContent = `${operator1} ${operation} ${operator2}`;
+
+                fetch(`S3?operator1=${operator1}&operator2=${operator2}&operation=${operation}`)
+                  .then(response => response.json())
+                  .then(result => {
+                    const { operator1, operator2, operation, result } = result;
+                    responseDiv.textContent = `Result: ${operator1} ${operation} ${operator2} = ${result}`;
+                  })
+                  .catch(error => {
+                    console.log(error);
+                  });
+              })
+              .catch(error => {
+                console.log(error);
+              });
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      });
+    });
+  </script>
+</body>
+</html>
+```
+
+```java
+// S1.java
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Random;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import com.google.gson.Gson;
+
+public class S1 extends HttpServlet {
+  protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    Random random = new Random();
+    int operator1 = random.nextInt(10) + 1;
+    int operator2 = random.nextInt(10) + 1;
+
+    OperationRequest operationRequest = new OperationRequest();
+    operationRequest.setOperator1(operator1);
+    operationRequest.setOperator2(operator2);
+
+    Gson gson = new Gson();
+    String jsonResponse = gson.toJson(operationRequest);
+
+    response.setContentType("application/json");
+    PrintWriter out = response.getWriter();
+    out.print(jsonResponse);
+    out.flush();
+  }
+}
+
+// S2.java
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class S2 extends HttpServlet {
+  protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    String[] operators = { "+", "-", "*", "/" };
+    int index = (int) (Math.random() * operators.length);
+    String operation = operators[index];
+
+    response.setContentType("text/plain");
+    PrintWriter out = response.getWriter();
+    out.print(operation);
+    out.flush();
+  }
+}
+
+// S3.java
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import com.google.gson.Gson;
+
+public class S3 extends HttpServlet {
+  protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    int operator1 = Integer.parseInt(request.getParameter("operator1"));
+    int operator2 = Integer.parseInt(request.getParameter("operator2"));
+    String operation = request.getParameter("operation");
+
+    int result = calculateResult(operator1, operator2, operation);
+
+    OperationRequest operationResult =
+
+ new OperationRequest();
+    operationResult.setOperator1(operator1);
+    operationResult.setOperator2(operator2);
+    operationResult.setOperation(operation);
+    operationResult.setResult(result);
+
+    Gson gson = new Gson();
+    String jsonResponse = gson.toJson(operationResult);
+
+    response.setContentType("application/json");
+    PrintWriter out = response.getWriter();
+    out.print(jsonResponse);
+    out.flush();
+  }
+
+  private int calculateResult(int operator1, int operator2, String operation) {
+    switch (operation) {
+      case "+":
+        return operator1 + operator2;
+      case "-":
+        return operator1 - operator2;
+      case "*":
+        return operator1 * operator2;
+      case "/":
+        return operator1 / operator2;
+      default:
+        return 0;
+    }
+  }
+}
+
+// OperationRequest.java (POJO)
+public class OperationRequest {
+  private int operator1;
+  private int operator2;
+  private String operation;
+  private int result;
+
+  // Getters and Setters
+}
+```
+
+In this example, when the "Calculate" button is clicked, the JavaScript code makes AJAX requests to the servlets S1, S2, and S3 in sequence. The responses from S1 and S2 are used to display the operation on the page, and the response from S3 is used to display the result. The JSON data is serialized using the Gson library in the servlets.
+
+Make sure to configure your servlet container (e.g., Apache Tomcat) properly and map the servlets in the web.xml file.
