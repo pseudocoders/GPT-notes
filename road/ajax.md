@@ -62,4 +62,86 @@ The asynchronous nature of Ajax allows web applications to provide real-time upd
 
 By combining HTML, CSS, JavaScript, the XMLHttpRequest object, and server-side technologies, Ajax empowers web developers to build dynamic, responsive, and interactive applications that closely resemble desktop applications.
 
+## Asynchrony
+
+In JavaScript programming, asynchronism refers to the ability of the code to execute tasks concurrently or non-blockingly, without waiting for a previous task to complete before moving on to the next one. This allows for efficient handling of time-consuming operations such as network requests, file I/O, or database queries, without blocking the execution of other code.
+
+The main mechanism for achieving asynchronism in JavaScript is through the use of asynchronous functions and callbacks, as well as newer features like Promises and async/await.
+
+Here are the key concepts related to asynchronism in JavaScript:
+
+1. **Callbacks:** Callbacks are functions that are passed as arguments to other functions. They allow you to define what should happen after an asynchronous task completes. For example, when making an Ajax request, you provide a callback function that handles the server's response once it is received.
+
+   ```javascript
+   function fetchData(callback) {
+     // Simulate an asynchronous task
+     setTimeout(() => {
+       const data = "Hello, world!";
+       callback(data); // Invoke the callback with the retrieved data
+     }, 1000);
+   }
+
+   function handleData(data) {
+     console.log(data);
+   }
+
+   fetchData(handleData); // Pass the handleData function as a callback
+   ```
+
+   In this example, the `fetchData` function simulates an asynchronous task and invokes the callback function `handleData` after the task is complete.
+
+2. **Promises:** Promises provide an enhanced way to handle asynchronism in JavaScript. They represent a future value that may not be available immediately. A Promise can be in one of three states: pending, fulfilled, or rejected. Promises allow you to chain asynchronous operations using `.then()` and `.catch()` methods.
+
+   ```javascript
+   function fetchData() {
+     return new Promise((resolve, reject) => {
+       setTimeout(() => {
+         const data = "Hello, world!";
+         resolve(data); // Resolve the promise with the retrieved data
+       }, 1000);
+     });
+   }
+
+   fetchData()
+     .then((data) => {
+       console.log(data);
+     })
+     .catch((error) => {
+       console.error(error);
+     });
+   ```
+
+   In this example, the `fetchData` function returns a Promise that resolves with the retrieved data. The `.then()` method is used to handle the resolved value, while the `.catch()` method handles any errors.
+
+3. **Async/await:** Async/await is a syntax introduced in ES2017 that simplifies asynchronous programming by allowing you to write asynchronous code that looks like synchronous code. The `async` keyword is used to define an asynchronous function, and the `await` keyword is used to pause the function execution until a Promise is resolved.
+
+   ```javascript
+   function fetchData() {
+     return new Promise((resolve, reject) => {
+       setTimeout(() => {
+         const data = "Hello, world!";
+         resolve(data); // Resolve the promise with the retrieved data
+       }, 1000);
+     });
+   }
+
+   async function handleData() {
+     try {
+       const data = await fetchData(); // Wait for the promise to resolve
+       console.log(data);
+     } catch (error) {
+       console.error(error);
+     }
+   }
+
+   handleData();
+   ```
+
+   In this example, the `handleData` function is declared as an asynchronous function using the `async` keyword. The `await` keyword is used to pause the execution of the function until the Promise returned by `fetchData()` resolves.
+
+Asynchronous programming in JavaScript allows for the execution of time-consuming tasks without blocking the main execution thread, ensuring that other parts of the code or the user interface remain responsive. It enables the handling of I/O operations, network requests, and other
+
+
+> [**Revise asynchronism javascript notes in GPT-notes**](../javascript/asynchronism.md)
+> [**Revise RxJs AJAX notes in GPT-notes**](../angular/rxjs.md)
 
