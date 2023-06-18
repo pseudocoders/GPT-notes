@@ -253,3 +253,268 @@ The servlet receives the data, performs the corresponding arithmetic operation b
 Finally, the JavaScript code handles the successful response by updating the result div with the calculated value.
 
 Please note that this is a simplified example for demonstration purposes, and in a production
+
+
+## Example: AJAX calculator with ES6 and servlets
+
+Here's an example of an Ajax calculator using ES6 syntax on the client-side and Servlets on the server-side. This example performs basic arithmetic operations (addition, subtraction, multiplication, and division) asynchronously without reloading the entire page.
+
+1. HTML Markup (index.html):
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ajax Calculator</title>
+  <script>
+    async function calculate() {
+      const num1 = document.getElementById("num1").value;
+      const num2 = document.getElementById("num2").value;
+      const operator = document.getElementById("operator").value;
+
+      try {
+        const response = await fetch("calculator", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ num1, num2, operator })
+        });
+
+        if (!response.ok) {
+          throw new Error(response.statusText);
+        }
+
+        const result = await response.text();
+        document.getElementById("result").textContent = `Result: ${result}`;
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  </script>
+</head>
+<body>
+  <h2>Ajax Calculator</h2>
+  <input type="number" id="num1" placeholder="Number 1"><br>
+  <input type="number" id="num2" placeholder="Number 2"><br>
+  <select id="operator">
+    <option value="add">Addition</option>
+    <option value="subtract">Subtraction</option>
+    <option value="multiply">Multiplication</option>
+    <option value="divide">Division</option>
+  </select><br>
+  <button onclick="calculate()">Calculate</button><br>
+  <div id="result"></div>
+</body>
+</html>
+```
+
+2. Servlet (CalculatorServlet.java):
+```java
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class CalculatorServlet extends HttpServlet {
+  protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    int num1 = Integer.parseInt(request.getParameter("num1"));
+    int num2 = Integer.parseInt(request.getParameter("num2"));
+    String operator = request.getParameter("operator");
+    int result = 0;
+
+    switch (operator) {
+      case "add":
+        result = num1 + num2;
+        break;
+      case "subtract":
+        result = num1 - num2;
+        break;
+      case "multiply":
+        result = num1 * num2;
+        break;
+      case "divide":
+        if (num2 != 0)
+          result = num1 / num2;
+        else
+          response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Cannot divide by zero.");
+        break;
+      default:
+        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid operator.");
+    }
+
+    response.getWriter().print(result);
+  }
+}
+```
+
+Make sure to configure your servlet container (e.g., Apache Tomcat) properly and update the necessary servlet mapping in the web.xml file.
+
+In this example, we're using ES6 syntax, including async/await and the Fetch API for making the Ajax request. The `calculate()` function is an asynchronous function that retrieves the input values of the numbers and the selected operator. It then sends an Ajax POST request to the server-side servlet (CalculatorServlet) with the data in JSON format.
+
+The servlet receives the data, performs the corresponding arithmetic operation based on the operator, and sends back the result as the response.
+
+Finally, the JavaScript code handles the successful response by updating the result div with the calculated value.
+
+Please note that this is a simplified example for demonstration purposes, and in a production environment, you would typically handle validation, error handling, and security considerations.
+
+## Example: AJAX calculator with ES6 and a servlet and Gson.
+
+Here's an example of an AJAX calculator using ES6 syntax on the client-side and a servlet on the server-side. The servlet will respond with JSON using the Google Gson library to convert a POJO that contains operators, the operation performed, and the response.
+
+1. HTML Markup (index.html):
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AJAX Calculator</title>
+</head>
+<body>
+  <h2>AJAX Calculator</h2>
+  <input type="number" id="num1" placeholder="Number 1"><br>
+  <input type="number" id="num2" placeholder="Number 2"><br>
+  <select id="operator">
+    <option value="add">Addition</option>
+    <option value="subtract">Subtraction</option>
+    <option value="multiply">Multiplication</option>
+    <option value="divide">Division</option>
+  </select><br>
+  <button id="calculate">Calculate</button><br>
+  <div id="operation"></div>
+  <div id="response"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+```
+
+2. POJO (CalculationResult.java):
+```java
+public class CalculationResult {
+  private String operator;
+  private String operation;
+  private int response;
+
+  public CalculationResult(String operator, String operation, int response) {
+    this.operator = operator;
+    this.operation = operation;
+    this.response = response;
+  }
+
+  // Getters and setters
+}
+```
+
+3. JavaScript (script.js):
+```javascript
+document.addEventListener("DOMContentLoaded", function() {
+  const calculateBtn = document.getElementById("calculate");
+  const operationDiv = document.getElementById("operation");
+  const responseDiv = document.getElementById("response");
+
+  calculateBtn.addEventListener("click", function() {
+    const num1 = document.getElementById("num1").value;
+    const num2 = document.getElementById("num2").value;
+    const operator = document.getElementById("operator").value;
+
+    const data = {
+      num1: num1,
+      num2: num2,
+      operator: operator
+    };
+
+    fetch("calculator", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+      .then(function(response) {
+        if (!response.ok) {
+          throw new Error(response.statusText);
+        }
+        return response.json();
+      })
+      .then(function(result) {
+        operationDiv.textContent = `Operation: ${result.operation}`;
+        responseDiv.textContent = `Response: ${result.response}`;
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  });
+});
+```
+
+4. Servlet (CalculatorServlet.java):
+```java
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import com.google.gson.Gson;
+
+public class CalculatorServlet extends HttpServlet {
+  protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    int num1 = Integer.parseInt(request.getParameter("num1"));
+    int num2 = Integer.parseInt(request.getParameter("num2"));
+    String operator = request.getParameter("operator");
+    int result = 0;
+    String operation = "";
+
+    switch (operator) {
+      case "add":
+        result = num1 + num2;
+        operation = num1 + " + " + num2;
+        break;
+      case "subtract":
+        result = num1 - num2;
+        operation = num1 + " - " + num2;
+        break;
+      case "multiply":
+        result = num1 * num2;
+        operation =
+
+ num1 + " * " + num2;
+        break;
+      case "divide":
+        if (num2 != 0) {
+          result = num1 / num2;
+          operation = num1 + " / " + num2;
+        } else {
+          response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Cannot divide by zero.");
+          return;
+        }
+        break;
+      default:
+        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid operator.");
+        return;
+    }
+
+    CalculationResult calculationResult = new CalculationResult(operator, operation, result);
+    Gson gson = new Gson();
+    String jsonResponse = gson.toJson(calculationResult);
+
+    response.setContentType("application/json");
+    PrintWriter out = response.getWriter();
+    out.print(jsonResponse);
+    out.flush();
+  }
+}
+```
+
+Please make sure to configure your servlet container (e.g., Apache Tomcat) properly and update the necessary servlet mapping in the web.xml file.
+
+In this example, we're using ES6 syntax with unobtrusive JavaScript. The script.js file is loaded at the end of the HTML document, and it listens for the "DOMContentLoaded" event. When the user clicks the "Calculate" button, the event listener triggers, retrieves the input values, and sends an AJAX POST request to the server-side servlet (CalculatorServlet) with the data in JSON format.
+
+The servlet receives the data, performs the corresponding arithmetic operation based on the operator, and creates a CalculationResult object with the operator, operation, and response. The Google Gson library is used to convert the CalculationResult object into JSON format.
+
+Finally, the server responds with the JSON representation of the CalculationResult object, and the JavaScript code updates the respective div elements with the operation and response values.
+
+Please note that this is a simplified example for demonstration purposes, and in a production environment, you would typically handle validation, error handling, and security considerations.
+
+
+
