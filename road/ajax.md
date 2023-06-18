@@ -58,8 +58,6 @@ Now, let's explore the typical flow of an Ajax request:
 
 The asynchronous nature of Ajax allows web applications to provide real-time updates, validate form inputs without refreshing the page, perform auto-suggestions, and create interactive elements that enhance the user experience.
 
-
-
 By combining HTML, CSS, JavaScript, the XMLHttpRequest object, and server-side technologies, Ajax empowers web developers to build dynamic, responsive, and interactive applications that closely resemble desktop applications.
 
 ## Asynchrony
@@ -141,8 +139,113 @@ Here are the key concepts related to asynchronism in JavaScript:
 
 Asynchronous programming in JavaScript allows for the execution of time-consuming tasks without blocking the main execution thread, ensuring that other parts of the code or the user interface remain responsive. It enables the handling of I/O operations, network requests, and other
 
+## 
 
-> [**Revise asynchronism javascript notes in GPT-notes**](../javascript/asynchronism.md)
+> [**Revise JSON notation notes in GPT-notes**](../markups/json.md)
 > 
-> [**Revise RxJs AJAX notes in GPT-notes**](../angular/rxjs.md)
+> [**Revise asynchronism javascript notes in GPT-notes**](../javascript/asynchronism.md)
 
+## Example: AJAX calculator with jQuery and servlets
+
+> [**Revise jQuery notes in GPT-notes**](../jquery/index.md)
+
+Here's an example of an Ajax calculator using jQuery on the client-side and Servlets on the server-side. This example performs basic arithmetic operations (addition, subtraction, multiplication, and division) asynchronously without reloading the entire page.
+
+1. HTML Markup (index.html):
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ajax Calculator</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $("#calculate").click(function() {
+        var num1 = $("#num1").val();
+        var num2 = $("#num2").val();
+        var operator = $("#operator").val();
+
+        $.ajax({
+          url: "calculator", // Servlet URL
+          type: "POST",
+          data: {
+            num1: num1,
+            num2: num2,
+            operator: operator
+          },
+          success: function(result) {
+            $("#result").text("Result: " + result);
+          },
+          error: function(error) {
+            console.log(error);
+          }
+        });
+      });
+    });
+  </script>
+</head>
+<body>
+  <h2>Ajax Calculator</h2>
+  <input type="number" id="num1" placeholder="Number 1"><br>
+  <input type="number" id="num2" placeholder="Number 2"><br>
+  <select id="operator">
+    <option value="add">Addition</option>
+    <option value="subtract">Subtraction</option>
+    <option value="multiply">Multiplication</option>
+    <option value="divide">Division</option>
+  </select><br>
+  <button id="calculate">Calculate</button><br>
+  <div id="result"></div>
+</body>
+</html>
+```
+
+2. Servlet (CalculatorServlet.java):
+```java
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class CalculatorServlet extends HttpServlet {
+  protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    int num1 = Integer.parseInt(request.getParameter("num1"));
+    int num2 = Integer.parseInt(request.getParameter("num2"));
+    String operator = request.getParameter("operator");
+    int result = 0;
+
+    switch (operator) {
+      case "add":
+        result = num1 + num2;
+        break;
+      case "subtract":
+        result = num1 - num2;
+        break;
+      case "multiply":
+        result = num1 * num2;
+        break;
+      case "divide":
+        if (num2 != 0)
+          result = num1 / num2;
+        else
+          response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Cannot divide by zero.");
+        break;
+      default:
+        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid operator.");
+    }
+
+    response.getWriter().print(result);
+  }
+}
+```
+
+Make sure to configure your servlet container (e.g., Apache Tomcat) properly and update the necessary servlet mapping in the web.xml file.
+
+This example demonstrates the basic structure of an Ajax calculator. When the "Calculate" button is clicked, the JavaScript code retrieves the input values of the numbers and the selected operator. It then sends an Ajax POST request to the server-side servlet (CalculatorServlet) with the data.
+
+The servlet receives the data, performs the corresponding arithmetic operation based on the operator, and sends back the result as the response.
+
+Finally, the JavaScript code handles the successful response by updating the result div with the calculated value.
+
+Please note that this is a simplified example for demonstration purposes, and in a production
