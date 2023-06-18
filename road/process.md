@@ -348,6 +348,13 @@ This example demonstrates a simple implementation of AJAX using the Fetch API in
 
 #### AJAX JSP example
 
+> :red_circle: Explore and learn: [**Java in GPT-notes**](../java/index.md)
+>
+> :red_circle: Explore and learn: [**Servlets & JSP in GPT-notes**](../java/servlets.md)
+>
+> :red_circle: Explore and learn: [**Java for the web development in GPT-notes**](../java4backend/index.md)
+
+
 Here's a very simple example of AJAX using JSP (JavaServer Pages) and the Fetch API:
 
 index.html:
