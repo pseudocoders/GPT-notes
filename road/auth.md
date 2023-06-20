@@ -548,3 +548,226 @@ node server.js
 
 This will start the server on port 3000. Open the HTML file in a web browser, and you can interact with the login, logout, and session check buttons.
 
+## Sharing information between servlets at context level
+
+To explain the use of sessions at the level of servlet context, I will provide an example where we implement three servlets and maintain a visitor counter for each servlet. The visitor counters will be persisted in a file.
+
+Let's begin by creating the three servlets:
+
+1. Create a servlet named `Servlet1.java`:
+
+```java
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class Servlet1 extends HttpServlet {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Get the servlet context
+        ServletContext context = getServletContext();
+
+        // Get the visitor counter for Servlet1 from the context
+        Integer counter = (Integer) context.getAttribute("counter1");
+
+        // Increment the counter
+        if (counter == null) {
+            counter = 1;
+        } else {
+            counter++;
+        }
+
+        // Update the visitor counter in the context
+        context.setAttribute("counter1", counter);
+
+        // Write the response
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+        out.println("<h1>Servlet 1</h1>");
+        out.println("<p>Visitor Count: " + counter + "</p>");
+    }
+}
+```
+
+2. Create a servlet named `Servlet2.java`:
+
+```java
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class Servlet2 extends HttpServlet {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Get the servlet context
+        ServletContext context = getServletContext();
+
+        // Get the visitor counter for Servlet2 from the context
+        Integer counter = (Integer) context.getAttribute("counter2");
+
+        // Increment the counter
+        if (counter == null) {
+            counter = 1;
+        } else {
+            counter++;
+        }
+
+        // Update the visitor counter in the context
+        context.setAttribute("counter2", counter);
+
+        // Write the response
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+        out.println("<h1>Servlet 2</h1>");
+        out.println("<p>Visitor Count: " + counter + "</p>");
+    }
+}
+```
+
+3. Create a servlet named `Servlet3.java`:
+
+```java
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class Servlet3 extends HttpServlet {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Get the servlet context
+        ServletContext context = getServletContext();
+
+        // Get the visitor counter for Servlet3 from the context
+        Integer counter = (Integer) context.getAttribute("counter3");
+
+        // Increment the counter
+        if (counter == null) {
+            counter = 1;
+        } else {
+            counter++;
+        }
+
+        // Update the visitor counter in the context
+        context.setAttribute("counter3", counter);
+
+        // Write the response
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+        out.println("<h1>Servlet 3</h1>");
+        out.println("<p>Visitor Count: " + counter + "</p>");
+    }
+}
+```
+
+Next, we will persist the visitor counters in a file. Let's modify the `ServletContextListener` class:
+
+1. Create a class named `CounterContextListener.java`:
+
+```java
+import java.io.*;
+import javax.servlet.*;
+
+public class CounterContextListener implements ServletContextListener {
+    private String filePath;
+
+    public void contextInitialized(ServletContextEvent event) {
+        ServletContext context = event.getServletContext();
+        filePath = context.getRealPath("/") + "counter.txt";
+
+        try {
+            File file = new File(filePath);
+
+            // Create the file if it doesn't exist
+            if (!file.exists()) {
+                file.createNewFile();
+                FileWriter writer
+
+ = new FileWriter(file);
+                writer.write("0\n0\n0\n");
+                writer.close();
+            }
+
+            // Read the visitor counters from the file
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String line;
+            int i = 1;
+            while ((line = reader.readLine()) != null) {
+                int counter = Integer.parseInt(line.trim());
+                context.setAttribute("counter" + i, counter);
+                i++;
+            }
+            reader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void contextDestroyed(ServletContextEvent event) {
+        ServletContext context = event.getServletContext();
+
+        try {
+            // Write the visitor counters to the file
+            FileWriter writer = new FileWriter(filePath);
+            for (int i = 1; i <= 3; i++) {
+                Integer counter = (Integer) context.getAttribute("counter" + i);
+                writer.write(counter + "\n");
+            }
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+Finally, we need to configure the `web.xml` file to map the servlets and configure the listener:
+
+1. Open the `web.xml` file and add the following code:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+    id="WebApp_ID" version="4.0">
+
+    <display-name>Session Example</display-name>
+
+    <listener>
+        <listener-class>CounterContextListener</listener-class>
+    </listener>
+
+    <servlet>
+        <servlet-name>Servlet1</servlet-name>
+        <servlet-class>Servlet1</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Servlet1</servlet-name>
+        <url-pattern>/servlet1</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Servlet2</servlet-name>
+        <servlet-class>Servlet2</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Servlet2</servlet-name>
+        <url-pattern>/servlet2</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Servlet3</servlet-name>
+        <servlet-class>Servlet3</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Servlet3</servlet-name>
+        <url-pattern>/servlet3</url-pattern>
+    </servlet-mapping>
+
+</web-app>
+```
+
+Make sure to adjust the paths and package names according to your project structure.
+
+Now, when the servlets are accessed, the visitor counters for each servlet will be incremented and persisted in the `counter.txt` file. The `CounterContextListener` class initializes the counters from the file when the application starts and saves the counters back to the file when the application is destroyed.
+
+Remember to place the `counter.txt` file in the appropriate location based on your project setup.
+
+That's it! You have now implemented three servlets with visitor counters persisted in a file using session context in a servlet-based application.
