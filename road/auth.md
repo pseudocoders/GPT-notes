@@ -33,7 +33,7 @@ To authenticate an AJAX frontend and maintain a session until a logout request, 
 By following these steps, you can authenticate an AJAX frontend using session-based authentication and maintain the session until a logout request is received. Remember to consider security measures like protecting against session hijacking, using HTTPS for secure communication, and implementing other relevant security best practices in your application.
 
 
-## Java cookie based sessions
+### Example: Java cookies based sessions
 
 Let's continue with the example of using a Java servlet on the backend and ES6 on the frontend. In this example, the servlet will handle three types of requests: login, logout, and check.
 
@@ -202,7 +202,7 @@ Remember to adjust the code to fit your project structure and requirements, and 
 Note: Don't forget to configure and deploy your servlet on a servlet container, such as Tomcat, to handle the requests.
 
 
-## PHP cookie based sessions
+### Example: PHP cookies based sessions
 
 Here's an example of using PHP on the backend instead of a servlet.
 
@@ -359,7 +359,7 @@ Remember to adjust the code to fit your project structure and requirements, and 
 Make sure to have a web server (such as Apache) configured to interpret PHP files and serve them correctly.
 
 
-## Node.js cookie based sessions
+### Example: Node.js cookies based sessions
 
 
 Certainly! Here's an example of using Node.js on the backend instead of a servlet or PHP.
