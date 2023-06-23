@@ -600,6 +600,154 @@ node server.js
 
 This will start the server on port 3000. Open the HTML file in a web browser, and you can interact with the login, logout, and session check buttons.
 
+## Sharing information between servlets at servlet-thread level
+
+In a servlet-based application, instances of the same servlet can share variable values and communicate with each other by utilizing shared class variables. These shared variables are initialized using the `init()` method of the servlet. However, it's important to note that this technique is not inherently thread-safe, and additional synchronization mechanisms need to be implemented to ensure thread safety if multiple threads will access and modify the shared variables concurrently.
+
+To initialize shared variables using the `init()` method, you can follow these steps:
+
+1. Declare the shared variables as class variables (static variables) within the servlet class. For example:
+
+```java
+public class MyServlet extends HttpServlet {
+    private static int sharedVariable;
+    // ...
+}
+```
+
+2. Override the `init()` method of the servlet and initialize the shared variables within it. This method is called by the servlet container when the servlet is first loaded or initialized. For example:
+
+```java
+public class MyServlet extends HttpServlet {
+    private static int sharedVariable;
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+
+        // Initialize shared variables
+        sharedVariable = 0;
+    }
+
+    // ...
+}
+```
+
+3. Access and modify the shared variables within the servlet's methods. Since the shared variables are static, their values are shared across all instances of the servlet. For example:
+
+```java
+public class MyServlet extends HttpServlet {
+    private static int sharedVariable;
+
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Access the shared variable
+        int value = sharedVariable;
+
+        // Modify the shared variable
+        sharedVariable++;
+
+        // ...
+    }
+
+    // ...
+}
+```
+
+It's important to note that this technique is not thread-safe by default. If multiple threads access and modify the shared variables concurrently, race conditions and other synchronization issues may occur. To ensure thread safety, you can use synchronization mechanisms such as `synchronized` blocks or locks to control access to the shared variables and ensure that only one thread can modify them at a time.
+
+For example, you can use a `synchronized` block to synchronize access to the shared variable within the servlet's methods:
+
+```java
+public class MyServlet extends HttpServlet {
+    private static int sharedVariable;
+
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        synchronized (MyServlet.class) {
+            // Access the shared variable
+            int value = sharedVariable;
+
+            // Modify the shared variable
+            sharedVariable++;
+
+            // ...
+        }
+    }
+
+    // ...
+}
+```
+
+By synchronizing access to the shared variable, you ensure that only one thread can read or modify it at a time, thus preventing concurrent access issues.
+
+In summary, instances of the same servlet can share variable values and communicate with each other by utilizing shared class variables. These variables are initialized using the `init()` method. However, to ensure thread safety when multiple threads access and modify the shared variables, additional synchronization mechanisms, such as `synchronized` blocks or locks, should be implemented.
+
+### Counter example
+
+Here's an example of a servlet-based application where two instances of the same servlet share a requests counter using a synchronized shared class variable:
+
+```java
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class RequestCounterServlet extends HttpServlet {
+    private static int requestCounter = 0;
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        incrementRequestCounter();
+
+        // Generate the response
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+        out.println("<h1>Request Counter Servlet</h1>");
+        out.println("<p>Total Requests: " + getRequestCounter() + "</p>");
+    }
+
+    private synchronized void incrementRequestCounter() {
+        requestCounter++;
+    }
+
+    private synchronized int getRequestCounter() {
+        return requestCounter;
+    }
+}
+```
+
+In this example, we have a servlet named `RequestCounterServlet` that extends `HttpServlet`. The servlet contains a shared class variable `requestCounter`, which will store the total number of requests received by both instances of the servlet.
+
+The `doGet()` method is overridden to handle HTTP GET requests. Inside the method, we have two synchronized methods: `incrementRequestCounter()` and `getRequestCounter()`. These methods are used to safely increment the `requestCounter` variable and retrieve its value, respectively.
+
+By using synchronized methods, we ensure that only one thread can access and modify the shared `requestCounter` variable at a time, preventing concurrency issues.
+
+To deploy and test this application, you need to configure the servlet mapping in the `web.xml` file, similar to the previous example.
+
+Once the application is deployed, you can access the servlet using the URL `http://localhost:8080/<context-path>/requestCounter`.
+
+When multiple clients make requests to the servlet, the `requestCounter` variable will be shared between the servlet instances, and the total number of requests will be displayed accurately.
+
+By synchronizing the access to the shared variable, you ensure thread safety and prevent concurrency issues that could arise from multiple threads accessing and modifying the variable simultaneously.
+
+To deploy and test this application, you need to configure the servlet mapping in the `web.xml` file:
+
+```xml
+<web-app>
+    <servlet>
+        <servlet-name>RequestCounterServlet</servlet-name>
+        <servlet-class>RequestCounterServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RequestCounterServlet</servlet-name>
+        <url-pattern>/requestCounter</url-pattern>
+    </servlet-mapping>
+</web-app>
+```
+
 ## Sharing information between servlets at context level
 
 To explain the use of sessions at the level of servlet context, I will provide an example where we implement three servlets and maintain a visitor counter for each servlet. The visitor counters will be persisted in a file.
@@ -729,9 +877,7 @@ public class CounterContextListener implements ServletContextListener {
             // Create the file if it doesn't exist
             if (!file.exists()) {
                 file.createNewFile();
-                FileWriter writer
-
- = new FileWriter(file);
+                FileWriter writer = new FileWriter(file);
                 writer.write("0\n0\n0\n");
                 writer.close();
             }
