@@ -3,7 +3,7 @@
 ## Introduction
 
 >
-> :red_circle: Explore and learn: [**Java in GPT-notes**](../basics/http.md)
+> :red_circle: Explore and learn: [**HTTP in GPT-notes**](../basics/http.md)
 >
 
 HTTP (Hypertext Transfer Protocol) is a stateless and connectionless protocol, which means that it does not inherently maintain a persistent connection between the client and the server. Each HTTP request is independent of the others, and the server does not retain any information about past requests or client states.
