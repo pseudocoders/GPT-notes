@@ -937,6 +937,114 @@ That's it! You have now implemented three servlets with visitor counters persist
 
 ## JWT
 
+### Example
+
+Here's an example of implementing JWT authentication without using Spring Security:
+
+1. Add the necessary dependencies to your project:
+```xml
+<dependency>
+    <groupId>io.jsonwebtoken</groupId>
+    <artifactId>jjwt-api</artifactId>
+    <version>0.11.2</version>
+</dependency>
+<dependency>
+    <groupId>io.jsonwebtoken</groupId>
+    <artifactId>jjwt-impl</artifactId>
+    <version>0.11.2</version>
+    <scope>runtime</scope>
+</dependency>
+<dependency>
+    <groupId>io.jsonwebtoken</groupId>
+    <artifactId>jjwt-jackson</artifactId>
+    <version>0.11.2</version>
+    <scope>runtime</scope>
+</dependency>
+```
+
+2. Create a JWTUtil class to handle JWT token generation and validation:
+```java
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
+
+import javax.crypto.SecretKey;
+import java.util.Date;
+
+public class JWTUtil {
+    private static final String SECRET_KEY = "yourSecretKey";
+    private static final long EXPIRATION_TIME = 86400000; // 24 hours
+
+    public static String generateToken(String username) {
+        SecretKey key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+
+        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + EXPIRATION_TIME);
+
+        return Jwts.builder()
+                .setSubject(username)
+                .setIssuedAt(now)
+                .setExpiration(expiryDate)
+                .signWith(key, SignatureAlgorithm.HS512)
+                .compact();
+    }
+
+    public static String extractUsername(String token) {
+        return extractClaims(token).getSubject();
+    }
+
+    public static boolean validateToken(String token) {
+        return extractClaims(token).getExpiration().after(new Date());
+    }
+
+    private static Claims extractClaims(String token) {
+        SecretKey key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
+}
+```
+
+3. Create a controller to handle authentication requests:
+```java
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class AuthController {
+    @PostMapping("/login")
+    public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
+        String username = loginRequest.getUsername();
+        String password = loginRequest.getPassword();
+
+        // Implement your authentication logic here (e.g., check credentials against a database)
+        if (username.equals("admin") && password.equals("password")) {
+            String token = JWTUtil.generateToken(username);
+            return ResponseEntity.ok(new JwtResponse(token));
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
+        }
+    }
+}
+```
+
+In this example, we have a `JWTUtil` class that handles JWT token generation and validation. The `generateToken()` method generates a JWT token using the provided username. The `extractUsername()` method extracts the username from a JWT token. The `validateToken()` method checks if a JWT token is valid.
+
+The `AuthController` class contains an endpoint for user authentication (`/login`). In the example, the authentication logic is simplified to check if the provided username and password are equal to "admin" and "password" respectively. If the credentials are valid, a JWT token is generated using the `JWTUtil` class and returned in the response.
+
+Remember to customize the authentication logic in the `Auth
+
+Controller` class to suit your specific needs, such as integrating with a user repository or service for authentication.
+
+### Example
+
+
 Here's an example of implementing JWT authentication using Spring Security:
 
 1. Add the necessary dependencies to your project's `pom.xml` file:
