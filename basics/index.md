@@ -9,4 +9,5 @@
 9. [Frontend](frontend.md)
 10. [Backend](backend.md)
 11. [Databases](databases.md)
+12. [Authentication methods](auth.md)
 13. [Deployment](deployment.md)
