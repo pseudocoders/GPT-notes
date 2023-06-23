@@ -1,5 +1,57 @@
 # Auth
 
+## Introduction
+
+>
+> :red_circle: Explore and learn: [**Java in GPT-notes**](../basics/http.md)
+>
+
+HTTP (Hypertext Transfer Protocol) is a stateless and connectionless protocol, which means that it does not inherently maintain a persistent connection between the client and the server. Each HTTP request is independent of the others, and the server does not retain any information about past requests or client states.
+
+Let's delve deeper into why HTTP is considered stateless and connectionless:
+
+Stateless:
+1. No memory of past requests: Each request made by a client to a server is treated as an independent transaction. The server does not retain any information about previous requests or the client's state. It does not store session data or maintain any context between requests.
+
+2. Each request is self-contained: Each HTTP request contains all the necessary information for the server to process it. The server does not rely on any prior knowledge or information from previous requests. This self-contained nature allows requests to be processed independently without any dependency on the previous or subsequent requests.
+
+Connectionless:
+1. No persistent connection: Unlike some other protocols like TCP (Transmission Control Protocol), HTTP does not maintain a persistent connection between the client and the server. After the server sends a response to a client's request, the connection is closed. Subsequent requests from the same client require establishing a new connection.
+
+2. No ongoing communication: Once the server sends a response to the client, the interaction ends. The server does not actively communicate or send data to the client unless initiated by a new request from the client.
+
+The stateless and connectionless nature of HTTP provides simplicity, scalability, and flexibility, which are crucial for web-based applications:
+
+1. Scalability: By not maintaining state or connection, the server can handle a large number of concurrent requests from multiple clients without the need to allocate and manage resources for maintaining session states.
+
+2. Simplicity: The stateless design simplifies the server's implementation, as it does not have to track or manage session-specific information. Each request can be processed independently without any dependencies on previous requests.
+
+3. Flexibility: The stateless nature allows clients and servers to operate independently and be interchangeable. A client can make requests to any server without needing to maintain a dedicated connection or session.
+
+However, despite being a stateless protocol, HTTP provides mechanisms to establish and maintain sessions between the client and the server. Sessions are essential for scenarios where the server needs to remember user-specific information or maintain context throughout a series of requests.
+
+There are several techniques commonly used to establish sessions in HTTP:
+
+1. Cookies: Cookies are small pieces of data that are stored on the client-side and sent with each subsequent request to the server. The server includes a Set-Cookie header in its response, and the client stores this cookie information. On subsequent requests, the client includes the cookie in the Cookie header, allowing the server to identify and associate the request with the corresponding session.
+
+2. URL Rewriting: Another method is to include a unique session identifier in the URL itself. The server generates a session ID and appends it to the URLs in subsequent responses. The client then includes this session ID in the URLs of subsequent requests, allowing the server to identify and maintain the session.
+
+3. Hidden Form Fields: In web forms, hidden fields can be used to store session information. The server includes a hidden field in the form with a unique session identifier, and the client submits this field along with the form data. The server can then associate the form submission with the appropriate session.
+
+4. Custom Headers: Some applications may use custom headers to maintain session information. The server may include a session ID or token in a custom header, and the client includes this header in subsequent requests to maintain the session.
+
+These techniques allow the server to maintain session information and associate requests from the same client within a session, even though HTTP itself is a stateless protocol. The server can use the session information to provide personalized experiences, remember user preferences, and maintain user-specific data throughout a series of requests.
+
+In addition to the techniques mentioned earlier, there are other methods that use tokens to maintain sessions in HTTP:
+
+1. JSON Web Tokens (JWT): JWT is an open standard (RFC 7519) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. In the context of sessions, a server can issue a JWT to the client upon successful authentication. The JWT contains claims that represent user identity and session-related information. The client includes the JWT in the Authorization header of subsequent requests, allowing the server to verify and maintain the session.
+
+2. OAuth: OAuth is an authorization framework that allows third-party applications to access a user's resources without sharing their credentials. OAuth involves the exchange of access tokens between the client, server, and the authorization server. The access token is used to establish and maintain the session between the client and the server, allowing the client to access protected resources on behalf of the user.
+
+3. Session Tokens: Session tokens are randomly generated strings or tokens that are issued by the server upon successful authentication. The server associates the token with a specific session and sends it to the client. The client includes the session token in subsequent requests, allowing the server to identify and maintain the session.
+
+These token-based session management techniques provide a secure and scalable way to maintain sessions in HTTP. They allow the server to authenticate and authorize clients, maintain session state, and provide access to protected resources based on the session token. Tokens offer flexibility and can be used across different platforms and technologies, making them widely adopted for session management in modern web applications.
+
 ## Cookies based sessions
 
 To authenticate an AJAX frontend and maintain a session until a logout request, you can follow these general steps:
