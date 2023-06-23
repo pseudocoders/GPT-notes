@@ -937,7 +937,7 @@ That's it! You have now implemented three servlets with visitor counters persist
 
 ## JWT
 
-### Example
+### Server Example
 
 Here's an example of implementing JWT authentication without using Spring Security:
 
@@ -1042,231 +1042,261 @@ Remember to customize the authentication logic in the `Auth
 
 Controller` class to suit your specific needs, such as integrating with a user repository or service for authentication.
 
-### Example
+### ES6 FrontEnd Example
 
+Here's an example of implementing the frontend code for JWT authentication using ES6:
 
-Here's an example of implementing JWT authentication using Spring Security:
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JWT Authentication</title>
+</head>
+<body>
+    <h1>Login</h1>
+    <div id="loginForm">
+        <input type="text" id="usernameInput" placeholder="Username">
+        <input type="password" id="passwordInput" placeholder="Password">
+        <button id="loginButton">Login</button>
+    </div>
 
-1. Add the necessary dependencies to your project's `pom.xml` file:
-```xml
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-security</artifactId>
-</dependency>
-<dependency>
-    <groupId>io.jsonwebtoken</groupId>
-    <artifactId>jjwt-api</artifactId>
-    <version>0.11.2</version>
-</dependency>
-<dependency>
-    <groupId>io.jsonwebtoken</groupId>
-    <artifactId>jjwt-impl</artifactId>
-    <version>0.11.2</version>
-    <scope>runtime</scope>
-</dependency>
-<dependency>
-    <groupId>io.jsonwebtoken</groupId>
-    <artifactId>jjwt-jackson</artifactId>
-    <version>0.11.2</version>
-    <scope>runtime</scope>
-</dependency>
-```
+    <h1>Welcome</h1>
+    <div id="welcomeMessage" style="display: none;">
+        <p id="usernameText"></p>
+        <button id="logoutButton">Logout</button>
+    </div>
 
-2. Create a JWTUtil class to handle JWT token generation and validation:
-```java
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+    <script>
+        // Function to make an HTTP POST request
+        async function postData(url, data) {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
 
-import java.util.Date;
+            if (!response.ok) {
+                throw new Error(response.status);
+            }
 
-@Component
-public class JWTUtil {
-    @Value("${jwt.secret}")
-    private String secret;
-
-    @Value("${jwt.expiration}")
-    private Long expiration;
-
-    public String generateToken(String username) {
-        Date now = new Date();
-        Date expiryDate = new Date(now.getTime() + expiration * 1000);
-
-        return Jwts.builder()
-                .setSubject(username)
-                .setIssuedAt(now)
-                .setExpiration(expiryDate)
-                .signWith(SignatureAlgorithm.HS512, secret)
-                .compact();
-    }
-
-    public String extractUsername(String token) {
-        return extractClaims(token).getSubject();
-    }
-
-    public boolean validateToken(String token) {
-        return extractClaims(token).getExpiration().after(new Date());
-    }
-
-    private Claims extractClaims(String token) {
-        return Jwts.parser()
-                .setSigningKey(secret)
-                .parseClaimsJws(token)
-                .getBody();
-    }
-}
-```
-
-3. Create a custom UserDetailsServiceImpl class that implements the UserDetailsService interface:
-```java
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
-
-@Service
-public class UserDetailsServiceImpl implements UserDetailsService {
-    @Autowired
-    private UserRepository userRepository;
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found with username: " + username);
-        }
-        return new org.springframework.security.core.userdetails.User(
-                user.getUsername(),
-                user.getPassword(),
-                new ArrayList<>()
-        );
-    }
-}
-```
-
-4. Configure the security settings in your application's configuration file (`application.properties` or `application.yml`):
-```properties
-spring.security.user.name=admin
-spring.security.user.password=admin
-spring.security.jwt.secret=yourSecretKey
-spring.security.jwt.expiration=86400
-```
-
-5. Implement the security configuration class:
-```java
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.security.config.annotation.web.builders
-
-.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-@Configuration
-@EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private JWTRequestFilter jwtRequestFilter;
-
-    @Autowired
-    private UserDetailsServiceImpl userDetailsService;
-
-    @Value("${spring.security.jwt.secret}")
-    private String jwtSecret;
-
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-    }
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/login").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
-    }
-
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
-}
-```
-
-6. Implement a controller to handle authentication requests:
-```java
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-
-@RestController
-public class AuthController {
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private JWTUtil jwtUtil;
-
-    @Autowired
-    private UserDetailsService userDetailsService;
-
-    @PostMapping("/login")
-    public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
-        try {
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
-            );
-        } catch (AuthenticationException e) {
-            throw new UsernameNotFoundException("Invalid username or password");
+            return response.json();
         }
 
-        final UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getUsername());
-        final String token = jwtUtil.generateToken(userDetails.getUsername());
+        // Function to handle the login process
+        async function login() {
+            const username = document.getElementById('usernameInput').value;
+            const password = document.getElementById('passwordInput').value;
 
-        return ResponseEntity.ok(new JwtResponse(token));
-    }
+            try {
+                const response = await postData('/login', { username, password });
+
+                // Store the token in localStorage
+                localStorage.setItem('token', response.token);
+
+                // Hide the login form and show the welcome message
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('welcomeMessage').style.display = 'block';
+                document.getElementById('usernameText').textContent = `Welcome, ${username}!`;
+            } catch (error) {
+                console.error(error);
+                alert('Failed to login. Please try again.');
+            }
+        }
+
+        // Function to handle the logout process
+        function logout() {
+            // Remove the token from localStorage
+            localStorage.removeItem('token');
+
+            // Show the login form and hide the welcome message
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('welcomeMessage').style.display = 'none';
+
+            // Clear the username input field
+            document.getElementById('usernameInput').value = '';
+        }
+
+        // Function to check if a user is authenticated
+        function checkAuth() {
+            const token = localStorage.getItem('token');
+            if (token) {
+                // Hide the login form and show the welcome message
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('welcomeMessage').style.display = 'block';
+
+                // Decode the token to get the username
+                const decodedToken = JSON.parse(atob(token.split('.')[1]));
+                const username = decodedToken.sub;
+
+                document.getElementById('usernameText').textContent = `Welcome, ${username}!`;
+            } else {
+                // Show the login form and hide the welcome message
+                document.getElementById('loginForm').style.display = 'block';
+                document.getElementById('welcomeMessage').style.display = 'none';
+            }
+        }
+
+        // Add event listeners to the login and logout buttons
+        document.getElementById('loginButton').addEventListener('click', login);
+        document.getElementById('logoutButton').addEventListener('click', logout);
+
+        // Check authentication on page load
+        checkAuth();
+    </script>
+</body>
+</html>
+```
+
+In this example, we have an HTML page that contains a login form and a welcome message. The JavaScript code utilizes ES6 features to handle the login and logout processes.
+
+The `postData()` function is an asynchronous function that sends a POST request to the server with the provided data. It
+
+ handles the response and stores the JWT token in the localStorage.
+
+The `login()` function is called when the login button is clicked. It retrieves the entered username and password, calls the `postData()` function to send the login request, and handles the response by storing the token and updating the UI accordingly.
+
+The `logout()` function is called when the logout button is clicked. It removes the token from localStorage and updates the UI to display the login form again.
+
+The `checkAuth()` function is called on page load. It checks if a token exists in localStorage and updates the UI accordingly.
+
+Note that this is a simplified example and doesn't cover all aspects of JWT authentication, such as token expiration and refresh. It's recommended to use a library or framework that provides built-in support for JWT authentication to handle these aspects more robustly.
+
+
+### Angular FrontEnd Example
+
+Here's an example of implementing the frontend code for JWT authentication using Angular:
+
+1. Create a login component to handle the login functionality:
+
+```typescript
+import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+interface LoginResponse {
+  token: string;
+}
+
+@Component({
+  selector: 'app-login',
+  template: `
+    <h1>Login</h1>
+    <div>
+      <input type="text" [(ngModel)]="username" placeholder="Username">
+      <input type="password" [(ngModel)]="password" placeholder="Password">
+      <button (click)="login()">Login</button>
+    </div>
+  `,
+})
+export class LoginComponent {
+  username: string;
+  password: string;
+
+  constructor(private http: HttpClient) {}
+
+  login(): void {
+    this.http
+      .post<LoginResponse>('/login', { username: this.username, password: this.password })
+      .subscribe(
+        (response) => {
+          localStorage.setItem('token', response.token);
+          // Handle successful login
+        },
+        (error) => {
+          console.error(error);
+          // Handle login error
+        }
+      );
+  }
 }
 ```
 
-In this example, we have implemented JWT authentication using Spring Security. The `JWTUtil` class handles JWT token generation and validation. The `UserDetailsServiceImpl` class implements the `UserDetailsService` interface to load user details from the database.
+2. Create an authentication service to handle token management and authentication status:
 
-The `SecurityConfig` class configures Spring Security settings, such as enabling global method security and defining URL access rules. It also registers the `JWTRequestFilter`, which intercepts requests and validates the JWT token.
+```typescript
+import { Injectable } from '@angular/core';
 
-The `AuthController` class contains an endpoint for user authentication. It uses the `AuthenticationManager` to authenticate the user credentials, and if successful, generates a JWT token using the `JWTUtil` class.
+@Injectable({
+  providedIn: 'root',
+})
+export class AuthService {
+  isAuthenticated(): boolean {
+    return !!localStorage.getItem('token');
+  }
 
-Remember to customize the example according to your project's requirements, such as integrating with your own User entity and UserRepository for user authentication.
+  logout(): void {
+    localStorage.removeItem('token');
+  }
+}
+```
+
+3. Create a component to display the authenticated content:
+
+```typescript
+import { Component } from '@angular/core';
+import { AuthService } from './auth.service';
+
+@Component({
+  selector: 'app-welcome',
+  template: `
+    <h1>Welcome</h1>
+    <div *ngIf="authService.isAuthenticated()">
+      <p>Welcome, {{ getUsernameFromToken() }}!</p>
+      <button (click)="logout()">Logout</button>
+    </div>
+    <div *ngIf="!authService.isAuthenticated()">
+      <p>Please login to access this page.</p>
+    </div>
+  `,
+})
+export class WelcomeComponent {
+  constructor(public authService: AuthService) {}
+
+  getUsernameFromToken(): string {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const tokenPayload = JSON.parse(atob(token.split('.')[1]));
+      return tokenPayload.sub;
+    }
+    return '';
+  }
+
+  logout(): void {
+    this.authService.logout();
+  }
+}
+```
+
+4. Add the components to your app module:
+
+```typescript
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
+import { AppComponent } from './app.component';
+import { LoginComponent } from './login.component';
+import { WelcomeComponent } from './welcome.component';
+
+@NgModule({
+  imports: [BrowserModule, FormsModule, HttpClientModule],
+  declarations: [AppComponent, LoginComponent, WelcomeComponent],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}
+```
+
+Make sure to import the necessary modules and components, and add them to the `declarations` and `bootstrap` arrays.
+
+5. Update the main `app.component.html` template:
+
+```html
+<app-login></app-login>
+<app-welcome></app-welcome>
+```
+
+This will render the login component and the welcome component in the main app component template.
+
+That's it! This example demonstrates a basic implementation of JWT authentication in an Angular application. The login component handles the login request and stores the JWT token in localStorage. The welcome component displays the authenticated content based on the token's presence in localStorage and provides a logout functionality.
