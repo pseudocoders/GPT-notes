@@ -706,6 +706,14 @@ To deploy and test this application, you need to configure the servlet mapping i
 
 ## Sharing information between servlets at context level
 
+Communication between servlets at the context level can be achieved using the ServletContext object provided by the servlet container. The ServletContext object represents a context, which is a web application's environment. It allows servlets within the same web application to share information and communicate with each other.
+
+Each servlet has access to its ServletContext object via the getServletContext() method inherited from the HttpServlet class. ServletContext provides a shared storage space where data can be stored and accessed by multiple servlets. This storage space is commonly referred to as the "context attributes." Servlets can store data in the ServletContext using the setAttribute() method, and retrieve the stored data using the getAttribute() method.
+
+It's important to note that the ServletContext is shared across all servlets within the same web application. Therefore, proper synchronization mechanisms should be implemented when accessing or modifying shared data to ensure thread safety, especially in scenarios with concurrent access.
+
+### Example
+
 To explain the use of sessions at the level of servlet context, I will provide an example where we implement three servlets and maintain a visitor counter for each servlet. The visitor counters will be persisted in a file.
 
 Let's begin by creating the three servlets:
