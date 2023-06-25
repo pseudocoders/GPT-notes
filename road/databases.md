@@ -209,4 +209,99 @@ Make sure to place the `db.properties` file in the appropriate location, such as
 
 By using a resource file, you can easily modify the connection parameters without modifying the servlet code, which provides greater flexibility and separation of concerns.
 
+### Parameterized queries based on the request parameters
 
+Here's a modified version of the previous example where the SQL query is parameterized based on the request parameters:
+
+```java
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
+
+public class DataServlet extends HttpServlet {
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/mydatabase";
+    private static final String DB_USER = "username";
+    private static final String DB_PASSWORD = "password";
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            // Connect to the database
+            conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+
+            // Get the request parameters
+            String name = request.getParameter("name");
+
+            // Prepare the SQL statement
+            String sql = "SELECT * FROM mytable WHERE name = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, name);
+
+            // Execute the query
+            rs = stmt.executeQuery();
+
+            // Create a list to hold the results
+            List<DataObject> data = new ArrayList<>();
+
+            // Iterate through the result set and retrieve data
+            while (rs.next()) {
+                DataObject obj = new DataObject();
+                obj.setId(rs.getInt("id"));
+                obj.setName(rs.getString("name"));
+                // Set other attributes as needed
+                data.add(obj);
+            }
+
+            // Set the response type to JSON
+            response.setContentType("application/json");
+            PrintWriter out = response.getWriter();
+
+            // Use Gson to convert the list to JSON
+            Gson gson = new Gson();
+            String json = gson.toJson(data);
+
+            // Write the JSON response
+            out.print(json);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Close the database resources
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+```
+
+In this modified example, the SQL query is parameterized based on the `name` request parameter. The `name` parameter is retrieved using `request.getParameter("name")`, and the SQL query is modified accordingly to filter the results based on the provided name.
+
+The `PreparedStatement` is used to set the parameter value using `stmt.setString(1, name)`, where `1` represents the index of the parameter in the SQL query.
+
+Please note that in this example, the assumption is made that you have a single request parameter named "name." You can modify the code to handle multiple parameters or adjust it according to your specific requirements.
