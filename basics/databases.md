@@ -93,23 +93,23 @@ Entity-Relationship Diagram (ERD):
 Here is a simplified representation of the ER model for the university system:
 
 ```
-+------------+         +---------+
-| Department |         | Course  |
-+------------+         +---------+
++-------------+         +---------+
+| Department  |         | Course  |
++-------------+         +---------+
 | DepartmentID|◄--------| CourseID|
-| Name       |         | Name    |
-| Location   |         | Credits |
-| Chairperson|         +---------+
-+------------+
+| Name        |         | Name    |
+| Location    |         | Credits |
+| Chairperson |         +---------+
++-------------+
       ▲
       |
-      |     +---------+
-      +-----| Student |
-            +---------+
+      |     +----------+
+      +-----| Student  |
+            +----------+
             | StudentID|
             | Name     |
             | Major    |
-            +---------+
+            +----------+
 ```
 
 In this example, the Department entity has a one-to-many relationship with the Course entity through the DepartmentID attribute. This relationship indicates that a department can offer multiple courses, but each course is associated with only one department.
