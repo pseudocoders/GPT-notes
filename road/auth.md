@@ -1297,6 +1297,189 @@ Make sure to import the necessary modules and components, and add them to the `d
 <app-welcome></app-welcome>
 ```
 
+
+## oAuth2 login with Google
+
+Here's an example of a simple authentication web application using a servlet and Google's OAuth 2.0 Java library:
+
+1. Create a `LoginServlet` to handle the login functionality:
+
+```java
+import com.google.api.client.auth.oauth2.AuthorizationCodeFlow;
+import com.google.api.client.auth.oauth2.AuthorizationCodeRequestUrl;
+import com.google.api.client.auth.oauth2.Credential;
+import com.google.api.client.extensions.servlet.auth.oauth2.AbstractAuthorizationCodeServlet;
+import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
+import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
+import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponseException;
+import com.google.api.client.http.BasicAuthentication;
+import com.google.api.client.http.GenericUrl;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.services.oauth2.Oauth2;
+import com.google.api.services.oauth2.model.Userinfoplus;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+
+public class LoginServlet extends AbstractAuthorizationCodeServlet {
+
+    private static final String CLIENT_ID = "your_client_id";
+    private static final String CLIENT_SECRET = "your_client_secret";
+    private static final String REDIRECT_URI = "http://localhost:8080/login/callback";
+    private static final List<String> SCOPES = Arrays.asList("email", "profile");
+
+    private final JsonFactory jsonFactory = new JacksonFactory();
+    private final NetHttpTransport httpTransport = new NetHttpTransport();
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        AuthorizationCodeFlow flow = createAuthorizationCodeFlow();
+
+        AuthorizationCodeRequestUrl authorizationUrl = flow.newAuthorizationUrl();
+        String redirectUrl = authorizationUrl.setRedirectUri(REDIRECT_URI).build();
+        resp.sendRedirect(redirectUrl);
+    }
+
+    @Override
+    protected String getRedirectUri(HttpServletRequest req) throws ServletException, IOException {
+        return REDIRECT_URI;
+    }
+
+    @Override
+    protected AuthorizationCodeFlow initializeFlow() throws IOException {
+        return createAuthorizationCodeFlow();
+    }
+
+    @Override
+    protected String getUserId(HttpServletRequest req) throws ServletException, IOException {
+        Credential credential = getFlow().loadCredential(getUserId(req));
+        if (credential != null) {
+            return ((GoogleCredential) credential).getUserId();
+        }
+        return null;
+    }
+
+    @Override
+    protected void onSuccess(HttpServletRequest req, HttpServletResponse resp, Credential credential)
+            throws ServletException, IOException {
+        Oauth2 oauth2 = new Oauth2.Builder(httpTransport, jsonFactory, credential).build();
+        Userinfoplus userInfo = oauth2.userinfo().get().execute();
+
+        // Access user information using `userInfo` object
+
+        // Redirect to the home page or perform any other action
+        resp.sendRedirect("/home");
+    }
+
+    @Override
+    protected void onError(HttpServletRequest req, HttpServletResponse resp, AuthorizationCodeResponseUrl errorResponse)
+            throws ServletException, IOException {
+        // Handle error during authentication
+        resp.getWriter().print("Authentication error: " + errorResponse.getError());
+    }
+
+    private AuthorizationCodeFlow createAuthorizationCodeFlow() {
+        return new GoogleAuthorizationCodeFlow.Builder(httpTransport, jsonFactory,
+                CLIENT_ID, CLIENT_SECRET, SCOPES).setAccessType("offline").build();
+    }
+}
+```
+
+2. Create a `LoginCallbackServlet` to handle the OAuth 2.0 callback:
+
+```java
+import com.google.api.client.auth.oauth2.AuthorizationCodeFlow;
+import com.google.api.client.auth.oauth2.AuthorizationCodeResponse
+
+Url;
+import com.google.api.client.auth.oauth2.Credential;
+import com.google.api.client.extensions.servlet.auth.oauth2.AbstractAuthorizationCodeCallbackServlet;
+import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
+import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
+import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponseException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+
+public class LoginCallbackServlet extends AbstractAuthorizationCodeCallbackServlet {
+
+    private static final String CLIENT_ID = "your_client_id";
+    private static final String CLIENT_SECRET = "your_client_secret";
+    private static final String REDIRECT_URI = "http://localhost:8080/login/callback";
+    private static final List<String> SCOPES = Arrays.asList("email", "profile");
+
+    @Override
+    protected void onSuccess(HttpServletRequest req, HttpServletResponse resp, Credential credential)
+            throws ServletException, IOException {
+        // Redirect to the login success page or perform any other action
+        resp.sendRedirect("/login/success");
+    }
+
+    @Override
+    protected void onError(HttpServletRequest req, HttpServletResponse resp, AuthorizationCodeResponseUrl errorResponse)
+            throws ServletException, IOException {
+        // Handle error during OAuth callback
+        resp.getWriter().print("Authentication error: " + errorResponse.getError());
+    }
+
+    @Override
+    protected String getRedirectUri(HttpServletRequest req) throws ServletException, IOException {
+        return REDIRECT_URI;
+    }
+
+    @Override
+    protected AuthorizationCodeFlow initializeFlow() throws IOException {
+        return new GoogleAuthorizationCodeFlow.Builder(HTTP_TRANSPORT, JSON_FACTORY,
+                CLIENT_ID, CLIENT_SECRET, SCOPES).setAccessType("offline").build();
+    }
+}
+```
+
+3. Configure the `web.xml` file to map the servlets:
+
+```xml
+<web-app>
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>your.package.name.LoginServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>LoginCallbackServlet</servlet-name>
+        <servlet-class>your.package.name.LoginCallbackServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginCallbackServlet</servlet-name>
+        <url-pattern>/login/callback</url-pattern>
+    </servlet-mapping>
+</web-app>
+```
+
+Make sure to replace `your.package.name` with the actual package name where you place the servlet classes.
+
+4. Build and deploy the application to your servlet container.
+
+This example demonstrates a basic implementation of OAuth 2.0 authentication using Google's OAuth 2.0 Java library and servlets. When the user visits the `/login` URL, they will be redirected to the Google login page. After successful authentication, the callback URL `/login/callback` will receive the authorization code, exchange it for an access token, and store it in the user's session. You can customize the success and error handling as per your requirements.
+
+Note: To use Google's OAuth 2.0 Java library, you need to include the necessary dependencies in your project. You can download the library from the Google API Client Library for Java website or use a dependency management tool like Maven or Gradle to include the library in your project.
+
+Make sure to replace `your_client_id` and `your_client_secret` with your actual Google OAuth 2.0 client ID and client secret.
+
+Remember to properly configure your Google OAuth 2.0 credentials in the Google Cloud Console for the authentication to work correctly.
 This will render the login component and the welcome component in the main app component template.
 
 That's it! This example demonstrates a basic implementation of JWT authentication in an Angular application. The login component handles the login request and stores the JWT token in localStorage. The welcome component displays the authenticated content based on the token's presence in localStorage and provides a logout functionality.
