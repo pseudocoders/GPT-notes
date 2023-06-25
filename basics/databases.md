@@ -28,7 +28,7 @@ Using a database offers several advantages over traditional file-based systems o
 
 By leveraging these advantages, databases provide a reliable, secure, and efficient solution for data storage, management, and analysis, making them indispensable for a wide range of applications and industries.
 
-## RDNMS
+## RDBMS
 
 An RDBMS, or Relational Database Management System, is a software system designed to manage and organize structured data in a relational database. It provides a systematic way of storing, retrieving, managing, and manipulating data, utilizing the principles of the relational model.
 
