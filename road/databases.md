@@ -4,6 +4,69 @@
 > :red_circle: Explore and learn: [**Databases in GPT-notes**](../basics/databases.md)
 > 
 
+## Statements and prepared statements
+
+In Java, when accessing databases using SQL, there are two common approaches: using regular statements and using prepared statements. Let's explore the differences between these two approaches:
+
+1. Regular Statement:
+A regular statement is a straightforward way of executing SQL queries in Java. It allows you to write SQL statements directly within your Java code as strings. For example:
+
+```java
+Statement statement = connection.createStatement();
+String sql = "SELECT * FROM users WHERE id = 1";
+ResultSet resultSet = statement.executeQuery(sql);
+```
+
+With regular statements, the SQL query is compiled and executed each time it is executed. If you have dynamic values or parameters to be included in your query, you need to concatenate them as strings, which can be error-prone and potentially vulnerable to SQL injection attacks.
+
+2. Prepared Statement:
+A prepared statement is a pre-compiled SQL statement that can be parameterized. It is typically used when you have a query that needs to be executed multiple times with different parameter values. Prepared statements offer several advantages over regular statements:
+
+- Improved Performance: Prepared statements are pre-compiled and stored in a compiled form in the database. This allows the database to reuse the query execution plan, resulting in better performance compared to regular statements, especially when executing the same query multiple times with different parameter values.
+
+- Parameter Binding: Prepared statements support parameter binding, allowing you to set parameter values dynamically without having to concatenate them into the SQL query as strings. This helps to prevent SQL injection attacks and ensures proper handling of special characters and data types. Here's an example:
+
+```java
+String sql = "SELECT * FROM users WHERE id = ?";
+PreparedStatement statement = connection.prepareStatement(sql);
+statement.setInt(1, 1); // Bind the value for the parameter
+ResultSet resultSet = statement.executeQuery();
+```
+
+- Readability and Maintainability: Prepared statements separate the SQL code from the data values, making the code more readable and easier to maintain. The SQL query remains intact, while the parameters can be changed without modifying the query itself.
+
+In summary, while regular statements are suitable for simple queries or one-time executions, prepared statements are preferred for queries that are executed multiple times or involve dynamic parameters. Prepared statements offer better performance, parameter binding for security, and improved code readability.
+
+### Injection atack example
+
+An SQL injection attack occurs when an attacker maliciously manipulates the input data in an SQL query to execute unintended commands or gain unauthorized access to the database. Let's consider an example using a regular statement without proper input validation or parameter binding:
+
+```java
+String username = request.getParameter("username");
+String password = request.getParameter("password");
+
+String sql = "SELECT * FROM users WHERE username = '" + username + "' AND password = '" + password + "'";
+Statement statement = connection.createStatement();
+ResultSet resultSet = statement.executeQuery(sql);
+```
+
+In the code above, the username and password inputs from a user are concatenated directly into the SQL query string. An attacker can exploit this vulnerability by providing crafted input, such as:
+
+Username: `' OR '1'='1'--`
+Password: `anything`
+
+The resulting SQL query would be:
+
+```sql
+SELECT * FROM users WHERE username = '' OR '1'='1'--' AND password = 'anything'
+```
+
+The attacker's intention is to make the condition `1=1` always true, effectively bypassing the username and password check. The double hyphen `--` denotes a comment, which comments out the rest of the original query.
+
+With this manipulated input, the attacker could gain unauthorized access to the system by logging in as any user or retrieving sensitive information from the database.
+
+To prevent SQL injection attacks, it is crucial to use prepared statements or employ proper input validation and sanitization techniques to ensure that user input is treated as data and not executable SQL code.
+
 ## Connection and data retrieval example
 
 Here's an example of a Java servlet that connects to a database, retrieves data based on a request, and returns the results in JSON format using the Google Gson library:
