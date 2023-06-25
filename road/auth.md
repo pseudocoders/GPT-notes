@@ -1483,3 +1483,35 @@ Remember to properly configure your Google OAuth 2.0 credentials in the Google C
 This will render the login component and the welcome component in the main app component template.
 
 That's it! This example demonstrates a basic implementation of JWT authentication in an Angular application. The login component handles the login request and stores the JWT token in localStorage. The welcome component displays the authenticated content based on the token's presence in localStorage and provides a logout functionality.
+
+
+Frontend code:
+
+```javascript
+// HTML Template
+const loginTemplate = `
+  <h1>Login with Google</h1>
+  <button id="loginBtn">Login</button>
+`;
+
+// DOM Elements
+const appContainer = document.getElementById('app');
+
+// Render Login Template
+appContainer.innerHTML = loginTemplate;
+
+// Event Listener for Login Button
+document.getElementById('loginBtn').addEventListener('click', () => {
+  // Redirect to the server endpoint for Google OAuth
+  window.location.href = '/login';
+});
+```
+
+In this example, we have a simple HTML template that displays a login button. When the button is clicked, the browser will redirect to the `/login` endpoint on the server to initiate the Google OAuth authentication flow.
+
+You can include this script in your HTML file and make sure to replace the `appContainer` element ID with the appropriate element ID in your project.
+
+Note that this is a simplified example and doesn't cover all aspects of OAuth authentication, such as handling the authentication callback and receiving the access token. The backend server should handle the OAuth callback and obtain the access token from Google, which can then be stored or used for further authentication and authorization purposes.
+
+Make sure to configure the server-side endpoints and handle the OAuth authentication flow accordingly.
+
