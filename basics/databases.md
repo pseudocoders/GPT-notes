@@ -520,7 +520,7 @@ NoSQL (Not Only SQL) databases are a category of databases that provide a flexib
 
 NoSQL databases are suitable for a range of applications, including web applications, real-time analytics, content management systems, and IoT platforms. They excel in scenarios requiring high scalability, flexible data models, and efficient handling of large and rapidly changing datasets. However, it's important to note that NoSQL databases may sacrifice some ACID properties (Atomicity, Consistency, Isolation, Durability) offered by traditional RDBMS in favor of scalability and performance optimizations.
 
-### advantages
+### Advantages
 
 NoSQL databases offer several advantages that make them suitable for certain use cases and provide benefits over traditional relational databases. Here are some advantages of using NoSQL databases:
 
