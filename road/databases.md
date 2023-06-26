@@ -26,7 +26,7 @@ Here are the key components and concepts related to JDBC:
 
 JDBC provides a standardized way to interact with databases, allowing Java applications to be database-independent and easily switch between different database vendors. It has become a foundational technology for Java database programming and is widely used in various Java-based applications, including web applications, desktop applications, and enterprise systems.
 
-## Statements and prepared statements
+### Statements and prepared statements
 
 In Java, when accessing databases using SQL, there are two common approaches: using regular statements and using prepared statements. Let's explore the differences between these two approaches:
 
@@ -59,7 +59,7 @@ ResultSet resultSet = statement.executeQuery();
 
 In summary, while regular statements are suitable for simple queries or one-time executions, prepared statements are preferred for queries that are executed multiple times or involve dynamic parameters. Prepared statements offer better performance, parameter binding for security, and improved code readability.
 
-### Injection atack example
+#### Injection atack example
 
 An SQL injection attack occurs when an attacker maliciously manipulates the input data in an SQL query to execute unintended commands or gain unauthorized access to the database. Let's consider an example using a regular statement without proper input validation or parameter binding:
 
@@ -89,7 +89,7 @@ With this manipulated input, the attacker could gain unauthorized access to the 
 
 To prevent SQL injection attacks, it is crucial to use prepared statements or employ proper input validation and sanitization techniques to ensure that user input is treated as data and not executable SQL code.
 
-## Connection and data retrieval example
+### Connection and data retrieval example using a ResultSet
 
 Here's an example of a Java servlet that connects to a database, retrieves data based on a request, and returns the results in JSON format using the Google Gson library:
 
@@ -180,7 +180,7 @@ After retrieving the data, the servlet sets the response type to JSON and uses t
 
 Please note that this is a basic example, and in a real-world application, you would typically handle exceptions more gracefully, use connection pooling, and possibly incorporate frameworks like Spring to handle dependency injection and simplify the database access code.
 
-### Taking out database information into a resorces file
+#### Taking out database information into a resorces file
 
 Here's a modified version of the previous example where the database connection parameters are stored in a resource file:
 
@@ -294,7 +294,7 @@ Make sure to place the `db.properties` file in the appropriate location, such as
 
 By using a resource file, you can easily modify the connection parameters without modifying the servlet code, which provides greater flexibility and separation of concerns.
 
-### Parameterized queries based on the request parameters
+#### Parameterized queries based on the request parameters
 
 Here's a modified version of the previous example where the SQL query is parameterized based on the request parameters:
 
