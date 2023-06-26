@@ -485,6 +485,53 @@ Here are some key components and features of Supabase:
 
 Supabase aims to simplify the development process by providing a comprehensive backend platform with a familiar SQL database, real-time capabilities, authentication, and storage. It is an appealing choice for developers who prefer open-source solutions, want to self-host their backend infrastructure, or require more control over their data and application stack.
 
+## Connection pools
+
+A connection pool is a cache of database connections maintained by an application or a middleware layer to improve the performance and efficiency of database operations. Rather than creating a new database connection each time a request is made, a connection pool manages a pool of pre-established connections that can be reused.
+
+Here's how a connection pool typically works:
+
+1. Initialization: When the application starts up or the middleware layer is initialized, a predefined number of database connections are created and added to the connection pool.
+
+2. Requesting a Connection: When a component of the application needs to interact with the database, it requests a connection from the connection pool.
+
+3. Reusing Connections: The connection pool returns an available, idle connection from the pool to the requesting component. If no connections are available, the pool can either create new connections up to a configured maximum limit or wait until a connection becomes available.
+
+4. Executing Database Operations: The component performs the required database operations using the obtained connection.
+
+5. Returning the Connection: After the database operations are completed, the component returns the connection back to the pool, making it available for reuse by other components.
+
+The main advantages of using a connection pool are:
+
+1. Connection Reuse: Reusing existing connections eliminates the overhead of creating a new connection for each request. This improves the performance and response time of the application.
+
+2. Resource Management: Connection pools help manage and limit the number of connections created, preventing resource exhaustion and potential database performance issues.
+
+3. Connection Pooling Parameters: Connection pools often allow configuration of parameters such as the maximum number of connections, idle timeout duration, and connection validation, providing control and flexibility for optimizing database interactions.
+
+Popular Java frameworks like Apache Tomcat, Spring, and Java Database Connectivity (JDBC) provide built-in connection pooling mechanisms or integrate with third-party connection pool libraries, making it easier to implement connection pooling in Java applications.
+
+Overall, connection pooling is an effective technique for managing and reusing database connections, leading to improved performance, scalability, and efficient resource utilization in applications that interact with databases.
+
+### Java Connection Pools
+
+Here are some popular and widely used connection pooling libraries for Java:
+
+1. HikariCP: HikariCP is a high-performance, lightweight connection pool that is widely regarded as one of the fastest connection pooling libraries for Java. It is known for its excellent performance, low latency, and efficient resource management.
+
+2. Apache DBCP (Database Connection Pool): Apache DBCP is a mature and widely adopted connection pooling library provided by the Apache Software Foundation. It offers a reliable and feature-rich connection pool implementation.
+
+3. C3P0: C3P0 is another popular connection pooling library for Java applications. It provides robust connection pooling and management features, including connection pooling parameters configuration, automatic recovery, and idle connection testing.
+
+4. BoneCP: BoneCP is a fast, open-source connection pooling library for Java. It focuses on performance and low memory footprint while offering various configuration options for connection pooling and management.
+
+5. Tomcat JDBC Connection Pool: The Tomcat JDBC Connection Pool is a part of the Apache Tomcat server, providing a built-in connection pooling mechanism. It is a lightweight and efficient connection pool that integrates seamlessly with Apache Tomcat and is commonly used in web applications.
+
+6. Vibur DBCP: Vibur DBCP is a high-performance JDBC connection pooling library. It offers features like pool-wide monitoring, connection leak detection, and fair distribution of connections.
+
+These are just a few examples of popular connection pooling libraries available for Java. Each library has its own set of features, performance characteristics, and configuration options. The choice of the connection pooling library depends on the specific requirements of your application and the performance considerations you prioritize.
+
+
 ## Transactions
 
 A transaction is a logical unit of work that consists of one or more database operations. It represents a sequence of actions that need to be executed as a single, indivisible unit. The purpose of a transaction is to ensure data integrity and consistency within a database.
