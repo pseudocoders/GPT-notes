@@ -4,6 +4,28 @@
 > :red_circle: Explore and learn: [**Databases in GPT-notes**](../basics/databases.md)
 > 
 
+## JDBC
+
+JDBC (Java Database Connectivity) is a Java API (Application Programming Interface) that provides a standard way for Java applications to interact with databases. It allows developers to execute SQL queries, retrieve and manipulate data, and perform database operations using Java code.
+
+Here are the key components and concepts related to JDBC:
+
+1. JDBC Driver: A JDBC driver is a software component that acts as an interface between the Java application and the database. It provides the necessary functionality to establish a connection, send SQL statements to the database, and retrieve the results. JDBC drivers are typically provided by the database vendors and need to be loaded and registered in the Java application.
+
+2. Connection: The Connection object represents a connection to the database. It is responsible for establishing a connection, authenticating with the database, and managing the communication channel with the database server. The Connection object is obtained by calling the `DriverManager.getConnection()` method, passing the database URL, username, and password.
+
+3. Statement: The Statement object is used to execute SQL queries and statements on the database. It can be used to perform operations like executing SELECT queries, updating data with INSERT, UPDATE, and DELETE statements, or executing any other SQL command. Statements are created using the `Connection.createStatement()` method.
+
+4. PreparedStatement: The PreparedStatement object is an extension of the Statement interface that provides a way to execute parameterized SQL queries. It allows you to create SQL statements with placeholders for parameters and then set the values of those parameters before executing the query. PreparedStatement helps prevent SQL injection attacks and improves performance by reusing the query execution plan.
+
+5. ResultSet: The ResultSet object represents the result of a SQL query executed against the database. It allows you to navigate through the rows of the result set and retrieve the data returned by the query. You can access the columns of the result set using the `getXXX()` methods, where `XXX` represents the data type of the column.
+
+6. Transaction Management: JDBC supports transaction management, which allows you to group multiple database operations into a single logical unit. You can start a transaction, perform database operations, and commit the changes or rollback if an error occurs.
+
+7. Exception Handling: JDBC throws various exceptions, such as SQLException, to handle database-related errors. Proper exception handling is essential to handle errors gracefully and take appropriate actions.
+
+JDBC provides a standardized way to interact with databases, allowing Java applications to be database-independent and easily switch between different database vendors. It has become a foundational technology for Java database programming and is widely used in various Java-based applications, including web applications, desktop applications, and enterprise systems.
+
 ## Statements and prepared statements
 
 In Java, when accessing databases using SQL, there are two common approaches: using regular statements and using prepared statements. Let's explore the differences between these two approaches:
