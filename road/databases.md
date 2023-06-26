@@ -368,3 +368,26 @@ In this modified example, the SQL query is parameterized based on the `name` req
 The `PreparedStatement` is used to set the parameter value using `stmt.setString(1, name)`, where `1` represents the index of the parameter in the SQL query.
 
 Please note that in this example, the assumption is made that you have a single request parameter named "name." You can modify the code to handle multiple parameters or adjust it according to your specific requirements.
+
+## Hikari Connection pool
+
+HikariCP is a high-performance, lightweight, and extremely fast connection pooling library for Java applications. It is widely regarded as one of the best connection pooling options available due to its exceptional performance, low latency, and efficient resource management.
+
+Here are some key features and characteristics of HikariCP:
+
+1. Performance: HikariCP is known for its excellent performance and high throughput. It achieves this by utilizing a combination of optimized algorithms and techniques, such as lock-free data structures, asynchronous processing, and minimal thread context switching.
+
+2. Lightweight and Low Footprint: HikariCP has a small footprint, making it suitable for resource-constrained environments. It has minimal dependencies, resulting in faster startup times and efficient memory utilization.
+
+3. Connection Reuse and Recycling: HikariCP emphasizes connection reuse and recycling. It maintains a pool of pre-established connections to the database and efficiently manages their reuse. Reusing connections eliminates the overhead of creating new connections for each request, resulting in improved performance.
+
+4. Configurability: HikariCP provides extensive configuration options to fine-tune its behavior based on specific application requirements. Configuration parameters include maximum pool size, connection timeout, connection validation, and many more.
+
+5. Connection Health Monitoring: HikariCP actively monitors the health and validity of connections in the pool. It performs periodic checks to ensure that connections are still valid and available. Unhealthy or idle connections are automatically removed from the pool to maintain optimal performance.
+
+6. Connection Pool Statistics: HikariCP collects and exposes various statistics related to connection pooling, including the number of active connections, idle connections, connection acquisition times, and more. These statistics can be useful for monitoring and performance tuning.
+
+7. Integration and Compatibility: HikariCP is compatible with various database drivers and frameworks. It can be easily integrated into Java applications using popular frameworks such as Spring, Hibernate, and Java Database Connectivity (JDBC).
+
+Overall, HikariCP offers an efficient, high-performance, and developer-friendly solution for connection pooling in Java applications. Its focus on performance, configurability, and lightweight design makes it a popular choice for optimizing database interactions and improving overall application performance.
+
