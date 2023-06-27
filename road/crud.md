@@ -16,6 +16,47 @@ Here's a breakdown of what each operation represents:
 
 These four operations collectively form the basic building blocks for data manipulation in various software applications, web services, and databases. They provide a standardized approach for managing data and are widely used in the development of applications that interact with databases or perform data management tasks.
 
+## API specification
+
+Here's a simple API specification for a CRUD app in Spring Boot:
+
+1. Retrieve a specific entity by ID:
+   - Method: GET
+   - Path: `/api/entities/{id}`
+   - Description: Retrieves a specific entity by its ID.
+   - Response: JSON representation of the entity.
+
+2. Retrieve a paginated list of entities:
+   - Method: GET
+   - Path: `/api/entities`
+   - Description: Retrieves a paginated list of entities.
+   - Query Parameters:
+     - `page` (optional): Specifies the page number (default: 0).
+     - `size` (optional): Specifies the page size (default: 10).
+   - Response: JSON representation of the paginated list of entities.
+
+3. Insert a new entity:
+   - Method: POST
+   - Path: `/api/entities`
+   - Description: Inserts a new entity.
+   - Request Body: JSON representation of the entity to be inserted.
+   - Response: JSON representation of the inserted entity.
+
+4. Update an existing entity by ID:
+   - Method: PUT
+   - Path: `/api/entities/{id}`
+   - Description: Updates an existing entity by its ID.
+   - Request Body: JSON representation of the updated entity.
+   - Response: JSON representation of the updated entity.
+
+5. Delete an entity by ID:
+   - Method: DELETE
+   - Path: `/api/entities/{id}`
+   - Description: Deletes an entity by its ID.
+   - Response: Success message or appropriate status code.
+
+
+
 ## READ
 
 ### GET
