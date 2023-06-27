@@ -18,6 +18,70 @@ These four operations collectively form the basic building blocks for data manip
 
 ## READ
 
+### GET
+
+To implement a GET operation in Spring Boot that receives an ID and returns an entity through an API, you can follow these steps:
+
+1. Define a REST endpoint in your controller class for the GET operation. Typically, this would be done using the `@GetMapping` annotation and specifying the path, such as `/entities/{id}`.
+
+   ```java
+   @GetMapping("/entities/{id}")
+   public ResponseEntity<Entity> getEntityById(@PathVariable Long id) {
+       // Implementation logic will be added in the next steps
+   }
+   ```
+
+2. Implement the logic in the controller method to retrieve the entity by its ID. This can be done by injecting a service or repository component and invoking a method to fetch the entity based on the provided ID.
+
+   ```java
+   @Autowired
+   private EntityService entityService;
+
+   @GetMapping("/entities/{id}")
+   public ResponseEntity<Entity> getEntityById(@PathVariable Long id) {
+       Entity entity = entityService.getEntityById(id);
+       if (entity != null) {
+           return ResponseEntity.ok(entity);
+       } else {
+           return ResponseEntity.notFound().build();
+       }
+   }
+   ```
+
+3. Create a service or repository class to handle the data access and business logic for retrieving the entity by ID. This class can be responsible for interacting with the database or any other data source.
+
+   ```java
+   @Service
+   public class EntityService {
+       @Autowired
+       private EntityRepository entityRepository;
+
+       public Entity getEntityById(Long id) {
+           return entityRepository.findById(id).orElse(null);
+       }
+   }
+   ```
+
+4. Create a repository interface that extends `JpaRepository` or any other Spring Data repository interface. This will provide the necessary methods to interact with the underlying data source.
+
+   ```java
+   public interface EntityRepository extends JpaRepository<Entity, Long> {
+   }
+   ```
+
+5. Ensure that your entity class is properly defined with annotations such as `@Entity` and `@Id`. This will map it to the corresponding database table and specify the primary key.
+
+   ```java
+   @Entity
+   public class Entity {
+       @Id
+       private Long id;
+       // Other properties and methods
+   }
+   ```
+
+With these steps, you can implement a GET operation in Spring Boot that receives an ID through the API endpoint. The entity associated with the provided ID is fetched using a service or repository class, and the response is returned as a `ResponseEntity` with the appropriate status code (`200 OK` if found or `404 Not Found` if not found).
+
 ### Pagination
 
 Paginating database query results in an API (Application Programming Interface) is essential for several reasons:
