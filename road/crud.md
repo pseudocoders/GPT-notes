@@ -33,6 +33,7 @@ Here's a simple API specification for a CRUD app in Spring Boot:
    - Query Parameters:
      - `page` (optional): Specifies the page number (default: 0).
      - `size` (optional): Specifies the page size (default: 10).
+     - `sort` (optional): Specifies the field(s) and direction(s) to sort the entities. Multiple fields can be comma-separated. The direction can be specified using asc (ascending) or desc (descending).
    - Response: JSON representation of the paginated list of entities.
 
 3. Insert a new entity:
