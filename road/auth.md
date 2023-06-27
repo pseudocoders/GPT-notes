@@ -337,9 +337,7 @@ document.getElementById('checkButton').addEventListener('click', function () {
         method: 'GET',
         credentials: 'include' // Send cookies with the request
     })
-        .then(response
-
- => {
+        .then(response => {
             if (response.ok) {
                 // User has an active session
                 console.log('User has an active session.');
