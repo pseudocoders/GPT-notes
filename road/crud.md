@@ -56,7 +56,140 @@ Here's a simple API specification for a CRUD app in Spring Boot:
    - Description: Deletes an entity by its ID.
    - Response: Success message or appropriate status code.
 
+### Example
 
+Certainly! Here's a complete request example for each endpoint in the CRUD application based on the API specification:
+
+1. Retrieve a specific entity by ID:
+   - Method: GET
+   - Path: `/api/entities/{id}`
+
+   Request example:
+   ```
+   GET /api/entities/1
+   ```
+
+   Response example:
+   ```
+   HTTP/1.1 200 OK
+   Content-Type: application/json
+   
+   {
+     "id": 1,
+     "name": "Entity 1",
+     "description": "This is entity 1"
+   }
+   ```
+
+2. Retrieve a paginated list of entities:
+   - Method: GET
+   - Path: `/api/entities`
+
+   Request example:
+   ```
+   GET /api/entities?page=0&size=10&sort=name:asc
+   ```
+
+   Response example:
+   ```
+   HTTP/1.1 200 OK
+   Content-Type: application/json
+   
+   {
+     "content": [
+       {
+         "id": 1,
+         "name": "Entity 1",
+         "description": "This is entity 1"
+       },
+       {
+         "id": 2,
+         "name": "Entity 2",
+         "description": "This is entity 2"
+       },
+       ...
+     ],
+     "page": 0,
+     "size": 10,
+     "totalElements": 20,
+     "totalPages": 2
+   }
+   ```
+
+3. Insert a new entity:
+   - Method: POST
+   - Path: `/api/entities`
+
+   Request example:
+   ```
+   POST /api/entities
+   Content-Type: application/json
+
+   {
+     "name": "New Entity",
+     "description": "This is a new entity"
+   }
+   ```
+
+   Response example:
+   ```
+   HTTP/1.1 201 Created
+   Content-Type: application/json
+   
+   {
+     "id": 21,
+     "name": "New Entity",
+     "description": "This is a new entity"
+   }
+   ```
+
+4. Update an existing entity by ID:
+   - Method: PUT
+   - Path: `/api/entities/{id}`
+
+   Request example:
+   ```
+   PUT /api/entities/1
+   Content-Type: application/json
+
+   {
+     "name": "Updated Entity",
+     "description": "This is an updated entity"
+   }
+   ```
+
+   Response example:
+   ```
+   HTTP/1.1 200 OK
+   Content-Type: application/json
+   
+   {
+     "id": 1,
+     "name": "Updated Entity",
+     "description": "This is an updated entity"
+   }
+   ```
+
+5. Delete an entity by ID:
+   - Method: DELETE
+   - Path: `/api/entities/{id}`
+
+   Request example:
+   ```
+   DELETE /api/entities/1
+   ```
+
+   Response example:
+   ```
+   HTTP/1.1 200 OK
+   Content-Type: text/plain
+   
+   Entity deleted successfully
+   ```
+
+These examples demonstrate how to make requests to each endpoint using HTTP methods and provide the necessary request payload or query parameters. The responses include the HTTP status code and the expected response body in JSON format.
+
+Remember to adapt the examples to match your specific API endpoints, data structure, and any additional requirements or validation you may have.
 
 ## READ
 
