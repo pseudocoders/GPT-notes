@@ -159,7 +159,7 @@ With this manipulated input, the attacker could gain unauthorized access to the 
 
 To prevent SQL injection attacks, it is crucial to use prepared statements or employ proper input validation and sanitization techniques to ensure that user input is treated as data and not executable SQL code.
 
-### ResultSet
+### ResultSets
 
 The ResultSet interface in JDBC represents the result of a database query. It provides methods to navigate through the rows of the result set and retrieve the data returned by the query. Here are the key aspects and operations related to ResultSet:
 
@@ -522,4 +522,221 @@ Here are some key features and characteristics of HikariCP:
 7. Integration and Compatibility: HikariCP is compatible with various database drivers and frameworks. It can be easily integrated into Java applications using popular frameworks such as Spring, Hibernate, and Java Database Connectivity (JDBC).
 
 Overall, HikariCP offers an efficient, high-performance, and developer-friendly solution for connection pooling in Java applications. Its focus on performance, configurability, and lightweight design makes it a popular choice for optimizing database interactions and improving overall application performance.
+
+### Example
+
+Here's a complete example of configuring and using HikariCP in a servlet:
+
+1. Add HikariCP Dependency: First, you need to include the HikariCP library in your project. You can do this by adding the dependency to your project's build file (e.g., Maven or Gradle). Here's an example for Maven:
+
+```xml
+<dependency>
+    <groupId>com.zaxxer</groupId>
+    <artifactId>HikariCP</artifactId>
+    <version>4.0.3</version>
+</dependency>
+```
+
+2. Configure HikariCP in Servlet Initialization: In your servlet, you can configure HikariCP in the `init()` method by creating a HikariDataSource object and setting the necessary configuration parameters. Here's an example:
+
+```java
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+
+public class MyServlet extends HttpServlet {
+    private HikariDataSource dataSource;
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+
+        // Create HikariCP configuration
+        HikariConfig config = new HikariConfig();
+        config.setJdbcUrl("jdbc:mysql://localhost:3306/mydatabase");
+        config.setUsername("username");
+        config.setPassword("password");
+        // Configure other HikariCP parameters as needed
+
+        // Create the HikariCP data source
+        dataSource = new HikariDataSource(config);
+    }
+
+    // Override other servlet methods (doGet, doPost, etc.)
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        
+        // Close the HikariCP data source
+        if (dataSource != null) {
+            dataSource.close();
+        }
+    }
+}
+```
+
+In the `init()` method, you create a HikariConfig object and set the JDBC URL, username, password, and any other desired configuration parameters.
+
+3. Use HikariCP Connection in Servlet Methods: In your servlet methods (e.g., `doGet()`, `doPost()`), you can obtain a connection from the HikariCP data source and use it to perform database operations. Here's an example:
+
+```java
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import com.zaxxer.hikari.HikariDataSource;
+
+public class MyServlet extends HttpServlet {
+    private HikariDataSource dataSource;
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        // HikariCP configuration (as shown in the previous step)
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try (Connection connection = dataSource.getConnection()) {
+            // Use the connection for database operations
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM users");
+            ResultSet resultSet = statement.executeQuery();
+
+            // Process the result set
+            while (resultSet.next()) {
+                String username = resultSet.getString("username");
+                // ...
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // Continue with servlet logic and response handling
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        // Closing HikariCP data source (as shown in the previous step)
+    }
+}
+```
+
+In the `doGet()` method (or any other servlet method), you can obtain a connection from the HikariCP data source using `
+
+dataSource.getConnection()`. Then, you can use the connection to prepare statements, execute queries, and process the result set.
+
+Remember to properly handle exceptions and close the ResultSet, PreparedStatement, and Connection objects to release resources and avoid resource leaks.
+
+This example demonstrates how to configure and use HikariCP in a servlet, including obtaining connections from the connection pool and performing database operations.
+
+### Configuration
+
+HikariCP provides a variety of configuration parameters that allow you to fine-tune its behavior and performance. These parameters can be set in the HikariConfig object when configuring the HikariCP data source. Here are some of the commonly used configuration parameters:
+
+1. JDBC URL (`jdbcUrl`): The URL of the database to connect to. It typically includes the database type, host, port, and database name.
+
+2. Username (`username`) and Password (`password`): The credentials used to authenticate with the database.
+
+3. Connection Pool Size (`maximumPoolSize`): The maximum number of connections that can be created in the connection pool. This determines the maximum concurrent connections that can be established with the database.
+
+4. Connection Timeout (`connectionTimeout`): The maximum time (in milliseconds) that HikariCP will wait for a connection to be established with the database. If the timeout is exceeded, an exception will be thrown.
+
+5. Minimum Idle Connections (`minimumIdle`): The minimum number of idle connections that HikariCP will maintain in the connection pool. Idle connections are ready-to-use connections that are kept in the pool to improve performance.
+
+6. Maximum Lifetime of Connections (`maxLifetime`): The maximum time (in milliseconds) that a connection can remain in the pool before being closed and replaced with a new connection. This helps to prevent connections from becoming stale or unreliable.
+
+7. Idle Connection Timeout (`idleTimeout`): The maximum time (in milliseconds) that an idle connection can remain in the pool before being closed and removed.
+
+8. Connection Validation (`connectionTestQuery`): A SQL query or statement used to validate the health of a connection before it is given to the application. If the query fails, the connection is considered invalid and will be discarded.
+
+9. Auto-commit Mode (`autoCommit`): Specifies whether connections obtained from the pool should be in auto-commit mode by default. Auto-commit mode automatically commits each database operation as a separate transaction.
+
+10. Data Source Properties: Additional properties specific to the database driver or data source can be set using the `dataSourceProperties` property of the HikariConfig object. These properties are driver-specific and can be used to configure driver-specific behavior.
+
+These are just a few examples of the configuration parameters available in HikariCP. You can refer to the HikariCP documentation or the HikariConfig class for a comprehensive list of all available configuration parameters and their detailed descriptions.
+
+By adjusting these configuration parameters according to your application's needs and the database environment, you can optimize the performance and resource utilization of your HikariCP connection pool.
+
+### Configuration in a Resources file 
+
+To configure HikariCP parameters using a resource file, you can use a properties file or a YAML file to store the configuration. Here's an example of how you can modify the previous example to load the HikariCP configuration from a properties file:
+
+1. Create a properties file (e.g., `hikari.properties`) and define the HikariCP configuration parameters. For example:
+
+```
+jdbcUrl=jdbc:mysql://localhost:3306/mydatabase
+username=username
+password=password
+maximumPoolSize=10
+connectionTimeout=30000
+minimumIdle=5
+maxLifetime=1800000
+idleTimeout=600000
+connectionTestQuery=SELECT 1
+autoCommit=true
+```
+
+2. Update the servlet's `init()` method to load the configuration from the properties file:
+
+```java
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+
+public class MyServlet extends HttpServlet {
+    private HikariDataSource dataSource;
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+
+        // Load the properties file
+        Properties properties = new Properties();
+        try (InputStream input = getClass().getClassLoader().getResourceAsStream("hikari.properties")) {
+            properties.load(input);
+        } catch (IOException e) {
+            throw new ServletException("Failed to load HikariCP configuration", e);
+        }
+
+        // Create HikariCP configuration
+        HikariConfig config = new HikariConfig(properties);
+
+        // Create the HikariCP data source
+        dataSource = new HikariDataSource(config);
+    }
+
+    // Override other servlet methods (doGet, doPost, etc.)
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        // Closing HikariCP data source (as shown in the previous example)
+    }
+}
+```
+
+In this example, we load the properties file (`hikari.properties`) using the `getClass().getClassLoader().getResourceAsStream()` method. We then create a `Properties` object and load the file contents into it.
+
+Next, we create a `HikariConfig` object and pass the `Properties` object to it. HikariCP will automatically parse and apply the properties to configure the data source.
+
+With this modification, you can configure HikariCP parameters in a separate properties file, making it easier to manage and modify the configuration without modifying the Java code directly.
+
+
+
+
+
 
