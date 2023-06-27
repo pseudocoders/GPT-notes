@@ -373,7 +373,7 @@ To serve JSON paginated results to frontend requests using Spring Boot, you can 
 By following these steps, you can use Spring Boot to serve JSON paginated results to frontend requests. Remember to adjust the code according to your specific requirements and data model.
 
 
-### getPage Example
+#### getPage Example
 
 Here's another example of how to use `Pageable` to serve JSON responses:
 
