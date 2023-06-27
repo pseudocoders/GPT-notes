@@ -490,7 +490,7 @@ To modify the previous example to allow ordering by any field and include a filt
 
 With these modifications, you can now include an optional filter field and value in your API request. The filtering logic can be implemented in your service or repository method based on the provided filter. Additionally, you can specify the ordering field and order direction in the request to retrieve paginated JSON responses with customized sorting and filtering.
 
-### Create
+## Create
 
 To implement a create operation in Spring Boot you can follow these steps:
 
@@ -553,7 +553,7 @@ To implement a create operation in Spring Boot you can follow these steps:
 
 With these steps, you can implement a create operation in Spring Boot that receives an entity JSON from the frontend. The entity is persisted in the database using a service or repository class, and the response is returned as a `ResponseEntity` with the appropriate status code (`201 Created`) and the created entity in the response body.
 
-### Update
+## Update
 
 Here's an example of a Spring Boot application that handle the update operation:
 
@@ -643,7 +643,7 @@ Make sure to include the necessary configuration for your database connection in
 
 Remember to handle exceptions, perform validation, and add appropriate error handling as per your application requirements.
 
-### Delete
+## Delete
 
 To create a delete by ID endpoint in a Spring Boot application, you can follow these steps:
 
