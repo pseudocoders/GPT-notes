@@ -1,6 +1,7 @@
 # Angular CRUD
 
-Here's an example of an Angular CRUD application:
+
+Here's an example of an Angular CRUD application with routing and services based on the provided API specification:
 
 1. Create a new Angular project:
 ```
