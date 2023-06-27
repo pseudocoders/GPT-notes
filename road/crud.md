@@ -139,7 +139,7 @@ Here are the key aspects of `Pageable`:
 Using `Pageable` in combination with Spring Data repositories enables you to easily implement pagination in your data access layer. It simplifies the retrieval of paginated data, supports sorting options, and provides valuable metadata about the result set.
 
 
-#### Basic Example
+#### getPage Basic Example
 
 To serve JSON paginated results to frontend requests using Spring Boot, you can follow these steps:
 
@@ -198,7 +198,7 @@ To serve JSON paginated results to frontend requests using Spring Boot, you can 
 By following these steps, you can use Spring Boot to serve JSON paginated results to frontend requests. Remember to adjust the code according to your specific requirements and data model.
 
 
-### Example
+### getPage Example
 
 Here's another example of how to use `Pageable` to serve JSON responses:
 
@@ -241,7 +241,7 @@ Here's another example of how to use `Pageable` to serve JSON responses:
 By following these steps, you can serve JSON responses from your API requests with support for pagination, specifying the page number, page size, and sorting order. This enables clients to retrieve and navigate through paginated data efficiently.
 
 
-#### Example
+#### getPage Example
 
 To modify the previous example to allow ordering by any field and include a filter in the request, you can make the following adjustments:
 
@@ -315,3 +315,157 @@ To modify the previous example to allow ordering by any field and include a filt
 
 With these modifications, you can now include an optional filter field and value in your API request. The filtering logic can be implemented in your service or repository method based on the provided filter. Additionally, you can specify the ordering field and order direction in the request to retrieve paginated JSON responses with customized sorting and filtering.
 
+### Create
+
+To implement a create operation in Spring Boot you can follow these steps:
+
+1. Define a REST endpoint in your controller class for the create operation. Typically, this would be done using the `@PostMapping` annotation and specifying the path.
+
+   ```java
+   @PostMapping("/entities")
+   public ResponseEntity<Entity> createEntity(@RequestBody Entity entity) {
+       // Implementation logic will be added in the next steps
+   }
+   ```
+
+2. Implement the logic in the controller method to create the entity. This can be done by injecting a service or repository component and invoking a method to persist the entity in the database.
+
+   ```java
+   @Autowired
+   private EntityService entityService;
+
+   @PostMapping("/entities")
+   public ResponseEntity<Entity> createEntity(@RequestBody Entity entity) {
+       Entity createdEntity = entityService.createEntity(entity);
+       return ResponseEntity.status(HttpStatus.CREATED).body(createdEntity);
+   }
+   ```
+
+3. Create a service or repository class to handle the data access and business logic for creating the entity. This class can be responsible for interacting with the database or any other data source.
+
+   ```java
+   @Service
+   public class EntityService {
+       @Autowired
+       private EntityRepository entityRepository;
+
+       public Entity createEntity(Entity entity) {
+           return entityRepository.save(entity);
+       }
+   }
+   ```
+
+4. Create a repository interface that extends `JpaRepository` or any other Spring Data repository interface. This will provide the necessary methods to interact with the underlying data source.
+
+   ```java
+   public interface EntityRepository extends JpaRepository<Entity, Long> {
+   }
+   ```
+
+5. Ensure that your entity class is properly defined with annotations such as `@Entity` and `@Id`. This will map it to the corresponding database table and specify the primary key.
+
+   ```java
+   @Entity
+   public class Entity {
+       @Id
+       @GeneratedValue(strategy = GenerationType.IDENTITY)
+       private Long id;
+       // Other properties and methods
+   }
+   ```
+
+6. Configure the serialization and deserialization of JSON in your Spring Boot application. By default, Spring Boot uses Jackson as the JSON serializer and deserializer, so you generally don't need any additional configuration.
+
+With these steps, you can implement a create operation in Spring Boot that receives an entity JSON from the frontend. The entity is persisted in the database using a service or repository class, and the response is returned as a `ResponseEntity` with the appropriate status code (`201 Created`) and the created entity in the response body.
+
+### Update
+
+Here's an example of a Spring Boot application that handle the update operation:
+
+1. Set up your Spring Boot project: Create a new Spring Boot project or use an existing one. Make sure you have the necessary dependencies for Spring Data JPA and a database driver in your project's build file (e.g., `pom.xml` for Maven or `build.gradle` for Gradle).
+
+2. Define your entity class: Create a Java class that represents the entity you want to store in the database. Annotate it with `@Entity` to mark it as a persistent entity, and use appropriate annotations (`@Id`, `@Column`, etc.) to define the fields and their mappings to the database columns.
+
+3. Create a repository interface: Define a repository interface that extends `JpaRepository` or another suitable repository interface provided by Spring Data JPA. This interface will provide basic CRUD operations for your entity.
+
+4. Create a service class: Create a service class that will handle the update operation. This class should be annotated with `@Service` to mark it as a service component in Spring.
+
+5. Autowire the repository in the service: In your service class, inject the repository instance by using the `@Autowired` annotation. This allows you to interact with the database through the repository methods.
+
+6. Implement the update operation in the service: Create a method in the service class that handles the update operation. This method should receive the entity JSON from the frontend as a parameter.
+
+7. Deserialize the JSON: Use a JSON deserialization library (e.g., Jackson) to convert the received JSON into an instance of your entity class.
+
+8. Fetch the existing entity: Retrieve the existing entity from the database using the identifier or any other unique identifier that you can extract from the JSON. You can use the repository methods for this purpose.
+
+9. Update the entity: Update the fields of the existing entity with the values from the received JSON entity.
+
+10. Save the updated entity: Use the repository interface to save the updated entity to the database.
+
+11. Create a controller: Create a controller class that handles the HTTP requests. Inject the service instance into the controller using the `@Autowired` annotation.
+
+12. Implement the API endpoint: Define an API endpoint in the controller that receives the entity JSON from the frontend and calls the service method to update the database.
+
+Here's an example implementation:
+
+```java
+@Entity
+public class Entity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String name;
+    private String description;
+
+    // Getters and setters, constructors
+}
+
+@Repository
+public interface EntityRepository extends JpaRepository<Entity, Long> {
+}
+
+@Service
+public class EntityService {
+    private final EntityRepository entityRepository;
+
+    public EntityService(EntityRepository entityRepository) {
+        this.entityRepository = entityRepository;
+    }
+
+    public void updateEntity(EntityJson entityJson) {
+        Entity existingEntity = entityRepository.findById(entityJson.getId())
+            .orElseThrow(() -> new EntityNotFoundException("Entity not found"));
+
+        existingEntity.setName(entityJson.getName());
+        existingEntity.setDescription(entityJson.getDescription());
+        // Update other fields as needed
+
+        entityRepository.save(existingEntity);
+    }
+}
+
+@RestController
+@RequestMapping("/api")
+public class EntityController {
+    private final EntityService entityService;
+
+    public EntityController(EntityService entityService) {
+        this.entityService = entityService;
+    }
+
+    @PostMapping("/updateEntity")
+    public ResponseEntity<String> updateEntity(@RequestBody EntityJson entityJson) {
+        entityService.updateEntity(entityJson);
+        return ResponseEntity.ok("Entity updated successfully");
+    }
+}
+```
+
+In this example, the application consists of an
+
+ entity class (`Entity`), a repository interface (`EntityRepository`), a service class (`EntityService`), and a controller class (`EntityController`). The controller exposes an API endpoint (`/api/updateEntity`) that receives the entity JSON from the frontend and calls the service method (`updateEntity`) to update the entity in the database.
+
+Make sure to include the necessary configuration for your database connection in the `application.properties` file or any other relevant configuration file in your Spring Boot project.
+
+Remember to handle exceptions, perform validation, and add appropriate error handling as per your application requirements.
