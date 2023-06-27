@@ -193,7 +193,7 @@ Remember to adapt the examples to match your specific API endpoints, data struct
 
 ## READ
 
-### GET
+### get
 
 To implement a GET operation in Spring Boot that receives an ID and returns an entity through an API, you can follow these steps:
 
