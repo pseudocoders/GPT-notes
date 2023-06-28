@@ -25,11 +25,12 @@
 > :red_circle: Explore and learn: [**Angular GPT-notes**](../angular/index.md)
 >
 
-1. [Basic SB CRUD](sb-crud.md)
-2. [Basic Angular CRUD](angular-crud.md)
-3. [Connecting CRUDS with relationships](cruds.md)
-4. [Improving CRUDS](icruds.md)
-5. Improving applications
+1. [Basic SB Database operations](sb-db-basic.md)
+2. [Basic SB CRUD](sb-crud.md)
+3. [Basic Angular CRUD](angular-crud.md)
+4. [Connecting CRUDS with relationships](cruds.md)
+5. [Improving CRUDS](icruds.md)
+6. Improving applications
    - Dealing with dates
    - Reports
    - Uploading images
