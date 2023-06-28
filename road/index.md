@@ -27,10 +27,11 @@
 
 1. [Basic SB Database operations](sb-db-basic.md)
 2. [Basic SB CRUD](sb-crud.md)
-3. [Basic Angular CRUD](angular-crud.md)
-4. [Connecting CRUDS with relationships](cruds.md)
-5. [Improving CRUDS](icruds.md)
-6. Improving applications
+3. [blogBUSTER server](blogbuster.md)
+4. [Basic Angular CRUD](angular-crud.md)
+5. [Connecting CRUDS with relationships](cruds.md)
+6. [Improving CRUDS](icruds.md)
+7. Improving applications
    - Dealing with dates
    - Reports
    - Uploading images
