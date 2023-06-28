@@ -1,6 +1,6 @@
 # BlogBUSTER
 
-``sql
+```sql
 CREATE TABLE `post` (
   `id` int(11) NOT NULL,
   `titulo` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
