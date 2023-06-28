@@ -1,5 +1,24 @@
 # BlogBUSTER
 
+``sql
+CREATE TABLE `post` (
+  `id` int(11) NOT NULL,
+  `titulo` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `cuerpo` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `fecha` datetime DEFAULT NULL,
+  `etiquetas` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `visible` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+ALTER TABLE `post`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `post`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+COMMIT;
+```
+
+
 ## Get
 
 I will guide you through creating a Spring Boot project named "blogBUSTER," creating the entity class for the "post" table, creating a repository, service, and implementing an API endpoint to retrieve a post by ID and return it in JSON format.
