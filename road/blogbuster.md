@@ -3,10 +3,10 @@
 ```sql
 CREATE TABLE `post` (
   `id` int(11) NOT NULL,
-  `titulo` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `cuerpo` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
-  `fecha` datetime DEFAULT NULL,
-  `etiquetas` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `body` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `date` datetime DEFAULT NULL,
+  `labels` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `visible` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
