@@ -245,3 +245,306 @@ In the updated code:
 - The `getPostsByPage` endpoint in the `PostController` returns a `ResponseEntity` containing the paginated `Page` of `Post` objects.
 
 Now, when you run the Spring Boot application and send a GET request to `/posts/page` with the appropriate query parameters, it will return a paginated response of posts based on the specified page number, page size, field order, and field direction using the `Pageable` functionality provided by Spring Boot.
+
+## Create
+
+To modify the "blogBUSTER" project and add a `create` API endpoint you can follow these steps:
+
+1. Update the `Post` entity class:
+Ensure that the `Post` entity class includes the necessary annotations and validation constraints. For example:
+```java
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "post")
+public class Post {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @NotBlank
+    @Size(max = 255)
+    private String title;
+
+    @Lob
+    private String body;
+
+    private LocalDateTime date;
+
+    @Size(max = 255)
+    private String labels;
+
+    private boolean visible;
+
+    // Constructors, getters, and setters
+}
+```
+
+2. Update the `PostService` class:
+Include a new method in the `PostService` class to handle the creation of posts:
+```java
+import org.springframework.stereotype.Service;
+
+@Service
+public class PostService {
+    private final PostRepository postRepository;
+
+    public PostService(PostRepository postRepository) {
+        this.postRepository = postRepository;
+    }
+
+    public Post createPost(Post post) {
+        return postRepository.save(post);
+    }
+}
+```
+
+3. Update the `PostController` class:
+Add a new endpoint to the `PostController` class for handling the creation of posts:
+```java
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+
+@RestController
+@RequestMapping("/posts")
+public class PostController {
+    private final PostService postService;
+
+    public PostController(PostService postService) {
+        this.postService = postService;
+    }
+
+    // Existing endpoints...
+
+    @PostMapping
+    public ResponseEntity<?> createPost(@RequestBody @Valid Post post, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            // Handle validation errors
+            return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
+        }
+
+        Post createdPost = postService.createPost(post);
+        return new ResponseEntity<>(createdPost, HttpStatus.CREATED);
+    }
+}
+```
+
+4. Test the `create` API endpoint:
+You can now test the `create` API endpoint by sending a POST request to `/posts` with a JSON payload containing the post data. The endpoint will validate the data based on the constraints defined in the `Post` entity class. If the validation passes, the post will be saved in the database and returned in the response with a status code of 201 (Created). If there are validation errors, the response will include the validation error details.
+
+Make sure to handle any additional error scenarios and customize the response messages as needed.
+
+Note: Don't forget to wire up the required dependencies (e.g., `PostRepository`) and configure the database connection properties in the Spring Boot project.
+
+## Update
+
+To modify the "blogBUSTER" project and add an `update` API endpoint you can follow these steps:
+
+1. Update the `PostService` class:
+Include a new method in the `PostService` class to handle the update of posts:
+```java
+import org.springframework.stereotype.Service;
+
+@Service
+public class PostService {
+    private final PostRepository postRepository;
+
+    public PostService(PostRepository postRepository) {
+        this.postRepository = postRepository;
+    }
+
+    public Post updatePost(Post post) {
+        if (!postRepository.existsById(post.getId())) {
+            throw new RuntimeException("Post not found for ID: " + post.getId());
+        }
+        return postRepository.save(post);
+    }
+}
+```
+
+2. Update the `PostController` class:
+Add a new endpoint to the `PostController` class for handling the update of posts:
+```java
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+
+@RestController
+@RequestMapping("/posts")
+public class PostController {
+    private final PostService postService;
+
+    public PostController(PostService postService) {
+        this.postService = postService;
+    }
+
+    // Existing endpoints...
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updatePost(@PathVariable int id, @RequestBody @Valid Post post,
+                                        BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            // Handle validation errors
+            return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
+        }
+
+        if (post.getId() != id) {
+            return ResponseEntity.badRequest().body("Mismatched ID in path and payload");
+        }
+
+        Post updatedPost = postService.updatePost(post);
+        return new ResponseEntity<>(updatedPost, HttpStatus.OK);
+    }
+}
+```
+
+3. Test the `update` API endpoint:
+You can now test the `update` API endpoint by sending a PUT request to `/posts/{id}` with the post ID in the URL path and a JSON payload containing the updated post data. The endpoint will validate the data based on the constraints defined in the `Post` entity class. If the validation passes and the post with the given ID exists in the database, the post will be updated and returned in the response with a status code of 200 (OK). If there are validation errors or the ID in the path and payload don't match, appropriate error responses will be returned.
+
+Make sure to handle any additional error scenarios and customize the response messages as needed.
+
+Note: Ensure that the necessary dependencies (e.g., `PostRepository`) are properly wired up and the database connection properties are configured in the Spring Boot project.
+
+
+## Delete
+
+To modify the "blogBUSTER" project and add a `delete` API endpoint that accepts a request with an ID and removes the corresponding post from the database, you can follow these steps:
+
+1. Update the `PostService` class:
+Include a new method in the `PostService` class to handle the deletion of posts:
+```java
+import org.springframework.stereotype.Service;
+
+@Service
+public class PostService {
+    private final PostRepository postRepository;
+
+    public PostService(PostRepository postRepository) {
+        this.postRepository = postRepository;
+    }
+
+    public void deletePost(int id) {
+        if (!postRepository.existsById(id)) {
+            throw new RuntimeException("Post not found for ID: " + id);
+        }
+        postRepository.deleteById(id);
+    }
+}
+```
+
+2. Update the `PostController` class:
+Add a new endpoint to the `PostController` class for handling the deletion of posts:
+```java
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/posts")
+public class PostController {
+    private final PostService postService;
+
+    public PostController(PostService postService) {
+        this.postService = postService;
+    }
+
+    // Existing endpoints...
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deletePost(@PathVariable int id) {
+        postService.deletePost(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+}
+```
+
+3. Test the `delete` API endpoint:
+You can now test the `delete` API endpoint by sending a DELETE request to `/posts/{id}` with the post ID in the URL path. The endpoint will check if the post with the given ID exists in the database. If it does, the post will be deleted, and a response with a status code of 204 (No Content) will be returned. If the post is not found, an appropriate error response will be returned.
+
+Make sure to handle any additional error scenarios and customize the response messages as needed.
+
+Note: Ensure that the necessary dependencies (e.g., `PostRepository`) are properly wired up and the database connection properties are configured in the Spring Boot project.
+
+
+
+## Generate
+
+To modify the "blogBUSTER" project and add a `generate` API endpoint that creates random posts in the database, you can follow these steps:
+
+1. Update the `PostService` class:
+Include a new method in the `PostService` class to generate and save random posts:
+```java
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.Random;
+
+@Service
+public class PostService {
+    private final PostRepository postRepository;
+
+    public PostService(PostRepository postRepository) {
+        this.postRepository = postRepository;
+    }
+
+    public void generateRandomPosts(int numberOfPosts) {
+        Random random = new Random();
+
+        for (int i = 0; i < numberOfPosts; i++) {
+            Post post = new Post();
+            post.setTitle("Random Post " + i);
+            post.setBody("This is the body of random post " + i);
+            post.setDate(LocalDateTime.now());
+            post.setLabels("Random");
+            post.setVisible(random.nextBoolean());
+
+            postRepository.save(post);
+        }
+    }
+}
+```
+
+2. Update the `PostController` class:
+Add a new endpoint to the `PostController` class for handling the generation of random posts:
+```java
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/posts")
+public class PostController {
+    private final PostService postService;
+
+    public PostController(PostService postService) {
+        this.postService = postService;
+    }
+
+    // Existing endpoints...
+
+    @PostMapping("/generate")
+    public ResponseEntity<?> generateRandomPosts(@RequestParam int numberOfPosts) {
+        postService.generateRandomPosts(numberOfPosts);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+}
+```
+
+3. Test the `generate` API endpoint:
+You can now test the `generate` API endpoint by sending a POST request to `/posts/generate` with the `numberOfPosts` parameter specifying the desired number of random posts to be generated and saved in the database. The endpoint will create and save the specified number of random posts, and a response with a status code of 201 (Created) will be returned.
+
+Make sure to handle any additional error scenarios and customize the response messages as needed.
+
+
+Note: Ensure that the necessary dependencies (e.g., `PostRepository`) are properly wired up and the database connection properties are configured in the Spring Boot project.
+
