@@ -1,6 +1,6 @@
 # blogBUSTER frontend
 
-## 
+## View
 
 To start a routed Angular project named "blogBUSTER-frontend" follow these steps:
 
@@ -237,3 +237,33 @@ Navigate to `http://localhost:4200`
 Remember to update the `apiUrl` in the `PostService` with the appropriate URL for your backend API.
 
 Note: Make sure you have the necessary dependencies installed, including the Angular CLI (`npm install -g @angular/cli`) and the required packages (`npm install`).
+
+## Showing visible as an icon
+
+To implement a filter to show the "visible" field as an icon in the `post-view` component, you can follow these steps:
+
+1. Open the `post-view.component.html` file in the `src/app/post-view` directory.
+2. Replace the line `<p>Visible: {{ post.visible }}</p>` with the following code:
+
+```html
+<!-- src/app/post-view/post-view.component.html -->
+
+<p>
+  Visible:
+  <i class="material-icons">{{ post.visible ? 'check' : 'close' }}</i>
+</p>
+```
+
+In this implementation, the `material-icons` class is used from the Material Design icons library. The `{{ post.visible ? 'check' : 'close' }}` expression conditionally sets the icon to either 'check' or 'close' based on the value of the `visible` field in the `post` object.
+
+Make sure you have the necessary stylesheets and dependencies imported to use the Material Design icons. You can add the following link in the `index.html` file inside the `<head>` section to include the Material Design icons:
+
+```html
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+```
+
+Now, when you view the `post-view` component, the `Visible` field will be displayed as an icon, showing a checkmark icon if the post is visible (`true`) or a close icon if the post is not visible (`false`).
+
+You can further customize the icon styles or use different icon libraries based on your preferences.
+
+Remember to update the `post-view` component with the necessary imports and dependencies to use the Material Design icons or any other icon library of your choice.
