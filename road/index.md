@@ -29,9 +29,10 @@
 2. [Basic SB CRUD](sb-crud.md)
 3. [blogBUSTER server](blogbuster.md)
 4. [Basic Angular CRUD](angular-crud.md)
-5. [Connecting CRUDS with relationships](cruds.md)
-6. [Improving CRUDS](icruds.md)
-7. Improving applications
+5. [blogBUSTER front-end](blogbuster-frontend.md)
+6. [Connecting CRUDS with relationships](cruds.md)
+7. [Improving CRUDS](icruds.md)
+8. Improving applications
    - Dealing with dates
    - Reports
    - Uploading images
