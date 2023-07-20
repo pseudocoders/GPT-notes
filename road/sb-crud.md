@@ -58,7 +58,7 @@ Here's a simple API specification for a CRUD app in Spring Boot:
 
 ### Example
 
-Certainly! Here's a complete request example for each endpoint in the CRUD application based on the API specification:
+Here's a complete request example for each endpoint in the CRUD application based on the API specification:
 
 1. Retrieve a specific entity by ID:
    - Method: GET
@@ -193,7 +193,7 @@ Remember to adapt the examples to match your specific API endpoints, data struct
 
 ## READ
 
-### get
+### Get
 
 To implement a GET operation in Spring Boot that receives an ID and returns an entity through an API, you can follow these steps:
 
