@@ -317,7 +317,7 @@ As always, remember to handle exceptions appropriately to handle cases when the 
 
 ## Reading all Entities
 
-Sure! To get all product entities from the database using Spring Boot and Spring Data JPA, you can utilize the `findAll()` method provided by the repository. Here's an example:
+To get all product entities from the database using Spring Boot and Spring Data JPA, you can utilize the `findAll()` method provided by the repository. Here's an example:
 
 1. Create the entity classes for `Product` and `ProductType`, and set up their respective repositories, similar to the previous examples.
 
@@ -390,7 +390,7 @@ Make sure to handle exceptions appropriately for real-world scenarios to ensure 
 
 ## Reading all Entities
 
-Sure! To get all product entities from the database using Spring Boot and Spring Data JPA, you can utilize the `findAll()` method provided by the repository. Here's an example:
+To get all product entities from the database using Spring Boot and Spring Data JPA, you can utilize the `findAll()` method provided by the repository. Here's an example:
 
 1. Create the entity classes for `Product` and `ProductType`, and set up their respective repositories, similar to the previous examples.
 
