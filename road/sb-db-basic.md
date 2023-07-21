@@ -814,7 +814,7 @@ import java.util.List;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
-    @Query("SELECT p FROM Product p ORDER BY p.price ASC")
+    @Query("SELECT TOP 10 * FROM Product ORDER BY price ASC")
     List<Product> findTop10CheapestProducts();
 }
 ```
