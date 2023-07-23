@@ -10,4 +10,4 @@
 8. [RxJS and AJAX](rxjs.md)
 9. Filters
 11. [Interceptors](interceptors.md)
-12. [Directives](directives.md)
+12. [Custom Directives](directives.md)
