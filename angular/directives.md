@@ -1,4 +1,4 @@
-# Directives
+# Custom Directives
 
 In Angular, directives are a fundamental concept that extends HTML with custom behavior, allowing developers to manipulate the DOM, apply styles, or add functionality to elements. Directives can be categorized into two main types: built-in directives and custom directives.
 
