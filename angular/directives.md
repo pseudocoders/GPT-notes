@@ -148,7 +148,7 @@ In summary, the three types of custom directives in Angular are:
 2. Attribute Directives: Change the appearance or behavior of elements by modifying their attributes (e.g., `appHighlight`).
 3. Component Directives: Act as standalone components with their own template and logic, encapsulating complex functionalities (e.g., `MyComponentDirective`).
 
-## Example of creating a custom directive
+## Example of creating a custom attribute directive
 
 Let's create a simple example to generate a new directive in Angular and use it in a template.
 
@@ -225,3 +225,82 @@ Step 5: Run the Application
 Now, when you run the Angular application, the elements with the `appMyDirective` attribute will have a yellow background and bold font weight, as defined in the directive.
 
 That's it! You have successfully generated a new directive in Angular and used it in a template. Directives are powerful tools in Angular that allow you to add custom behavior and styles to HTML elements, making your templates more dynamic and reusable.
+
+## Components instantiated as attributes
+
+In Angular, components can be instantiated using attributes in other components' templates by using square brackets `[ ]` in the component selector. This technique allows you to use a component as an attribute within another component's template. By doing so, you can apply the functionality and template of the child component to a specific element within the parent component's template.
+
+Let's create a simple example to demonstrate how to use a component as an attribute in another component's template.
+
+Step 1: Generate the Component
+Run the following Angular CLI command to generate the component:
+
+```bash
+ng generate component shared-component
+```
+
+This will generate the `shared-component` component with its template, styles, and TypeScript file.
+
+Step 2: Implement the Shared Component
+Edit the `shared-component.component.ts` file to define the content of the shared component.
+
+```typescript
+import { Component, Input } from '@angular/core';
+
+@Component({
+  selector: '[app-shared-component]', // Use square brackets in the selector
+  template: `
+    <div>
+      <p>This is the Shared Component.</p>
+      <p>Received message: {{ message }}</p>
+    </div>
+  `,
+  styles: []
+})
+export class SharedComponentComponent {
+  @Input() message: string;
+}
+```
+
+In this example, we've set the selector of the `shared-component` as `[app-shared-component]`, which means this component can be used as an attribute in another component's template.
+
+Step 3: Use the Shared Component as an Attribute
+Now, let's use the `shared-component` as an attribute in another component's template.
+
+Edit the `app.component.html` file to include the `shared-component` component as an attribute.
+
+```html
+<div>
+  <h1>Welcome to My Angular App</h1>
+  <div [app-shared-component] message="Hello from the Parent Component"></div>
+</div>
+```
+
+Step 4: Add the Shared Component to the Module
+Don't forget to add the `SharedComponentComponent` to the declarations array of the module where you want to use the `shared-component` component.
+
+```typescript
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { SharedComponentComponent } from './shared-component/shared-component.component'; // Import the SharedComponentComponent
+
+import { AppComponent } from './app.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    SharedComponentComponent // Add the SharedComponentComponent to the declarations
+  ],
+  imports: [
+    BrowserModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
+
+Step 5: Run the Application
+Now, when you run the Angular application, the `shared-component` will be used as an attribute in the `app.component.html` template, and its content will be displayed within the div element.
+
+That's it! You have successfully instantiated a component using an attribute in another component's template by using the square brackets `[ ]` in the selector. This technique allows you to reuse the content and functionality of the shared component within different parts of your Angular application.
