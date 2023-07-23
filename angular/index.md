@@ -9,4 +9,4 @@
 7. [Forms](forms.md)
 8. [RxJS and AJAX](rxjs.md)
 9. Filters
-10. Interceptors
+10. [Interceptors](interceptors.md)
