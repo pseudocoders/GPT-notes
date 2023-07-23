@@ -100,6 +100,106 @@ The `angular.json` file provides a centralized place to configure various aspect
 
 It's worth noting that when you make changes to the `angular.json` file, you may need to restart the Angular CLI commands for the changes to take effect.
 
+## app.module.ts
+
+The `app.module.ts` file in an Angular project is a crucial file that serves as the root module of the application. It is responsible for importing and configuring various modules, components, services, and other dependencies required for the proper functioning of the application. Here's an explanation of the typical structure of the `app.module.ts` file in an Angular project:
+
+1. Import Statements: The `app.module.ts` file begins with a series of import statements. These imports include Angular modules, third-party libraries, components, services, and other dependencies required for the application.
+
+```typescript
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { AppRoutingModule } from './app-routing.module';
+
+// Other imports as needed
+```
+
+2. `@NgModule` Decorator: The `@NgModule` decorator is used to define the metadata for the module. It includes various properties that specify the declarations, imports, providers, bootstrap components, and other configurations for the module.
+
+```typescript
+@NgModule({
+  declarations: [
+    // List of components, directives, and pipes declared in this module
+  ],
+  imports: [
+    // List of modules imported in this module
+  ],
+  providers: [
+    // List of services/providers used by this module
+  ],
+  bootstrap: [
+    // List of components that serve as the root component for the application
+  ]
+})
+```
+
+3. Declarations: The `declarations` property inside the `@NgModule` decorator contains an array of components, directives, and pipes that belong to the current module. These components, directives, and pipes are available for use within the module.
+
+```typescript
+@NgModule({
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    MyComponent,
+    CustomDirective,
+    CustomPipe
+  ],
+  // Other properties...
+})
+```
+
+4. Imports: The `imports` property inside the `@NgModule` decorator lists other modules that are imported into the current module. These modules provide various functionalities and features to the application.
+
+```typescript
+@NgModule({
+  imports: [
+    BrowserModule,
+    FormsModule,
+    HttpClientModule,
+    AppRoutingModule,
+    // Other imported modules...
+  ],
+  // Other properties...
+})
+```
+
+5. Providers: The `providers` property inside the `@NgModule` decorator is used to specify the services or providers that are available for injection and use within the module and its components.
+
+```typescript
+@NgModule({
+  providers: [
+    DataService,
+    AuthService,
+    // Other services/providers...
+  ],
+  // Other properties...
+})
+```
+
+6. Bootstrap: The `bootstrap` property inside the `@NgModule` decorator is an array of components that will be bootstrapped when the application starts. Typically, this array contains the root component of the application, usually named `AppComponent`.
+
+```typescript
+@NgModule({
+  bootstrap: [
+    AppComponent
+  ],
+  // Other properties...
+})
+```
+
+7. Exporting the Module: Finally, the module is exported using the `export` keyword so that it can be imported and used by other modules if needed.
+
+```typescript
+@NgModule({
+  // Module configurations...
+})
+export class AppModule { }
+```
+
+The `app.module.ts` file provides the foundation for the Angular application, defining its structure, dependencies, and configuration. Additional modules can be created to organize the application further, but the root module (`AppModule`) remains the entry point of the application.
+
 ## Bootstraping
 
 The bootstrap process in an Angular application refers to the initialization and startup sequence of the Angular framework. During the bootstrap process, Angular initializes the necessary components, modules, services, and sets up the application's runtime environment. Let's dive into the details of the bootstrap process in an Angular application:
