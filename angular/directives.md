@@ -69,6 +69,85 @@ Custom directives are powerful as they allow you to create reusable components t
 
 In summary, built-in directives are provided by Angular out of the box and offer common functionalities, while custom directives are developed by programmers to add specific behavior and features tailored to their application's requirements. Both types of directives play a significant role in extending the functionality and interactivity of Angular applications.
 
+## Types of custom directives
+
+In Angular, there are three types of custom directives based on their function and purpose:
+
+1. **Structural Directives:**
+Structural directives modify the layout of the DOM by adding or removing elements based on conditions. They use the asterisk (*) syntax in the template to indicate that they are structural directives. The most common structural directive is `ngIf`, which conditionally adds or removes elements from the DOM.
+
+Example of a structural directive:
+
+```html
+<div *ngIf="showElement">This div will only be displayed if showElement is true.</div>
+```
+
+2. **Attribute Directives:**
+Attribute directives change the appearance or behavior of an element by modifying its attributes. They are used as attributes in the template. Attribute directives can manipulate the element they are applied to, change its style, or add specific behavior.
+
+Example of an attribute directive:
+
+```typescript
+import { Directive, ElementRef, HostListener } from '@angular/core';
+
+@Directive({
+  selector: '[appHighlight]'
+})
+export class HighlightDirective {
+  constructor(private el: ElementRef) {}
+
+  @HostListener('mouseenter') onMouseEnter() {
+    this.highlight('yellow');
+  }
+
+  @HostListener('mouseleave') onMouseLeave() {
+    this.highlight(null);
+  }
+
+  private highlight(color: string) {
+    this.el.nativeElement.style.backgroundColor = color;
+  }
+}
+```
+
+In this example, `appHighlight` is an attribute directive that changes the background color of an element when the mouse enters and removes the highlight when the mouse leaves.
+
+To use the attribute directive:
+
+```html
+<p appHighlight>
+  Hover over this paragraph to see the custom directive in action!
+</p>
+```
+
+3. **Component Directives:**
+Component directives are a type of custom directive that acts as standalone components with their own template and logic. They are used to encapsulate complex functionalities or UI elements and are reusable throughout the application. Component directives are created using the `@Component` decorator, similar to regular components, but they do not have their own selector.
+
+Example of a component directive:
+
+```typescript
+import { Component } from '@angular/core';
+
+@Component({
+  template: '<p> This is a component directive.</p>'
+})
+export class MyComponentDirective { }
+```
+
+To use the component directive:
+
+```html
+<app-my-component-directive></app-my-component-directive>
+```
+
+Component directives provide a way to create reusable components that can be used as a single unit, containing both the template and the logic.
+
+In summary, the three types of custom directives in Angular are:
+
+1. Structural Directives: Modify the layout of the DOM based on conditions (e.g., `ngIf`, `ngFor`).
+2. Attribute Directives: Change the appearance or behavior of elements by modifying their attributes (e.g., `appHighlight`).
+3. Component Directives: Act as standalone components with their own template and logic, encapsulating complex functionalities (e.g., `MyComponentDirective`).
+
 ## Example of creating a custom directive
 
 Let's create a simple example to generate a new directive in Angular and use it in a template.
