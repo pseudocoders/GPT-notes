@@ -181,3 +181,105 @@ export class AppComponent {
 ```
 
 That's it! You now have an Angular CRUD application with routing and services based on the provided API specification. Remember to configure your API base URL appropriately in the `entity.service.ts` file. You can further customize the components and add additional functionality as per your requirements.
+
+
+## entity-details
+
+Developing the "entity-details" component for an Angular CRUD project involves creating a component that displays the details of a specific entity from the API you mentioned earlier. This component will be responsible for showing the details of a single entity, allowing users to view the entity's information in a user-friendly manner. Here's a step-by-step guide on how to develop the "entity-details" component:
+
+Step 1: Generate the "entity-details" Component
+Run the following Angular CLI command to generate the "entity-details" component:
+
+```bash
+ng generate component entity-details
+```
+
+This will create the "entity-details" component with its template, styles, and TypeScript file.
+
+Step 2: Import Required Modules and Services
+In the "entity-details.component.ts" file, import the necessary modules and services required for fetching the entity details from the API. If you have a service dedicated to API communication, import it into the component and use it to retrieve the entity details.
+
+Example:
+
+```typescript
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { EntityService } from '../services/entity.service'; // Replace 'EntityService' with your actual service for API communication
+
+@Component({
+  selector: 'app-entity-details',
+  templateUrl: './entity-details.component.html',
+  styleUrls: ['./entity-details.component.css']
+})
+export class EntityDetailsComponent implements OnInit {
+  entityId: number;
+  entityDetails: any; // Replace 'any' with the actual type of your entity
+
+  constructor(
+    private route: ActivatedRoute,
+    private entityService: EntityService
+  ) {}
+
+  ngOnInit(): void {
+    this.getEntityDetails();
+  }
+
+  getEntityDetails(): void {
+    this.entityId = +this.route.snapshot.paramMap.get('id');
+    this.entityService.getEntityById(this.entityId).subscribe(
+      (data) => {
+        this.entityDetails = data;
+      },
+      (error) => {
+        console.error('Error fetching entity details:', error);
+      }
+    );
+  }
+}
+```
+
+Step 3: Display Entity Details in the Template
+In the "entity-details.component.html" file, display the retrieved entity details using Angular's data binding.
+
+Example:
+
+```html
+<div *ngIf="entityDetails">
+  <h2>Entity Details</h2>
+  <p><strong>ID:</strong> {{ entityId }}</p>
+  <p><strong>Name:</strong> {{ entityDetails.name }}</p>
+  <p><strong>Description:</strong> {{ entityDetails.description }}</p>
+  <!-- Add other properties as needed -->
+</div>
+
+<div *ngIf="!entityDetails">
+  <p>Loading entity details...</p>
+</div>
+```
+
+In this example, we use the Angular's structural directive `*ngIf` to conditionally display the entity details when they are available. If the `entityDetails` is not yet fetched, a "Loading entity details..." message will be shown.
+
+Step 4: Add Styling (Optional)
+Optionally, you can add CSS styles to the "entity-details.component.css" file to style the appearance of the "entity-details" component.
+
+Step 5: Use the "entity-details" Component in Your Application
+In the parent component or template where you want to display the entity details, include the "entity-details" component using its selector.
+
+Example:
+
+```html
+<div>
+  <!-- Assuming you have a list of entities, and you're using Angular Router to navigate to the "entity-details" component with the entity ID -->
+  <ul>
+    <li *ngFor="let entity of entities">
+      <a [routerLink]="['/entity-details', entity.id]">{{ entity.name }}</a>
+    </li>
+  </ul>
+</div>
+
+<router-outlet></router-outlet>
+```
+
+In this example, we have a list of entities displayed using an `*ngFor` loop. When the user clicks on an entity's name, it will navigate to the "entity-details" component with the respective entity ID in the URL.
+
+That's it! You have now developed the "entity-details" component for your Angular CRUD project. This component will display the details of a specific entity and can be navigated to from the list of entities.
