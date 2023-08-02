@@ -43,11 +43,12 @@ If everything is set up correctly, you should see the Docker version information
 
 ## Docker LAMP
 
-* Reference: [github](https://github.com/sprintcube/docker-compose-lamp)
+* Reference: [github: sprintcube/docker-compose-lamp](https://github.com/sprintcube/docker-compose-lamp)
 
 ```
 git clone https://github.com/sprintcube/docker-compose-lamp.git
 cd docker-compose-lamp/
+// save a copy of sample.env
 cp sample.env .env
 // modify sample.env as needed
 docker-compose up -d
