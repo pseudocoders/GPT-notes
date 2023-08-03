@@ -101,7 +101,7 @@ MYSQL_LOG_DIR=./logs/mysql
 HOST_MACHINE_UNSECURE_HOST_PORT=8080
 
 # If you already have the port 443 in use, you can change it (for example if you have Apache)
-HOST_MACHINE_SECURE_HOST_PORT=8090
+HOST_MACHINE_SECURE_HOST_PORT=8443
 
 # If you already have the port 3306 in use, you can change it (for example if you have MySQL)
 HOST_MACHINE_MYSQL_PORT=3306
