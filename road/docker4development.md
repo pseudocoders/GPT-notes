@@ -108,7 +108,7 @@ HOST_MACHINE_MYSQL_PORT=3306
 
 # If you already have the port 8080 in use, you can change it (for example if you have PMA)
 HOST_MACHINE_PMA_PORT=8081
-HOST_MACHINE_PMA_SECURE_PORT=8443
+HOST_MACHINE_PMA_SECURE_PORT=8444
 
 # If you already has the port 6379 in use, you can change it (for example if you have Redis)
 HOST_MACHINE_REDIS_PORT=6379
