@@ -41,6 +41,34 @@ sudo docker run hello-world
 
 If everything is set up correctly, you should see the Docker version information and a "Hello from Docker!" message.
 
+## Docker ce vs Docker
+
+"Docker CE" (Community Edition) and "Docker" (sometimes referred to as "Docker EE" or "Docker Enterprise Edition") are two different variants of the Docker platform, each with distinct features and target audiences.
+
+1. **Docker CE (Community Edition):**
+
+   Docker CE is the free and open-source version of Docker. It's aimed at individual developers, small teams, and hobbyists who want to use Docker for creating, deploying, and managing containerized applications. Docker CE provides essential features for containerization, such as container runtime, image management, networking, and orchestration tools like Docker Compose.
+
+   Docker CE comes in two editions:
+   - **Docker CE Desktop**: This is a desktop application that provides an easy-to-use graphical interface for managing containers and images. It's available for Windows and macOS operating systems.
+   - **Docker CE Engine**: This is the command-line tool and runtime for creating and managing containers on Linux-based systems.
+
+   Docker CE is suitable for development environments, personal projects, and small-scale deployments. It's regularly updated with new features and improvements.
+
+3. **Docker (Docker EE / Docker Enterprise Edition):**
+   Docker Enterprise Edition (formerly known as Docker Datacenter) is a commercial platform offered by Docker, Inc. It's designed for larger enterprises and organizations that require additional features, support, and security for their container environments. Docker EE includes all the features of Docker CE and extends them with enterprise-focused capabilities.
+
+   Some key features of Docker EE include:
+   - **Advanced Security**: Enhanced security features like image signing, vulnerability scanning, and role-based access control (RBAC).
+   - **Image Management**: Tools for managing and distributing container images across an organization.
+   - **Orchestration**: Advanced orchestration features for managing clusters of containers at scale, such as Docker Swarm or Kubernetes integration.
+   - **Certified Infrastructure**: Integration with certified infrastructure partners for optimized performance.
+   - **Enterprise Support**: Official support from Docker, Inc., including training, certification, and technical assistance.
+
+   Docker EE is suitable for large-scale deployments in enterprise environments where security, scalability, and support are critical factors.
+
+In summary, the main difference between Docker CE and Docker EE lies in their target audiences and feature sets. Docker CE is suitable for individual developers and small teams, offering essential containerization features. Docker EE is a commercial platform tailored for enterprises, offering advanced security, orchestration, and support options. It's important to choose the variant that best aligns with your project's requirements and scale. Keep in mind that the container ecosystem is rapidly evolving, so it's a good idea to check for the latest updates and offerings from Docker, Inc.
+
 ## Docker LAMP
 
 * Reference: [github: sprintcube/docker-compose-lamp](https://github.com/sprintcube/docker-compose-lamp)
