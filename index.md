@@ -75,13 +75,11 @@ subtitle: All you need to be a web developer
 >
 
 * [BackEnd programming](road/backend.md)
+* [Databases, connection pools and transactions](road/databases.md)
 
 ## AJAX
+
 * [AJAX](road/ajax.md)
-
-## Databases
-
-* [Databases, connection pools and transactions](road/databases.md)
 
 ## Authentication and sessions
 
