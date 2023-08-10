@@ -53,7 +53,7 @@ subtitle: All you need to be a web developer
 
 * [Web processment](road/process.md)
 
-* solvantes
+* 📓 solvantes
     * Static muttiplication quadrant
     * [https://rafaelaznar.github.io/solvantes/](https://rafaelaznar.github.io/solvantes/)
     * [https://github.com/rafaelaznar/solvantes](https://github.com/rafaelaznar/solvantes)
@@ -61,11 +61,7 @@ subtitle: All you need to be a web developer
 ## FrontEnd processment
 
 >
-> :red_circle: Explore and learn: [**Javascript**](/javascript/index.md)
->
-> :red_circle: Explore and learn: [**JQuery**](/javascript/index.md)
-> 
-> :red_circle: Explore and learn: [**AngularJS**](/angularjs/index.md)
+> :red_circle: Explore and learn: [**Javascript**](/javascript/index.md) [**JQuery**](/javascript/index.md) [**AngularJS**](/angularjs/index.md)
 >
 
 * [FrontEnd programming](road/fontend.md)
@@ -74,9 +70,7 @@ subtitle: All you need to be a web developer
 ## Servlets & ES6
 
 >
-> :red_circle: Explore and learn: [**Java in GPT-notes**](/java/index.md)
->
-> :red_circle: Explore and learn: [**Java for the backend GPT-notes**](/java4backend/index.md)
+> :red_circle: Explore and learn: [**Java in GPT-notes**](/java/index.md) [**Java for the backend GPT-notes**](/java4backend/index.md)
 >
 
 * [BackEnd programming](road/backend.md)
@@ -93,11 +87,7 @@ subtitle: All you need to be a web developer
 ## Spring Boot & angular applications
 
 >
-> :red_circle: Explore and learn: [**Spring Boot in GPT-notes**](springboot/index.md)
->
-> :red_circle: Explore and learn: [**Typescript GPT-notes**](typescript/index.md)
->
-> :red_circle: Explore and learn: [**Angular GPT-notes**](angular/index.md)
+> :red_circle: Explore and learn: [**Spring Boot in GPT-notes**](springboot/index.md) [**Typescript GPT-notes**](typescript/index.md) [**Angular GPT-notes**](angular/index.md)
 >
 
 1. [Basic SB Database operations](road/sb-db-basic.md)
