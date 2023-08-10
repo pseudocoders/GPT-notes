@@ -51,6 +51,11 @@ subtitle: All you need to be a web developer
 
 ## Web processment
 
+>
+> :red_circle: Explore and learn: [**The Internet, HTTP and the world wide web**](basics/http.md)
+>
+
+
 * [Web processment](road/process.md)
 
 * 📓 solvantes
@@ -70,7 +75,7 @@ subtitle: All you need to be a web developer
 ## Servlets & ES6
 
 >
-> :red_circle: Explore and learn: [**Java in GPT-notes**](/java/index.md) [**Java for the backend GPT-notes**](/java4backend/index.md)
+> :red_circle: Explore and learn: [**Java**](/java/index.md) [**Java for the backend**](/java4backend/index.md)
 >
 
 * [BackEnd programming](road/backend.md)
@@ -87,7 +92,7 @@ subtitle: All you need to be a web developer
 ## Spring Boot & angular applications
 
 >
-> :red_circle: Explore and learn: [**Spring Boot in GPT-notes**](springboot/index.md) [**Typescript GPT-notes**](typescript/index.md) [**Angular GPT-notes**](angular/index.md)
+> :red_circle: Explore and learn: [**Spring Boot**](springboot/index.md) [**Typescript**](typescript/index.md) [**Angular**](angular/index.md)
 >
 
 1. [Basic SB Database operations](road/sb-db-basic.md)
