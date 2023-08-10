@@ -21,22 +21,24 @@ subtitle: All you need to be a web developer
 12. [Authentication methods](basics/auth.md)
 13. [Deployment](basics/deployment.md)
 
-# Markups
+# Support
+
+## Markups
 
 1. [JSON](markups/json.md)
 2. HTML
 3. CSS
 
-# Tools
+## Tools
 1. [Git](git/index.md)
 2. [nvm](nvm/index.md)
 
-# Backend
+## Backend
 1. [Java](java/index.md)
 2. [Java for the backend](java4backend/index.md)
 3. [Spring Boot](springboot/index.md)
 
-# Frontend
+## Frontend
 1. [Javascript](javascript/index.md)
 2. [JQuery](jquery/index.md)
 3. [AngularJS](angularjs/index.md)
@@ -47,8 +49,21 @@ subtitle: All you need to be a web developer
 
 1. [Docker for development](road/docker4development.md)
 
-1. [Web process](road/process.md)
-2. [FrontEnd programming](road/fontend.md)
+## Web processment
+
+* [Web processment](road/process.md)
+
+## FrontEnd processment
+
+>
+> :red_circle: Explore and learn: [**Javascript**](/javascript/index.md)
+>
+> :red_circle: Explore and learn: [**JQuery**](/javascript/index.md)
+> 
+> :red_circle: Explore and learn: [**AngularJS**](/angularjs/index.md)
+>
+
+* [FrontEnd programming](road/fontend.md)
 
 
 ## Servlets & ES6
@@ -58,15 +73,21 @@ subtitle: All you need to be a web developer
 >
 > :red_circle: Explore and learn: [**Java for the backend GPT-notes**](/java4backend/index.md)
 >
-> :red_circle: Explore and learn: [**Javascript GPT-notes**](/javascript/index.md)
->
 
+* [BackEnd programming](road/backend.md)
 
-2. [AJAX](road/ajax.md)
-3. [Databases, connection pools and transactions](road/databases.md)
-4. [Authentication and sessions](road/auth.md)
+## AJAX
+* [AJAX](road/ajax.md)
 
-## Spring Boot & angular
+## Databases
+
+* [Databases, connection pools and transactions](road/databases.md)
+
+## Authentication and sessions
+
+* [Authentication and sessions](road/auth.md)
+
+## Spring Boot & angular applications
 
 >
 > :red_circle: Explore and learn: [**Spring Boot in GPT-notes**](springboot/index.md)
