@@ -43,5 +43,53 @@ subtitle: All you need to be a web developer
 4. [Typescript](typescript/index.md)
 5. [Angular](angular/index.md)
 
-# Road to full stack developer
-1. [Road to full stack developer](road/index.md)
+# Road to full stack web developer
+
+1. [Docker for development](road/docker4development.md)
+
+
+## Servlets & ES6
+
+>
+> :red_circle: Explore and learn: [**Java in GPT-notes**](/java/index.md)
+>
+> :red_circle: Explore and learn: [**Java for the backend GPT-notes**](/java4backend/index.md)
+>
+> :red_circle: Explore and learn: [**Javascript GPT-notes**](/javascript/index.md)
+>
+
+1. [Web process](road/process.md)
+2. [AJAX](road/ajax.md)
+3. [Databases, connection pools and transactions](road/databases.md)
+4. [Authentication and sessions](road/auth.md)
+
+## Spring Boot & angular
+
+>
+> :red_circle: Explore and learn: [**Spring Boot in GPT-notes**](springboot/index.md)
+>
+> :red_circle: Explore and learn: [**Typescript GPT-notes**](typescript/index.md)
+>
+> :red_circle: Explore and learn: [**Angular GPT-notes**](angular/index.md)
+>
+
+1. [Basic SB Database operations](road/sb-db-basic.md)
+2. [Basic SB CRUD](road/sb-crud.md)
+3. [blogBUSTER server](road/blogbuster.md)
+4. [Basic Angular CRUD](road/angular-crud.md)
+5. [blogBUSTER front-end](road/blogbuster-frontend.md)
+6. [Connecting CRUDS with relationships](road/cruds.md)
+7. [Improving CRUDS](road/icruds.md)
+8. Improving applications
+   - Dealing with dates
+   - Reports
+   - Uploading images
+   - Registering users
+   - Recovering passwords
+   - Captchas
+
+
+
+
+
+
