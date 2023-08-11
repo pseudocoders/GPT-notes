@@ -8,7 +8,7 @@
 > * [https://rafaelaznar.github.io/sorteo/](https://rafaelaznar.github.io/sorteo/)
 > * [https://github.com/rafaelaznar/sorteo](https://github.com/rafaelaznar/sorteo)
 
-### Quadrants
+### jQuery frontend Quadrants
 
 > 📓 clisela
 > * Dynamic multiplications quadrant.
@@ -22,9 +22,19 @@
 > * Dynamic multiplications quadrant.
 > * FrontEnd processment only.
 > * Javascript & JQuery.
-> * Table generator button. (events handler)
+> * Table generator button.
+> * Events handler use case.
 > * [https://rafaelaznar.github.io/elicudo/](https://rafaelaznar.github.io/elicudo/)
 > * [https://github.com/rafaelaznar/elicudo](https://github.com/rafaelaznar/elicudo)
+
+> 📓 sistelar
+> * Dynamic multiplications quadrant.
+> * FrontEnd processment only.
+> * Javascript, JQuery & Bootstrap.
+> * Table generator button.
+> * Understanding callbacks.
+> * [https://rafaelaznar.github.io/sistelar/](https://rafaelaznar.github.io/sistelar/)
+> * https://github.com/rafaelaznar/sistelar](https://github.com/rafaelaznar/sistelar)
 
 > 📓 sinatec
 > * Dynamic multiplications quadrant.
