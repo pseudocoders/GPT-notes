@@ -10,6 +10,22 @@
 
 ### Quadrants
 
+> 📓 clisela
+> * Dynamic multiplications quadrant.
+> * No form.
+> * FrontEnd processment only.
+> * Javascript, JQuery y Bootstrap.
+> * [https://rafaelaznar.github.io/clisela/](https://rafaelaznar.github.io/clisela/)
+> * [https://github.com/rafaelaznar/clisela](https://github.com/rafaelaznar/clisela)
+
+> 📓 elicudo
+> * Dynamic multiplications quadrant.
+> * FrontEnd processment only.
+> * Javascript & JQuery.
+> * Table generator button. (events handler)
+> * [https://rafaelaznar.github.io/elicudo/](https://rafaelaznar.github.io/elicudo/)
+> * [https://github.com/rafaelaznar/elicudo](https://github.com/rafaelaznar/elicudo)
+
 > 📓 sinatec
 > * Dynamic multiplications quadrant.
 > * FrontEnd processment only.
