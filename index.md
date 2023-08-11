@@ -65,7 +65,7 @@ subtitle: All you need to be a web developer
 > :red_circle: Explore and learn: [**Javascript**](/javascript/index.md) [**JQuery**](/javascript/index.md) [**AngularJS**](/angularjs/index.md)
 >
 
-* [FrontEnd programming](road/fontend.md)
+* [FrontEnd programming](road/frontend.md)
 
 
 ## Servlets & ES6
