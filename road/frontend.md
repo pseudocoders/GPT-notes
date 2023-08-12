@@ -57,3 +57,11 @@
 > * [https://github.com/rafaelaznar/olimanto](https://github.com/rafaelaznar/olimanto)
 
 ## Angular JS
+
+> 📓 Cantinol
+> * Dynamic multiplications quadrant.
+> * FrontEnd processment.
+> * Javascript & AngularJS.
+> * With generator form and validations.
+> * [https://rafaelaznar.github.io/cantinol](https://rafaelaznar.github.io/cantinol)
+> * [https://github.com/rafaelaznar/cantinol](https://github.com/rafaelaznar/cantinol)
