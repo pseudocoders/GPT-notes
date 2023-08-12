@@ -47,4 +47,13 @@
 
 ## ES6 Javascript
 
+> 📓 olimanto
+> * Dynamic multiplications quadrant.
+> * FrontEnd processment.
+> * Javascript ES6.
+> * With generator form and validations.
+> * Functional generation of table.
+> * [https://rafaelaznar.github.io/olimanto](https://rafaelaznar.github.io/olimanto)
+> * [https://github.com/rafaelaznar/olimanto](https://github.com/rafaelaznar/olimanto)
+
 ## Angular JS
