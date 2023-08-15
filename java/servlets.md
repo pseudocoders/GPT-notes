@@ -616,7 +616,7 @@ Below that, the `getGreeting()` method from the declaration is called using `<%=
 
 This example demonstrates the use of page directives to set configuration options and declarations to define variables and methods within the JSP page.
 
-### including
+### Modularizing by using includes
 
 You can refactorize your application using inclusions with or without params.
 
