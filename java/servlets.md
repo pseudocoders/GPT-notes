@@ -616,6 +616,130 @@ Below that, the `getGreeting()` method from the declaration is called using `<%=
 
 This example demonstrates the use of page directives to set configuration options and declarations to define variables and methods within the JSP page.
 
+### including
+
+You can refactorize your application using inclusions with or without params.
+
+1. **Include Directive Without Parameters:**
+
+In this example, let's say you have two JSP files: `header.jsp` and `footer.jsp`. You want to include these files in your main JSP page without passing any parameters.
+
+**header.jsp:**
+```jsp
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Header</title>
+</head>
+<body>
+    <header>
+        <h1>Welcome to our Website</h1>
+    </header>
+```
+
+**footer.jsp:**
+```jsp
+    <footer>
+        <p>&copy; 2023 MyWebsite. All rights reserved.</p>
+    </footer>
+</body>
+</html>
+```
+
+**main.jsp:**
+```jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Main Page</title>
+</head>
+<body>
+    <%@ include file="header.jsp" %>
+    
+    <section>
+        <p>This is the main content of the page.</p>
+    </section>
+    
+    <%@ include file="footer.jsp" %>
+</body>
+</html>
+```
+
+In this example, the `include` directive is used to include the contents of `header.jsp` and `footer.jsp` into the `main.jsp` page.
+
+2. **Include Directive With Parameters:**
+
+In this example, let's say you want to include a parameter in the included JSP file.
+
+**greeting.jsp:**
+```jsp
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Greeting</title>
+</head>
+<body>
+    <h2>Hello, <%= request.getParameter("name") %>!</h2>
+</body>
+</html>
+```
+
+**main.jsp:**
+```jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Main Page</title>
+</head>
+<body>
+    <%@ include file="greeting.jsp" %>
+</body>
+</html>
+```
+
+In this example, the `greeting.jsp` file includes a parameter using the `<%= request.getParameter("name") %>` expression. When you include `greeting.jsp` into `main.jsp`, you can pass the parameter like this:
+
+```jsp
+http://example.com/main.jsp?name=John
+```
+
+Replace `example.com` with your actual domain. This way, the included `greeting.jsp` will display a personalized greeting for the provided name.
+
+Here's another example using only the `<jsp:include>` directive with the `<jsp:param>` tag to pass parameters to the included file:
+
+**greeting.jsp:**
+```jsp
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Greeting</title>
+</head>
+<body>
+    <h2>Hello, <%= request.getParameter("name") %>!</h2>
+</body>
+</html>
+```
+
+**main.jsp:**
+```jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Main Page</title>
+</head>
+<body>
+    <jsp:include page="greeting.jsp">
+        <jsp:param name="name" value="John" />
+    </jsp:include>
+</body>
+</html>
+```
+
+In this example, the `<jsp:param>` tag is used directly within the `<jsp:include>` tag to pass the parameter "name" with the value "John" to the included `greeting.jsp` file. This simplifies the process of including the parameter while using the `<jsp:include>` directive.
+
 ### JSP are actually servlets
 
 JSP (JavaServer Pages) are indeed interpreted as servlets by the web container at runtime. When a JSP page is requested, the web container dynamically translates it into a servlet class, which is then compiled and executed.
