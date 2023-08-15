@@ -83,7 +83,8 @@ subtitle: All you need to be a web developer
 
 ## Authentication and sessions
 
-* [Authentication and sessions](road/auth.md)
+* [Authentication and sessions introduction](road/auth.md)
+* [Authentication and sessions roadmap](road/auth.roadmap.md)
 
 ## Spring Boot & angular applications
 
