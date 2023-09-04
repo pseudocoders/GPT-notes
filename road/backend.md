@@ -31,3 +31,16 @@
 > * HTML hight/width form using server validations
 > * [https://github.com/rafaelaznar/plexura](https://github.com/rafaelaznar/plexura)
 
+## Servlets
+
+> 📓 bizarte
+> * Basic Hello World Servlets example. Introduction to servlets.
+> * web.xml -> servlet control welcome page study. Servlet control multilíne & Servlet holamundo uniline. index.html no welcome.
+> * Servlet Backend
+> * [https://github.com/rafaelaznar/bizarte](https://github.com/rafaelaznar/bizarte)
+  
+> 📓 paramitario
+> * Parameter reception in a servlet
+> * [https://github.com/rafaelaznar/paramitario](https://github.com/rafaelaznar/paramitario)
+
+
