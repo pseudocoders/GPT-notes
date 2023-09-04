@@ -34,6 +34,7 @@ In contrast, dynamic web pages involve executing code to generate customized con
 
 > 📓 solvantes
 > * Static multiplication quadrant
+> * :arrow_right: HTML
 > * [https://rafaelaznar.github.io/solvantes/](https://rafaelaznar.github.io/solvantes/)
 > * [https://github.com/rafaelaznar/solvantes](https://github.com/rafaelaznar/solvantes)
 
