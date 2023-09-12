@@ -100,7 +100,7 @@ subtitle: All you need to be a web developer
 6. [Connecting CRUDS with relationships](road/cruds.md)
 7. [Improving CRUDS](road/icruds.md)
 8. Improving applications
-   - Dealing with dates
+   - [Dealing with dates](dates.md)
    - Reports
    - [Uploading images](road/uploading.md)
    - [Sending an email from the server](road/email.md)
