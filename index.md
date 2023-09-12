@@ -102,7 +102,7 @@ subtitle: All you need to be a web developer
 8. Improving applications
    - Dealing with dates
    - Reports
-   - Uploading images
+   - [Uploading images](road/uploading.md)
    - Registering users
    - Recovering passwords
    - Captchas
