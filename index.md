@@ -105,7 +105,7 @@ subtitle: All you need to be a web developer
    - [Uploading images](road/uploading.md)
    - [Sending an email from the server](road/email.md)
    - Registering users
-   - Recovering passwords
+   - [Recovering accounts](road/recovering.md)
    - Captchas
 
 
