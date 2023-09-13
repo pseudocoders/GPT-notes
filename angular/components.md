@@ -754,70 +754,70 @@ In Angular, there are several options for communicating between components, whic
 
    - Create a parent component that will project content into a child component:
 
-```typescript
-// parent.component.ts
-import { Component } from '@angular/core';
-
-@Component({
-  selector: 'app-parent',
-  template: `
-    <div class="parent">
-      <h2>Parent Component</h2>
-      <app-child>
-        <!-- Content projected from parent -->
-        <p>This content is projected from the parent component.</p>
-        <button (click)="onButtonClick()">Click me in parent</button>
-      </app-child>
-    </div>
-  `,
-})
-export class ParentComponent {
-  onButtonClick() {
-    alert('Button clicked in parent');
-  }
-}
-```
+     ```typescript
+     // parent.component.ts
+     import { Component } from '@angular/core';
+     
+     @Component({
+       selector: 'app-parent',
+       template: `
+         <div class="parent">
+           <h2>Parent Component</h2>
+           <app-child>
+             <!-- Content projected from parent -->
+             <p>This content is projected from the parent component.</p>
+             <button (click)="onButtonClick()">Click me in parent</button>
+           </app-child>
+         </div>
+       `,
+     })
+     export class ParentComponent {
+       onButtonClick() {
+         alert('Button clicked in parent');
+       }
+     }
+     ```
 
    - Create a child component that uses `ng-content` to project the content from the parent:
 
-```typescript
-// child.component.ts
-import { Component } from '@angular/core';
-
-@Component({
-  selector: 'app-child',
-  template: `
-    <div class="child">
-      <h2>Child Component</h2>
-      <ng-content></ng-content>
-      <button (click)="onButtonClick()">Click me in child</button>
-    </div>
-  `,
-})
-export class ChildComponent {
-  onButtonClick() {
-    alert('Button clicked in child');
-  }
-}
-```
+     ```typescript
+     // child.component.ts
+     import { Component } from '@angular/core';
+     
+     @Component({
+       selector: 'app-child',
+       template: `
+         <div class="child">
+           <h2>Child Component</h2>
+           <ng-content></ng-content>
+           <button (click)="onButtonClick()">Click me in child</button>
+         </div>
+       `,
+     })
+     export class ChildComponent {
+       onButtonClick() {
+         alert('Button clicked in child');
+       }
+     }
+     ```
 
    - Include these components in your Angular module:
 
-```typescript
-// app.module.ts
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { AppComponent } from './app.component';
-import { ParentComponent } from './parent.component';
-import { ChildComponent } from './child.component';
-
-@NgModule({
-  declarations: [AppComponent, ParentComponent, ChildComponent],
-  imports: [BrowserModule],
-  bootstrap: [AppComponent],
-})
-export class AppModule {}
-```
+     ```typescript
+     // app.module.ts
+     import { NgModule } from '@angular/core';
+     import { BrowserModule } from '@angular/platform-browser';
+     import { AppComponent } from './app.component';
+     import { ParentComponent } from './parent.component';
+     import { ChildComponent } from './child.component';
+     
+     @NgModule({
+       declarations: [AppComponent, ParentComponent, ChildComponent],
+       imports: [BrowserModule],
+       bootstrap: [AppComponent],
+     })
+     export class AppModule {}
+     ```
 
    - In this example:
 
