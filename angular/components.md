@@ -658,5 +658,94 @@ The template includes an `<input>` element with the `(change)` event, an associa
 By utilizing these input events, you can capture and respond to user interactions within your Angular component. Whether it's tracking changes in input values, handling form submissions, or responding to key events, you have the flexibility to implement the desired functionality based on your application's requirements.
    
    
-   
+## Component communication
+
+In Angular, there are several options for communicating between components, which are essential for building complex and interactive web applications. The choice of communication method depends on the specific use case and the relationship between the components involved. Here are some common options for communicating between Angular components:
+
+1. **Input and Output Properties**:
+   - **Input Properties**: You can pass data from a parent component to a child component by binding the data to an input property of the child component. This is typically done using property binding, where you use square brackets (`[]`) to bind a property of the child component to a property of the parent component.
+
+     ```html
+     <!-- Parent Component -->
+     <app-child [data]="parentData"></app-child>
+
+     <!-- Child Component -->
+     @Input() data: any;
+     ```
+
+   - **Output Properties (Event Emitters)**: To communicate data changes from a child component to a parent component, you can use output properties with `EventEmitter`. The child component emits events that the parent component can listen to using event binding.
+
+     ```html
+     <!-- Child Component -->
+     <button (click)="emitData()">Send Data</button>
+
+     // Inside the Child Component TypeScript
+     @Output() dataEvent = new EventEmitter<any>();
+
+     emitData() {
+       this.dataEvent.emit(this.data);
+     }
+
+     <!-- Parent Component -->
+     <app-child (dataEvent)="handleData($event)"></app-child>
+     ```
+
+2. **Service**:
+   - Angular services are singleton instances that can be used to store and share data between components. Components can inject a shared service and use its methods and properties to exchange data.
+
+     ```typescript
+     // Shared Service
+     @Injectable({
+       providedIn: 'root',
+     })
+     export class DataService {
+       sharedData: any;
+     }
+
+     // Component 1
+     constructor(private dataService: DataService) {
+       this.dataService.sharedData = 'Data from Component 1';
+     }
+
+     // Component 2
+     constructor(private dataService: DataService) {
+       console.log(this.dataService.sharedData); // Access data from Component 1
+     }
+     ```
+
+3. **ViewChild and ContentChild**:
+   - You can use `@ViewChild` and `@ContentChild` decorators to access child components or elements in the template of a parent component. This allows you to interact with the child component directly.
+
+     ```html
+     <!-- Parent Component -->
+     <app-child #childComponent></app-child>
+
+     // Inside the Parent Component TypeScript
+     @ViewChild('childComponent') child: ChildComponent;
+
+     // You can now access methods and properties of the child component using this.child
+     ```
+
+4. **RxJS Observables**:
+   - RxJS is a powerful library for handling asynchronous operations, and you can use observables to facilitate communication between components. A component can subscribe to an observable to receive updates when data changes.
+
+     ```typescript
+     // Shared Service
+     private dataSubject = new BehaviorSubject<any>(null);
+     data$ = this.dataSubject.asObservable();
+
+     // Component 1
+     constructor(private dataService: DataService) {
+       this.dataService.setData('Data from Component 1');
+     }
+
+     // Component 2
+     constructor(private dataService: DataService) {
+       this.dataService.data$.subscribe(data => {
+         console.log(data); // Receive data from Component 1
+       });
+     }
+     ```
+
+These are the primary methods for communicating between components in Angular. The choice of method depends on factors like component hierarchy, data flow direction, and the complexity of your application. Each method has its advantages and is suitable for different scenarios, so you should choose the one that best fits your specific requirements.
  
