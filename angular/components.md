@@ -750,7 +750,7 @@ In Angular, there are several options for communicating between components, whic
 
 4. **Content projection**:
 
-Angular provides a powerful feature called content projection using `ng-content`, which allows you to project content from the parent component's template into a child component. This is useful when you want to create reusable components that can accept arbitrary content. Here's an example demonstrating how to use `ng-content` for content projection:
+   - Angular provides a powerful feature called content projection using `ng-content`, which allows you to project content from the parent component's template into a child component. This is useful when you want to create reusable components that can accept arbitrary content. Here's an example demonstrating how to use `ng-content` for content projection:
 
    - Create a parent component that will project content into a child component:
 
@@ -819,12 +819,12 @@ import { ChildComponent } from './child.component';
 export class AppModule {}
 ```
 
-In this example:
+   - In this example:
 
-- The `ParentComponent` contains an `<app-child>` element in its template.
-- Inside the `<app-child>` element, we have placed arbitrary content, including a paragraph and a button.
-- The `ChildComponent` uses `<ng-content></ng-content>` to project the content from the parent into its template. This allows the child component to display the content provided by the parent.
-- Both the parent and child components have their own buttons with separate click event handlers.
+      - The `ParentComponent` contains an `<app-child>` element in its template.
+      - Inside the `<app-child>` element, we have placed arbitrary content, including a paragraph and a button.
+      - The `ChildComponent` uses `<ng-content></ng-content>` to project the content from the parent into its template. This allows the child component to display the content provided by the parent.
+      - Both the parent and child components have their own buttons with separate click event handlers.
 
 
 
