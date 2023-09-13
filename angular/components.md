@@ -749,3 +749,104 @@ In Angular, there are several options for communicating between components, whic
 
 These are the primary methods for communicating between components in Angular. The choice of method depends on factors like component hierarchy, data flow direction, and the complexity of your application. Each method has its advantages and is suitable for different scenarios, so you should choose the one that best fits your specific requirements.
  
+
+### Communication between two Angular components synchronously using RxJS and a shared service.
+
+In this example, we'll create a shared service to exchange data between two components: a parent and a child component.
+
+1. Create a shared service:
+
+```typescript
+// shared-data.service.ts
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class SharedDataService {
+  // Create a BehaviorSubject to store the shared data
+  private sharedDataSubject = new BehaviorSubject<string>('Initial data');
+
+  // Expose an observable that components can subscribe to
+  sharedData$ = this.sharedDataSubject.asObservable();
+
+  // Method to update the shared data
+  updateSharedData(newData: string) {
+    this.sharedDataSubject.next(newData);
+  }
+}
+```
+
+2. Create the parent and child components:
+
+```typescript
+// parent.component.ts
+import { Component } from '@angular/core';
+import { SharedDataService } from './shared-data.service';
+
+@Component({
+  selector: 'app-parent',
+  template: `
+    <h2>Parent Component</h2>
+    <button (click)="updateData()">Update Data</button>
+  `,
+})
+export class ParentComponent {
+  constructor(private sharedDataService: SharedDataService) {}
+
+  updateData() {
+    this.sharedDataService.updateSharedData('New data from parent');
+  }
+}
+```
+
+```typescript
+// child.component.ts
+import { Component, OnInit } from '@angular/core';
+import { SharedDataService } from './shared-data.service';
+
+@Component({
+  selector: 'app-child',
+  template: `
+    <h2>Child Component</h2>
+    <p>Data received from parent: {{ receivedData }}</p>
+  `,
+})
+export class ChildComponent implements OnInit {
+  receivedData: string = 'Initial data';
+
+  constructor(private sharedDataService: SharedDataService) {}
+
+  ngOnInit() {
+    // Subscribe to the sharedData$ observable to receive updates
+    this.sharedDataService.sharedData$.subscribe((data) => {
+      this.receivedData = data;
+    });
+  }
+}
+```
+
+3. Make sure to include these components in your Angular module:
+
+```typescript
+// app.module.ts
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppComponent } from './app.component';
+import { ParentComponent } from './parent.component';
+import { ChildComponent } from './child.component';
+import { SharedDataService } from './shared-data.service';
+
+@NgModule({
+  declarations: [AppComponent, ParentComponent, ChildComponent],
+  imports: [BrowserModule],
+  providers: [SharedDataService],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}
+```
+
+Now, when you click the "Update Data" button in the `ParentComponent`, it will update the shared data in the `SharedDataService`, and the `ChildComponent` will receive and display the updated data synchronously.
+
+This example demonstrates how to use a shared service to facilitate synchronous communication between two Angular components.
