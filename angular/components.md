@@ -1161,6 +1161,91 @@ In this example:
 
 When you run the application, you will see that content with the `header` attribute is projected into one location within the `ChildComponent`, and content without the `header` attribute is projected into another location. This demonstrates how you can use the `ng-content` directive with an attribute to selectively project content based on the presence of that attribute in the parent component's template.
 
+## Dynamically create and show components at runtime
 
+In Angular, you can dynamically create and show components at runtime using a combination of Angular's `ComponentFactoryResolver`, `ViewContainerRef`, and Angular modules. Here's an example of how to create and display components dynamically:
+
+1. First, create the dynamic component that you want to generate at runtime. For this example, let's create a simple dynamic component.
+
+```typescript
+// dynamic.component.ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-dynamic',
+  template: '<p>This is a dynamic component!</p>',
+})
+export class DynamicComponent {}
+```
+
+2. Create a placeholder in your template where you want to render the dynamic components. You can use `ng-container` or `ng-template` with a `ViewContainerRef`.
+
+```html
+<!-- app.component.html -->
+<div>
+  <button (click)="loadDynamicComponent()">Load Dynamic Component</button>
+  <ng-container #dynamicComponentContainer></ng-container>
+</div>
+```
+
+3. In your app component, you'll need to use `ComponentFactoryResolver` and `ViewContainerRef` to create and display the dynamic component.
+
+```typescript
+// app.component.ts
+import { Component, ComponentFactoryResolver, ViewContainerRef, ViewChild } from '@angular/core';
+import { DynamicComponent } from './dynamic.component';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+})
+export class AppComponent {
+  @ViewChild('dynamicComponentContainer', { read: ViewContainerRef }) dynamicComponentContainer: ViewContainerRef;
+
+  constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
+
+  loadDynamicComponent() {
+    // Create a component factory for the dynamic component
+    const factory = this.componentFactoryResolver.resolveComponentFactory(DynamicComponent);
+
+    // Create an instance of the dynamic component
+    const dynamicComponentRef = factory.create(this.dynamicComponentContainer.injector);
+
+    // Attach the component to the view container
+    this.dynamicComponentContainer.insert(dynamicComponentRef.hostView);
+  }
+}
+```
+
+In this example:
+
+- We import the necessary Angular modules, including `ComponentFactoryResolver`, `ViewContainerRef`, and `ViewChild`.
+
+- In the app component, we define a `dynamicComponentContainer` using `ViewChild` and `ViewContainerRef`. This container will be used to hold the dynamically created component.
+
+- The `loadDynamicComponent` method is called when the "Load Dynamic Component" button is clicked.
+
+- Inside `loadDynamicComponent`, we use `ComponentFactoryResolver` to create a factory for the `DynamicComponent`.
+
+- We then use the factory to create an instance of the `DynamicComponent` and insert it into the `dynamicComponentContainer` using `insert`.
+
+4. Don't forget to add the `DynamicComponent` to your app module declarations:
+
+```typescript
+// app.module.ts
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppComponent } from './app.component';
+import { DynamicComponent } from './dynamic.component';
+
+@NgModule({
+  declarations: [AppComponent, DynamicComponent],
+  imports: [BrowserModule],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}
+```
+
+Now, when you click the "Load Dynamic Component" button, the `DynamicComponent` will be dynamically created and displayed in the `ng-container`. You can follow a similar pattern to create and display other dynamic components as needed in your application.
 
 
