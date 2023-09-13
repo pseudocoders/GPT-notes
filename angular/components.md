@@ -748,7 +748,89 @@ In Angular, there are several options for communicating between components, whic
      ```
 
 These are the primary methods for communicating between components in Angular. The choice of method depends on factors like component hierarchy, data flow direction, and the complexity of your application. Each method has its advantages and is suitable for different scenarios, so you should choose the one that best fits your specific requirements.
- 
+
+
+### Example of communication between two Angular components using @Input and @Output. 
+
+Communicating between Angular components using `@Input` and `@Output` is a common pattern for passing data from parent components to child components and vice versa. Here's an example demonstrating how to use these decorators:
+
+1. Create a parent component and a child component:
+
+```typescript
+// parent.component.ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-parent',
+  template: `
+    <h2>Parent Component</h2>
+    <button (click)="updateChildData()">Update Child Data</button>
+    <app-child [dataFromParent]="parentData" (dataToParent)="handleChildData($event)"></app-child>
+    <p>Data received from child: {{ dataFromChild }}</p>
+  `,
+})
+export class ParentComponent {
+  parentData: string = 'Data from parent';
+  dataFromChild: string = '';
+
+  updateChildData() {
+    this.parentData = 'Updated data from parent';
+  }
+
+  handleChildData(data: string) {
+    this.dataFromChild = data;
+  }
+}
+```
+
+```typescript
+// child.component.ts
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+
+@Component({
+  selector: 'app-child',
+  template: `
+    <h2>Child Component</h2>
+    <p>Data received from parent: {{ dataFromParent }}</p>
+    <button (click)="sendDataToParent()">Send Data to Parent</button>
+  `,
+})
+export class ChildComponent {
+  @Input() dataFromParent: string;
+  @Output() dataToParent = new EventEmitter<string>();
+
+  sendDataToParent() {
+    this.dataToParent.emit('Data from child');
+  }
+}
+```
+
+2. Include these components in your Angular module:
+
+```typescript
+// app.module.ts
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppComponent } from './app.component';
+import { ParentComponent } from './parent.component';
+import { ChildComponent } from './child.component';
+
+@NgModule({
+  declarations: [AppComponent, ParentComponent, ChildComponent],
+  imports: [BrowserModule],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}
+```
+
+In this example:
+
+- The `ParentComponent` template includes the `ChildComponent` using `<app-child></app-child>`.
+- The `@Input() dataFromParent` decorator in `ChildComponent` allows the parent component to pass data to the child component.
+- The `@Output() dataToParent` decorator in `ChildComponent` emits events that the parent component can listen to using event binding `(dataToParent)="handleChildData($event)"`.
+- When you click the "Send Data to Parent" button in the `ChildComponent`, it emits an event with the data, which is captured by the `handleChildData` method in the `ParentComponent`, allowing data to flow from child to parent.
+
+This way, you can easily communicate between the `ParentComponent` and `ChildComponent` using `@Input` and `@Output` decorators.
 
 ### Example of communication between two Angular components using RxJS and a shared service.
 
