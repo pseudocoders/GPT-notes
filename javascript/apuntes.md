@@ -1,3 +1,9 @@
+* Arrows
+* Perdida del contexto de this
+* Argumentos ... en funciones
+
+
+
 # Pérdida del contexto de this
 
 En JavaScript clásico (ES5), el valor de `this` puede cambiar dependiendo del contexto de ejecución. Un caso común en el que `this` pierde su contexto es cuando se utiliza dentro de una función anidada o callback. Veamos un ejemplo:
