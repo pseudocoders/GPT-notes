@@ -9,3 +9,5 @@
 7. [Object oriented programming](oop.md)
 8. [Asynchronism](asynchronism.md)
 9. [Best practices](bestpractices.md)
+
+[Apuntes](apuntes.md)
