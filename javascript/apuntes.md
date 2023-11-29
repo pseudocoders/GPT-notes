@@ -154,7 +154,142 @@ La functión anterior después de esperar 1 segundo imprime 100 parejas de (11,1
 
 Encontrar la solución para que al pasar un segundo imprima (1,1)(1,2)...(2,1)(2,2)...(10,10)
 
-Solución:
+
+
+
+
+## Clase del miercoles
+
+```javascript
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplos</title>
+</head>
+
+<body>
+    <h1>Ejemplos</h1>
+    <pre id="output"></pre>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            var o = document.getElementById("output");
+            var f = function () {
+                var a = 1;
+                return (function () {
+                    return a;
+                })();
+            }
+            var b = f();
+            o.innerHTML += "b = " + b + "<br>";
+            var o = document.getElementById("output");
+            var f = function () {
+                var a = 1;
+                return function () {
+                    return a;
+                };
+            }
+            var b = f()();
+            o.innerHTML += "b = " + b + "<br>";
+            //---------------------------------------
+            o.innerHTML += "------------- <br>";
+            function contador1() {
+                var c = 0;
+                return function () {
+                    return ++c;
+                }
+            }
+            // o.innerHTML += "quiero acceder a c " + c + "<br>"; ERROR!!! no se puede
+            var c1 = contador1();
+            o.innerHTML += "c1 = " + c1() + "<br>";
+            //------------------------------------
+            o.innerHTML += "------------- <br>";
+            function contador2() {
+                var c = 0;
+                return function () {
+                    return ++c;
+                }
+            }
+            // o.innerHTML += "quiero acceder a c " + c + "<br>"; ERROR!!! no se puede
+            var c2 = contador2();
+            c2();
+            c2();
+            c2();
+            o.innerHTML += "c2 = " + c2() + "<br>";
+            //------------------------------------
+            function contador3() {
+                var c = 0;
+                return {
+                    incrementar: function () {
+                        return ++c;
+                    },
+                    decrementar: function () {
+                        return --c;
+                    },
+                    reset: function () {
+                        c = 0;
+                    },
+                    consultar: function () {
+                        return c;
+                    }
+                }
+            }
+            // o.innerHTML += "quiero acceder a c " + c + "<br>"; ERROR!!! no se puede
+            o.innerHTML += "------------- <br>";
+            var c3 = contador3();
+            c3.incrementar();
+            c3.incrementar();
+            c3.decrementar();
+            o.innerHTML += "c3 = " + c3.consultar() + "<br>";
+            c3.incrementar();
+            c3.incrementar();
+            o.innerHTML += "c3 = " + c3.consultar() + "<br>";
+            c3.reset();
+            o.innerHTML += "c3 = " + c3.consultar() + "<br>";
+            //------------------------------------
+            o.innerHTML += "------------- <br>";
+            function outerFunction(x) {
+                return function (y) {
+                    return function (z) {
+                        return x + y + z;
+                    }
+                }
+            }
+            var f1 = outerFunction(1)(2)(3);
+            o.innerHTML += "f1 = " + f1 + "<br>";
+            var f1 = outerFunction(1)(2);
+            o.innerHTML += "f1 = " + f1(3) + "<br>";
+            var f1 = outerFunction(1);
+            o.innerHTML += "f1 = " + f1(2)(3) + "<br>";
+            //------------------------------------
+            o.innerHTML += "------------- <br>";
+            function add(x, y) {
+                return x + y;
+            }
+            function partialAdd(x) {
+                return function (y) {
+                    return add(x, y);
+                };
+            }
+            var add5 = partialAdd(5);
+            o.innerHTML += "add5 = " + add5(3) + "<br>";
+            //------------------------------------
+            o.innerHTML += "------------- <br>";
+            function apply(func, arg) {
+                return func(arg);
+            }
+            var add10 = apply(partialAdd, 10);
+            o.innerHTML += "add10 = " + apply(add10, 5) + "<br>";
+            //------------------------------------
+
+        })
+    </script>
+</body>
+
+</html>
+```
 
 ```javascript
 //pendeinte para casa
