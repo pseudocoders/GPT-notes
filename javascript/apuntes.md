@@ -1,7 +1,9 @@
 * Arrows
 * Perdida del contexto de this
 * Argumentos ... en funciones
-
+* Objetos, creación literal y función constructora
+  * herencia prototípica, cadena prototípica
+  * EC6: class, contructor, extends, super
 
 
 # Pérdida del contexto de this
