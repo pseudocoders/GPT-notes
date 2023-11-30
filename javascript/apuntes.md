@@ -185,18 +185,15 @@ for (var i=1;i<=10; i++){
 ```
 Justificación: se crea un ámbito local para i y j mediante la ejecución de una función.
 
-### curry
+Entro enfoque:
 
 ```javascript
 function escribe(i,j){
-  return function(){
-     setTimeout(function(){console.log(i,j)},1000)
-  }
+  setTimeout(function(){console.log(i,j)},1000)
 }
-
 for (var i=1;i<=10; i++){
     for (var j=1;j<=10;j++){
-      escribe(i,j)();
+      escribe(i,j);
     }
 }
 ```
