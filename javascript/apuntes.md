@@ -378,9 +378,145 @@ for (var i=1;i<=10; i++){
 
 </html>
 ```
+## Ejemplos de clase (jueves)
 
 ```javascript
-//pendeinte para casa
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplos</title>
+</head>
+
+<body>
+    <h1>Ejemplos</h1>
+    <pre id="output"></pre>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            var o = document.getElementById("output");
+            //---------------------------------------
+            o.innerHTML += "<h1>function factory </h1>";
+
+            function creaMusico(nombre) {
+                return function (instrumento) {
+                    o.innerHTML += nombre + " toca " + instrumento + "<br>";
+                }
+            }
+            let musico1 = creaMusico("Juan");
+            let musico2 = creaMusico("Pedro");
+            musico1("guitarra");
+            musico2("bajo");
+            musico1("batería");
+
+            //---------------------------------------
+            o.innerHTML += "<h1>function factory</h1>";
+
+            // Definición de la interfaz (puede ser una clase abstracta o una interfaz en otros lenguajes)
+            class Product {
+                constructor(name) {
+                    this.name = name;
+                }
+
+                display() {
+                    o.innerHTML += `Product: ${this.name}`;
+                }
+            }
+
+            // Implementación de productos específicos
+            class ConcreteProductA extends Product {
+                constructor(name) {
+                    super(name);
+                }
+
+                display() {
+                    o.innerHTML += `ConcreteProductA: ${this.name} <br>`;
+                }
+            }
+
+            class ConcreteProductB extends Product {
+                constructor(name) {
+                    super(name);
+                }
+
+                display() {
+                    o.innerHTML += `ConcreteProductB: ${this.name} <br>`;
+                }
+            }
+
+            // Factory que crea objetos Product
+            class ProductFactory {
+                createProduct(type, name) {
+                    switch (type) {
+                        case 'A':
+                            return new ConcreteProductA(name);
+                        case 'B':
+                            return new ConcreteProductB(name);
+                        default:
+                            throw new Error('Invalid product type');
+                    }
+                }
+            }
+
+            // Uso del Factory
+            const factory = new ProductFactory();
+
+            const productA = factory.createProduct('A', 'ProductA');
+            const productB = factory.createProduct('B', 'ProductB');
+
+            productA.display(); // Debería imprimir "ConcreteProductA: ProductA"
+            productB.display(); // Debería imprimir "ConcreteProductB: ProductB"
+
+
+
+
+
+
+            o.innerHTML += "<h1>patron singleton</h1>";
+
+            const Singleton = (function () {
+                let instance;
+
+
+                function createInstance(nombre) {
+                    return {
+                        name: nombre,
+                        saluda: function () {
+                            o.innerHTML += "hola soy " + this.name + "<br>";
+                        },
+                    };
+                }
+
+                return {
+                    getInstance: function (nombre) {
+                        if (!instance) {
+                            instance = createInstance(nombre);
+                        }
+                        return instance;
+                    },
+                };
+            })();
+
+            // Uso del Singleton
+            const instance1 = Singleton.getInstance("Juan");
+            const instance2 = Singleton.getInstance("Pedro");
+            const instance3 = Singleton.getInstance("Ana");
+
+            o.innerHTML += "son la misma instancia? " + (instance1 === instance2) + "<br>"; // Debería imprimir true
+            o.innerHTML += "son la misma instancia? " + (instance1 === instance3) + "<br>"; // Debería imprimir true
+            o.innerHTML += "Soy " + instance1.name + "<br>";
+            instance1.saluda();
+            instance2.saluda();
+            instance3.saluda();
+
+
+
+        })
+    </script>
+</body>
+
+</html>
 ```
 
 
