@@ -172,7 +172,7 @@ Al cambiar `var` por `let`, introduces el ámbito de bloque. Con `let`, la varia
 
 En resumen, con `var`, todas las funciones de `setTimeout` comparten la misma variable `i`, mientras que con `let`, cada función de `setTimeout` tiene su propia variable `i` con el valor correcto. Esto lleva a la diferencia en el resultado observado.
 
-### solucion let
+### solucion con una función
 
 ```javascript
 for (var i=1;i<=10; i++){
