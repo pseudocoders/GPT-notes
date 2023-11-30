@@ -292,19 +292,19 @@ for (var i=1;i<=10; i++){
             o.innerHTML += "c3 = " + c3.consultar() + "<br>";
             //------------------------------------
             o.innerHTML += "------------- <br>";
-            function outerFunction(x) {
+            function suma(x) {
                 return function (y) {
                     return function (z) {
                         return x + y + z;
                     }
                 }
             }
-            var f1 = outerFunction(1)(2)(3);
-            o.innerHTML += "f1 = " + f1 + "<br>";
-            var f1 = outerFunction(1)(2);
-            o.innerHTML += "f1 = " + f1(3) + "<br>";
-            var f1 = outerFunction(1);
-            o.innerHTML += "f1 = " + f1(2)(3) + "<br>";
+            var f1 = suma(1)(2)(3);
+            o.innerHTML += "resultado1 = " + f1 + "<br>";
+            var add3 = suma(1)(2);
+            o.innerHTML += "resultado2 = " + add3(3) + "<br>";
+            var add1 = suma(1);
+            o.innerHTML += "resultado3 = " + add1(2)(3) + "<br>";            
             //------------------------------------
             o.innerHTML += "------------- <br>";
             function add(x, y) {
@@ -317,15 +317,53 @@ for (var i=1;i<=10; i++){
             }
             var add5 = partialAdd(5);
             o.innerHTML += "add5 = " + add5(3) + "<br>";
-            //------------------------------------
-            o.innerHTML += "------------- <br>";
-            function apply(func, arg) {
+            function ejecuta(func, arg) {
                 return func(arg);
             }
-            var add10 = apply(partialAdd, 10);
-            o.innerHTML += "add10 = " + apply(add10, 5) + "<br>";
+            var add10 = ejecuta(partialAdd, 10);
+            o.innerHTML += "add10 = " + ejecuta(add10, 5) + "<br>";
             //------------------------------------
-
+            o.innerHTML += "------------- <br>";
+            // función curry genérica en javascript clásico
+            function curry(func) {
+                var args = Array.prototype.slice.call(arguments, 1); //args es todo menos la funcion
+                return function () {
+                    return func.apply(this, args.concat( //se ejecuta func con los argumentos
+                        Array.prototype.slice.call(arguments, 0)
+                    ));
+                };
+            }
+            var add = function (x, y) {
+                return x + y;
+            };
+            var add10 = curry(add, 10);
+            o.innerHTML += "add10 = " + add10(5) + "<br>";
+            //ejemplo más complejo
+            function add(x, y, z) {
+                return x + y + z;
+            }
+            var add10 = curry(add, 10);
+            var add10y20 = curry(add10, 20);
+            o.innerHTML += "add10y20 = " + add10y20(30) + "<br>";
+            //------------------------------------
+            // función curry genérica en javascript Ecmascript 6
+            function curryES6(func, ...args) {
+                return function (...args2) {
+                    return func(...args, ...args2);
+                };
+            }
+            var add = function (x, y) {
+                return x + y;
+            };
+            var add10 = curryES6(add, 10);
+            o.innerHTML += "add10 = " + add10(5) + "<br>";
+            //ejemplo más complejo
+            function add(x, y, z) {
+                return x + y + z;
+            }
+            var add10 = curryES6(add, 10);
+            var add10y20 = curryES6(add10, 20);
+            o.innerHTML += "add10y20 = " + add10y20(30) + "<br>";
         })
     </script>
 </body>
