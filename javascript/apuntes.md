@@ -1,14 +1,22 @@
-
+* diferencias entre let const y var
 * Arrows
 * Repaso de las funciones map filter y reduce con arrows
 * Perdida del contexto de this
-* Argumentos ... en funciones
+* Argumentos ... en funciones (rest operator) (spread operator)
 * Creación literal de objetos
 * Creación de objetos con función constructora
 * new y this
 * Herencia prototípica (prototype)
 * Orientación a objetos ES6 con class, constructor, extends y super
 * asincronismo y callbacks (ejemplo de los dos bucles)
+* interpolación de strings
+* aplicación parcial y currificación
+* modo estricto
+* parametros por defecto en javascript
+* patron factory en javascript
+* patron singleton
+* pte: async/await + promises
+* pte: repaso de map filter y reduce
 
 
 
@@ -374,3 +382,8 @@ for (var i=1;i<=10; i++){
 ```javascript
 //pendeinte para casa
 ```
+
+
+
+
+
