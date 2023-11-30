@@ -154,7 +154,52 @@ La functión anterior después de esperar 1 segundo imprime 100 parejas de (11,1
 
 Encontrar la solución para que al pasar un segundo imprima (1,1)(1,2)...(2,1)(2,2)...(10,10)
 
+### solucion let
 
+```javascript
+for (let i=1;i<=10; i++){
+    for (let j=1;j<=10;j++){
+        setTimeout(function(){console.log(i,j)},1000)
+    }
+}
+```
+
+El comportamiento que estás observando está relacionado con el ámbito de las variables `var` y `let` en JavaScript, así como con el concepto de clausura (closure) en el manejo del tiempo de ejecución.
+
+Cuando usas `var` en JavaScript, la variable se eleva (hoisting) al inicio del ámbito de la función más cercana, pero no respeta el ámbito de bloque. En tu caso, la variable `i` está siendo elevada al ámbito de la función que contiene tu bucle `for`, y se está utilizando en la función `setTimeout`. Sin embargo, debido a que las funciones de `setTimeout` se ejecutan después de que el bucle ha terminado, todas las funciones de `setTimeout` comparten la misma variable `i`, y al final del bucle, `i` tiene el valor de 11.
+
+Al cambiar `var` por `let`, introduces el ámbito de bloque. Con `let`, la variable `i` está limitada al bloque `for`, y cada iteración del bucle crea una nueva variable `i` con su propio ámbito. Como resultado, cada función de `setTimeout` dentro del bucle captura el valor correcto de `i` al momento de la iteración.
+
+En resumen, con `var`, todas las funciones de `setTimeout` comparten la misma variable `i`, mientras que con `let`, cada función de `setTimeout` tiene su propia variable `i` con el valor correcto. Esto lleva a la diferencia en el resultado observado.
+
+### solucion let
+
+```javascript
+for (var i=1;i<=10; i++){
+    for (var j=1;j<=10;j++){
+        (function(i,j){
+        setTimeout(function(){console.log(i,j)},1000)
+        })(i,j)
+    }
+}
+```
+Justificación: se crea un ámbito local para i y j mediante la ejecución de una función.
+
+### curry
+
+```javascript
+function escribe(i,j){
+  return function(){
+     setTimeout(function(){console.log(i,j)},1000)
+  }
+}
+
+for (var i=1;i<=10; i++){
+    for (var j=1;j<=10;j++){
+      escribe(i,j)();
+    }
+}
+```
 
 
 
