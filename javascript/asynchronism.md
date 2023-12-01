@@ -111,6 +111,162 @@ In this example, we create a Promise that generates a random number and resolves
 
 Promises can also be chained together using the then() method, allowing for more complex asynchronous operations. In addition, ES6 also introduced the async/await keywords as syntactic sugar for working with Promises, making asynchronous code even easier to read and write.
 
+### methods
+
+In JavaScript, promises come with several methods that facilitate the handling of asynchronous operations. Here's an explanation of each of the primary methods associated with promises:
+
+1. **`Promise()` Constructor:**
+   - The `Promise` object is a constructor for creating promise instances.
+   - Syntax: `new Promise(executor)`
+
+   ```javascript
+   const myPromise = new Promise((resolve, reject) => {
+     // Asynchronous operation
+     if (/* operation is successful */) {
+       resolve(result);
+     } else {
+       reject(error);
+     }
+   });
+   ```
+
+2. **`Promise.prototype.then(onFulfilled, onRejected)`:**
+   - This method is used to handle the fulfillment or rejection of a promise.
+   - `onFulfilled`: A function that is called when the promise is fulfilled.
+   - `onRejected`: A function that is called when the promise is rejected.
+   - Returns a new promise resolving to the return value of the `onFulfilled` or `onRejected` callback.
+
+   ```javascript
+   myPromise.then(
+     (result) => {
+       console.log('Fulfilled:', result);
+     },
+     (error) => {
+       console.error('Rejected:', error);
+     }
+   );
+   ```
+
+3. **`Promise.prototype.catch(onRejected)`:**
+   - This method is used to handle errors in promises.
+   - `onRejected`: A function that is called when the promise is rejected.
+   - Returns a new promise resolving to the return value of the `onRejected` callback.
+
+   ```javascript
+   myPromise.catch((error) => {
+     console.error('Error:', error);
+   });
+   ```
+
+4. **`Promise.prototype.finally(onFinally)`:**
+   - This method is used to specify a function to be called when the promise is settled (fulfilled or rejected).
+   - `onFinally`: A function that is called when the promise is settled.
+   - Returns a new promise resolving to the original promise's result after `onFinally` has been called.
+
+   ```javascript
+   myPromise.finally(() => {
+     console.log('Finally block executed.');
+   });
+   ```
+
+5. **`Promise.all(iterable)`:**
+   - This method takes an iterable (e.g., an array) of promises and returns a new promise that fulfills with an array of fulfillment values when all of the input promises have fulfilled, or rejects with the reason of the first promise that rejects.
+
+   ```javascript
+   const promise1 = someAsyncOperation1();
+   const promise2 = someAsyncOperation2();
+
+   Promise.all([promise1, promise2])
+     .then((results) => {
+       console.log('All promises fulfilled:', results);
+     })
+     .catch((error) => {
+       console.error('One of the promises rejected:', error);
+     });
+   ```
+
+6. **`Promise.race(iterable)`:**
+   - This method takes an iterable of promises and returns a new promise that fulfills or rejects as soon as one of the promises in the iterable fulfills or rejects, with the value or reason from that promise.
+
+   ```javascript
+   const promise1 = someAsyncOperation1();
+   const promise2 = someAsyncOperation2();
+
+   Promise.race([promise1, promise2])
+     .then((firstResult) => {
+       console.log('The first promise fulfilled:', firstResult);
+     })
+     .catch((firstError) => {
+       console.error('The first promise rejected:', firstError);
+     });
+   ```
+
+### any 
+
+The `Promise.any()` static method is a part of the Promise API introduced in ECMAScript 2021 (ES12). It is used to create a single promise from an iterable of promises and fulfills as soon as one of the promises in the iterable fulfills. If all the promises in the iterable reject, then `Promise.any()` rejects with an `AggregateError`, an error object that contains an array of individual errors.
+
+Here's the basic syntax:
+
+```javascript
+Promise.any(iterable);
+```
+
+- **`iterable`**: An iterable (usually an array) of promises.
+
+### Example:
+
+```javascript
+const promise1 = new Promise((resolve) => setTimeout(() => resolve('One'), 1000));
+const promise2 = new Promise((_, reject) => setTimeout(() => reject('Two'), 2000));
+const promise3 = new Promise((resolve) => setTimeout(() => resolve('Three'), 3000));
+
+Promise.any([promise1, promise2, promise3])
+  .then((firstResult) => {
+    console.log('The first promise fulfilled:', firstResult);
+  })
+  .catch((error) => {
+    console.error('All promises were rejected:', error);
+    // Output: All promises were rejected: AggregateError: All promises were rejected
+    // The AggregateError object contains an array of individual rejection reasons.
+  });
+```
+
+In this example, `Promise.any()` is used to wait for the first promise in the iterable to fulfill. If any promise fulfills, the `then` callback is executed with the value of the first fulfilled promise. If all promises in the iterable reject, the `catch` callback is triggered with an `AggregateError` containing an array of rejection reasons.
+
+This method is particularly useful when you have multiple asynchronous operations, and you're interested in the result of the first one to complete successfully. It can be seen as the opposite of `Promise.all()`, which waits for all promises to fulfill.
+
+### reject
+
+The `Promise.reject()` static method is a built-in method in JavaScript that is used to create a new promise that is rejected with a specified reason (error). It returns a new Promise object that is in a rejected state with the provided reason.
+
+Here's the basic syntax:
+
+```javascript
+Promise.reject(reason);
+```
+
+- **`reason`**: The reason (usually an error or an object representing the rejection reason) for the promise being rejected.
+
+### Example:
+
+```javascript
+const reason = new Error('This promise is rejected.');
+
+const rejectedPromise = Promise.reject(reason);
+
+rejectedPromise.catch((error) => {
+  console.error('Promise rejected with reason:', error.message);
+  // Output: Promise rejected with reason: This promise is rejected.
+});
+```
+
+In this example, `Promise.reject` is used to create a new promise that is immediately rejected with the specified `reason`. The `catch` method is then used to handle the rejection and log the error message.
+
+This method is useful when you want to explicitly create a rejected promise without performing any asynchronous operations. It allows you to handle errors in a consistent manner and integrate them into a promise chain or use other promise-related methods.
+
+
+These methods provide a powerful and flexible way to work with asynchronous code, allowing developers to write cleaner and more maintainable asynchronous logic.
+
 ## async/await
 
 ES6 introduced the `async/await` syntax, which provides a more elegant way to work with asynchronous code compared to callbacks and promises. It allows you to write asynchronous code in a synchronous way, making the code more readable and easier to understand.
