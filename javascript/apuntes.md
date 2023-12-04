@@ -518,8 +518,57 @@ for (var i=1;i<=10; i++){
 
 </html>
 ```
+## Promesas: ejemplo de clase
+
+```javascript
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplos</title>
+</head>
+
+<body>
+    <h1>Ejemplos</h1>
+    <pre id="output"></pre>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            var o = document.getElementById("output");
+            //---------------------------------------
+            o.innerHTML += "<h1>promises</h1>";
+
+            var oPromise = new Promise(function (resolve, reject) {
+                setTimeout(function () {
+                    //random resolution
+                    if (Math.random() > 0.4) {
+                        resolve('ven a por tu hamburguesa');
+                    } else {
+                        reject('vete a otro sitio');
+                    }
+                }, Math.random() * 5000);
+            });
 
 
+            //HACER OTRAS COSAS
+
+            oPromise.then(function (value) {
+                o.innerHTML += "then: " + value + "<br>";
+                // expected output: "foo"
+            }).catch((error) => {
+                o.innerHTML += "then: ERROR " + error + "<br>";
+            });
+
+            o.innerHTML += "--> ya tengo la promesa estoy charlando con mis amigos y amigas<br>";
+            // expected output: [object Promise]
+
+        })
+    </script>
+</body>
+
+</html>
+```
 
 
 
