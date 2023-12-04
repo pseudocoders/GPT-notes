@@ -542,18 +542,18 @@ for (var i=1;i<=10; i++){
             o.innerHTML += "<h1>promises</h1>";
 
             var oPromise = new Promise(function (resolve, reject) {
+                let delay = Math.floor(Math.random() * 5000) + 1000;
                 setTimeout(function () {
+                    o.innerHTML += "<p>El delay ha finalizado</p>";
                     //random resolution
-                    if (Math.random() > 0.4) {
+                    if (Math.random() > 0.4) {                        
                         resolve('ven a por tu hamburguesa');
                     } else {
                         reject('vete a otro sitio');
                     }
-                }, Math.random() * 5000);
-            });
-
-
-            //HACER OTRAS COSAS
+                }, delay);
+                o.innerHTML += "<p>El delay es de " + delay + " pero OJO!! no ha finalizado todavía</p>";
+            });            
 
             oPromise.then(function (value) {
                 o.innerHTML += "then: " + value + "<br>";
@@ -562,8 +562,9 @@ for (var i=1;i<=10; i++){
                 o.innerHTML += "then: ERROR " + error + "<br>";
             });
 
-            o.innerHTML += "--> ya tengo la promesa estoy charlando con mis amigos y amigas<br>";
-            // expected output: [object Promise]
+            //HACER OTRAS COSAS
+
+            o.innerHTML += "--> ya tengo la promesa estoy charlando con mis amigos y amigas<br>";            
 
         })
     </script>
