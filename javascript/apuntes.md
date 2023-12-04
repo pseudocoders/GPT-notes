@@ -570,5 +570,49 @@ for (var i=1;i<=10; i++){
 </html>
 ```
 
+## Métodos async await ES6
 
+```javascript
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplos</title>
+</head>
+
+<body>
+    <h1>Ejemplos</h1>
+    <pre id="output"></pre>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            var o = document.getElementById("output");
+            //---------------------------------------
+            o.innerHTML += "<h1>async await methods</h1>";
+            async function f1() {
+                return 1;                
+            }
+            f1().then((value) => {
+                o.innerHTML += "<p>value: " + value + "</p>";
+            });
+            //---------------------------------------
+            o.innerHTML += "<h1>async await methods</h1>";
+            async function f2() {
+                // random delay 
+                let delay = Math.floor(Math.random() * 5000) + 1;
+                await new Promise((resolve, reject) => setTimeout(resolve, delay));
+                o.innerHTML += "<p>delay: " + delay + " finalizado</p>";
+                return "OK";
+            }
+            f2().then((value) => {
+                o.innerHTML += "<p>done: value: " + value + "</p>";
+            });            
+            o.innerHTML += "<p>programa finalizado</p>";
+
+        })
+    </script>
+</body>
+
+</html>
+```
