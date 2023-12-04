@@ -15,7 +15,9 @@
 * parametros por defecto en javascript
 * patron factory en javascript
 * patron singleton
-* pte: async/await + promises
+* ECMASCRIPT promises 
+* ES6: métodos async/await
+* pte: RxJS a fondo con ejemploos
 * pte: repaso de map filter y reduce
 
 
