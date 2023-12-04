@@ -44,6 +44,7 @@ subtitle: All you need to be a web developer
 3. [AngularJS](angularjs/index.md)
 4. [Typescript](typescript/index.md)
 5. [Angular](angular/index.md)
+6. [RxJS](rxjs/index.md)
 
 # Road to full stack web developer
 
