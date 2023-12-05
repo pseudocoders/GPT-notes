@@ -56,3 +56,36 @@ Here are some key concepts and features of RxJS:
    - Observables can be categorized as hot or cold. Cold observables start producing values when a subscription is made, while hot observables produce values regardless of subscriptions. Subjects are an example of hot observables.
 
 RxJS is commonly used in scenarios where there is a need for handling asynchronous operations, such as user interactions, HTTP requests, and other event-based systems. It has become particularly popular in the context of Angular applications, where it is often used for managing state, handling asynchronous data, and event handling.
+
+## Template for examples
+
+```javascript
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- https://cdnjs.com/libraries/rxjs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/7.8.1/rxjs.umd.min.js"
+        integrity="sha512-D9LDs8YUUVa4V9Gl4Zb+xqRAc7RCzooR3+zzebgK2RMu/KU+dh90pbjEEMzPiSyRSGbSp9j1pZnrO4joGa5WEg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- https://cdnjs.com/libraries/axios -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js"
+        integrity="sha512-b94Z6431JyXY14iSXwgzeZurHHRNkLt9d6bAHt7BZT38eqV+GyngIi/tVye4jBKPYQ2lBdRs0glww4fmpuLRwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>RxJS</title>
+</head>
+
+<body>
+    <h1>RxJS</h1>
+    <pre id="output"></pre>
+     <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            var o = document.getElementById("output");
+            o.innerHTML += 'RXJS Examples<br>';
+        });
+    </script>
+
+</body>
+</html>           
+```
