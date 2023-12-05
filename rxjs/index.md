@@ -125,7 +125,8 @@ RxJS is commonly used in scenarios where there is a need for handling asynchrono
 
 
 
-
+```javascript
+```
 
 
 RxJS, or Reactive Extensions for JavaScript, is a library for reactive programming using Observables. Observables are a crucial part of RxJS, but there are several other core concepts to understand. Let's delve into the key elements of RxJS:
@@ -155,6 +156,30 @@ const observer = {
 
 observable.subscribe(observer);
 ```
+```javascript
+            // forma deprecada
+            var source$ = rxjs.from([1, 2, 3, 4, 5]);
+            var subscription = source$.subscribe(
+                function (x) {
+                    o.innerHTML += x;
+                },
+                function (err) {
+                    o.innerHTML += ' Error: ' + err;
+                },
+                function () {
+                    o.innerHTML += '--> Completed!';
+                });            
+```
+
+```javascript
+            var source$ = rxjs.from([1, 2, 3, 4, 5]);
+            source$.subscribe(
+                next => o.innerHTML += next,
+                err => o.innerHTML += " Error: " + err,
+                () => o.innerHTML += '-->Completed!',
+            );
+```
+
 
 ## 3. **Subscription:**
 A Subscription represents the execution of an Observable. It is created when you subscribe to an Observable and can be used to unsubscribe, releasing resources and stopping the Observable from emitting further values.
