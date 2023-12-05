@@ -131,21 +131,27 @@ RxJS is commonly used in scenarios where there is a need for handling asynchrono
 
 RxJS, or Reactive Extensions for JavaScript, is a library for reactive programming using Observables. Observables are a crucial part of RxJS, but there are several other core concepts to understand. Let's delve into the key elements of RxJS:
 
-## 1. **Observable:**
-An Observable represents a stream of data or events that can be observed over time. It can emit multiple values asynchronously. Observables can be created from various sources, including events, arrays, promises, and more.
+## 1. **Observable, Observer and Subscription
+* An Observable represents a stream of data or events that can be observed over time. It can emit multiple values asynchronously. Observables can be created from various sources, including events, arrays, promises, and more.
+* An Observer is an object with three callback functions: `next`, `error`, and `complete`. It subscribes to an Observable to receive notifications when the Observable emits values. The `next` function is called when a new value is emitted, `error` handles errors, and `complete` is called when the Observable is done emitting values.
+* A Subscription represents the execution of an Observable. It is created when you subscribe to an Observable and can be used to unsubscribe, releasing resources and stopping the Observable from emitting further values.
+
 
 ```javascript
-import { Observable } from 'rxjs';
-
-const observable = new Observable(observer => {
-  observer.next('Hello');
-  observer.next('World');
-  observer.complete();
-});
+const observable01$ = rxjs.Observable.create(observer01 => {
+                observer01.next("hello");
+                observer01.next("mundo");
+                observer01.complete;
+            });
 ```
 
-## 2. **Observer:**
-An Observer is an object with three callback functions: `next`, `error`, and `complete`. It subscribes to an Observable to receive notifications when the Observable emits values. The `next` function is called when a new value is emitted, `error` handles errors, and `complete` is called when the Observable is done emitting values.
+            const observable01$.subscribe(
+                next => o.innerHTML += next,
+                err => o.innerHTML += " Error: " + err,
+                () => o.innerHTML += '-->Completed!',
+            );
+
+
 
 ```javascript
 const observer = {
@@ -179,10 +185,6 @@ observable.subscribe(observer);
                 () => o.innerHTML += '-->Completed!',
             );
 ```
-
-
-## 3. **Subscription:**
-A Subscription represents the execution of an Observable. It is created when you subscribe to an Observable and can be used to unsubscribe, releasing resources and stopping the Observable from emitting further values.
 
 ```javascript
 const subscription = observable.subscribe(observer);
