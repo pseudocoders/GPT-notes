@@ -314,7 +314,7 @@ Here's a basic example to illustrate how `pipe` works:
 
 In this example, the `pipe` function is used to compose two operators (`filter` and `map`) on the `source` observable. It filters out odd numbers and then doubles each remaining number. The result is a new observable, `modifiedObservable`, which emits the modified values.
 
-### Key Points about `pipe`:
+Key Points about `pipe`:
 
 1. **Readability and Composition:**
    - `pipe` makes it easier to read and understand the sequence of operations applied to an observable.
@@ -387,18 +387,21 @@ In this example, the `double` operator is created as a reusable function and the
             const s = process.subscribe(observer);
 ```
 
-
+### concat
 
 ```javascript
-import { from } from 'rxjs';
-import { map, filter } from 'rxjs/operators';
+            var source1 = rxjs.range(1, 3);
+            var source2 = rxjs.range(1, 3);
+            rxjs.concat(source1, source2).subscribe(result => o.innerHTML += '<br>' + result);
+```
 
-const source = from([1, 2, 3, 4, 5]);
+### merge
 
-source.pipe(
-  filter(value => value % 2 === 0),
-  map(value => value * 2)
-).subscribe(observer);
+```javascript
+            var source = rxjs.merge(
+                rxjs.range(1, 3),
+                rxjs.range(4, 5)
+            ).subscribe(result => o.innerHTML += '<br>' + result);
 ```
 
 ## 5. **Subjects:**
