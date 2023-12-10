@@ -112,7 +112,7 @@ RxJS is commonly used in scenarios where there is a need for handling asynchrono
      <script>
         window.addEventListener('DOMContentLoaded', () => {
             var o = document.getElementById("output");
-            o.innerHTML += 'RXJS Examples<br>';
+            o.innerHTML += '<h2>RXJS Examples</h2>';
         });
     </script>
 
@@ -138,31 +138,44 @@ RxJS, or Reactive Extensions for JavaScript, is a library for reactive programmi
 
 
 ```javascript
-            const observable01$ = rxjs.Observable.create(observer01 => {
+            const observable01 = rxjs.Observable.create(observer01 => {
                 observer01.next("hello");
                 observer01.next("mundo");
                 observer01.complete;
             });
 
-            observable01$.subscribe(
+            observable01.subscribe(
                 next => o.innerHTML += next + "<br>",
-                err => o.innerHTML += " Error: " + err,
-                () => o.innerHTML += '-->Completed!',
+                err => o.innerHTML += " Error: " + err + "<br>",
+                () => o.innerHTML += '--> Completed!' + "<br>",
             );
 ```
 
-
-
-
 ```javascript
-const observer = {
-  next: value => console.log(value),
-  error: error => console.error(error),
-  complete: () => console.log('Completed'),
-};
+            const observable01 = rxjs.Observable.create(observer01 => {
+                observer01.next("hello");
+                observer01.next("mundo");
+                observer01.complete;
+            });
 
-observable.subscribe(observer);
+            const observer02 = {
+                next: value => o.innerHTML += value + ' from observer02' + '<br>',
+                error: error => o.innerHTML += console.error("ERROR: " + error + '<br>'),
+                complete: () => o.innerHTML += 'Completed' + '<br>',
+            };
+
+            const observer03 = {
+                next: value => o.innerHTML += value + ' from observer03' + '<br>',
+                error: error => o.innerHTML += console.error("ERROR: " + error + '<br>'),
+                complete: () => o.innerHTML += 'Completed' + '<br>',
+            };
+
+            const subscription1 = observable01.subscribe(observer02);
+            const subscription2 = observable01.subscribe(observer03);
+            subscription1.unsubscribe();
+            subscription2.unsubscribe();
 ```
+
 ```javascript
             // forma deprecada
             var source$ = rxjs.from([1, 2, 3, 4, 5]);
