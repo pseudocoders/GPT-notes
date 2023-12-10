@@ -178,8 +178,8 @@ RxJS, or Reactive Extensions for JavaScript, is a library for reactive programmi
 
 ```javascript
             // forma deprecada
-            var source$ = rxjs.from([1, 2, 3, 4, 5]);
-            var subscription = source$.subscribe(
+            var source = rxjs.from([1, 2, 3, 4, 5]);
+            var subscription = source.subscribe(
                 function (x) {
                     o.innerHTML += x;
                 },
@@ -188,12 +188,12 @@ RxJS, or Reactive Extensions for JavaScript, is a library for reactive programmi
                 },
                 function () {
                     o.innerHTML += '--> Completed!';
-                });            
+                });        
 ```
 
 ```javascript
-            var source$ = rxjs.from([1, 2, 3, 4, 5]);
-            source$.subscribe(
+            var source = rxjs.from([1, 2, 3, 4, 5]);
+            source.subscribe(
                 next => o.innerHTML += next,
                 err => o.innerHTML += " Error: " + err,
                 () => o.innerHTML += '-->Completed!',
@@ -201,11 +201,25 @@ RxJS, or Reactive Extensions for JavaScript, is a library for reactive programmi
 ```
 
 ```javascript
-const subscription = observable.subscribe(observer);
+            const data = new rxjs.Observable(observer => {
+                const origin = [
+                    { id: 1, name: 'A' },
+                    { id: 2, name: 'B' },
+                    { id: 3, name: 'C' },
+                ];
+                for (let x of origin) {
+                    observer.next(x);
+                }
+                observer.complete();
+            });
 
-// Later, to unsubscribe
-subscription.unsubscribe();
+            data.subscribe(observer => {
+                o.innerHTML += `<p>${observer.id} - ${observer.name}</p>`;
+            });
 ```
+
+
+
 
 ## 4. **Operators:**
 Operators are functions that transform, filter, or combine Observables. RxJS provides a rich set of operators to manipulate data streams. Common operators include `map`, `filter`, `mergeMap`, `switchMap`, `combineLatest`, and more.
