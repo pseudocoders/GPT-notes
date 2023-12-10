@@ -289,7 +289,105 @@ OJO ---> ERROR!
 Returns an observable that immediately completes.
 
 ## 4. **Operators:**
-Operators are functions that transform, filter, or combine Observables. RxJS provides a rich set of operators to manipulate data streams. Common operators include `map`, `filter`, `mergeMap`, `switchMap`, `combineLatest`, and more.
+Operators are functions that transform, filter, or combine Observables. RxJS provides a rich set of operators to manipulate data streams. 
+
+Common operators include `map`, `filter`, `mergeMap`, `switchMap`, `combineLatest`, and more.
+
+### pipe
+
+In RxJS, the `pipe` function is a powerful and flexible tool for composing operations on observables. It allows you to chain multiple RxJS operators together in a more readable and maintainable way.
+
+The `pipe` function takes one or more operators as arguments and returns a new observable with those operators applied in sequence. This is a more functional and composable way to work with observables compared to chaining operators directly on an observable instance.
+
+Here's a basic example to illustrate how `pipe` works:
+
+```javascript
+           const source = rxjs.of(1, 2, 3, 4, 5);
+
+            const modifiedObservable = source.pipe(
+                rxjs.filter(value => value % 2 === 0), // Keep only even numbers
+                rxjs.map(value => value * 2) // Double each remaining number
+            );
+
+            modifiedObservable.subscribe(result => o.innerHTML += '<br>' + result);
+```
+
+In this example, the `pipe` function is used to compose two operators (`filter` and `map`) on the `source` observable. It filters out odd numbers and then doubles each remaining number. The result is a new observable, `modifiedObservable`, which emits the modified values.
+
+### Key Points about `pipe`:
+
+1. **Readability and Composition:**
+   - `pipe` makes it easier to read and understand the sequence of operations applied to an observable.
+   - You can chain multiple operators without nesting them, enhancing code readability.
+
+2. **Immutability:**
+   - Observables are immutable, and the `pipe` function returns a new observable with the applied operators. The original observable remains unchanged.
+
+3. **Separation of Concerns:**
+   - `pipe` promotes a separation of concerns by allowing you to define and reuse individual operators separately from the observable they are applied to.
+
+4. **Reusability:**
+   - You can create reusable operator functions and easily compose them with `pipe` to create complex data transformations.
+
+5. **Order of Execution:**
+   - Operators are applied in the order they appear in the `pipe` function, from left to right.
+
+Here's an example of creating a reusable operator function and using it with `pipe`:
+
+```javascript
+            // Reusable operator function
+            const double = rxjs.map(value => value * 2);
+            const add10 = rxjs.map(value => value + 10);
+
+            const source = rxjs.of(1, 2, 3, 4, 5);
+
+            const modifiedObservable = source.pipe(
+                double,
+                add10
+            );
+
+            modifiedObservable.subscribe(result => o.innerHTML += '<br>' + result);
+```
+
+In this example, the `double` operator is created as a reusable function and then used within the `pipe` function along with another operator. This illustrates the reusability and composability of the `pipe` function in creating observable pipelines.
+
+### map
+```javascript
+            const observer = {
+                next: value => o.innerHTML += value + '<br>',
+                error: error => o.innerHTML += "ERROR: " + error + '<br>',
+                complete: () => o.innerHTML += 'Completed' + '<br>',
+            };
+            const source = rxjs.range(1, 5);
+            const process = source.pipe(rxjs.map(x => x * 2));
+            const s = process.subscribe(observer);
+```
+### filter
+```javascript
+            const observer = {
+                next: value => o.innerHTML += value + '<br>',
+                error: error => o.innerHTML += "ERROR: " + error + '<br>',
+                complete: () => o.innerHTML += 'Completed' + '<br>',
+            };
+            const source = rxjs.range(1, 5);
+            const process = source.pipe(rxjs.filter(x => x <= 2));
+            const s = process.subscribe(observer);
+```
+
+### reduce
+
+```javascript
+            const observer = {
+                next: value => o.innerHTML += value + '<br>',
+                error: error => o.innerHTML += "ERROR: " + error + '<br>',
+                complete: () => o.innerHTML += 'Completed' + '<br>',
+            };
+            const source = rxjs.range(1, 5);
+            const process = source.pipe(rxjs.reduce((acc, v) => acc * v));
+            const s = process.subscribe(observer);
+```
+
+
 
 ```javascript
 import { from } from 'rxjs';
