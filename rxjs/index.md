@@ -136,6 +136,27 @@ RxJS, or Reactive Extensions for JavaScript, is a library for reactive programmi
 * An Observer is an object with three callback functions: `next`, `error`, and `complete`. It subscribes to an Observable to receive notifications when the Observable emits values. The `next` function is called when a new value is emitted, `error` handles errors, and `complete` is called when the Observable is done emitting values.
 * A Subscription represents the execution of an Observable. It is created when you subscribe to an Observable and can be used to unsubscribe, releasing resources and stopping the Observable from emitting further values.
 
+### Observable generation functions
+#### new 
+```javascript
+            const data = new rxjs.Observable(observer => {
+                const origin = [
+                    { id: 1, name: 'A' },
+                    { id: 2, name: 'B' },
+                    { id: 3, name: 'C' },
+                ];
+                for (let x of origin) {
+                    observer.next(x);
+                }
+                observer.complete();
+            });
+
+            data.subscribe(observer => {
+                o.innerHTML += `<p>${observer.id} - ${observer.name}</p>`;
+            });
+```
+
+#### create
 
 ```javascript
             const observable01 = rxjs.Observable.create(observer01 => {
@@ -152,6 +173,22 @@ RxJS, or Reactive Extensions for JavaScript, is a library for reactive programmi
 ```
 
 ```javascript
+            const observable = rxjs.Observable.create(observer => {
+                observer.next("how");
+                observer.next("are");
+                observer.next("you?");
+                throw "cacheable error";
+                observer.next("end!");
+            });
+
+            observable.subscribe(
+                next => o.innerHTML += "next:" + next + "<br>",
+                err => o.innerHTML += "error:" + err + "<br>",
+                () => o.innerHTML += "the end <br>"
+            );
+```
+
+```javascript
             const observable01 = rxjs.Observable.create(observer01 => {
                 observer01.next("hello");
                 observer01.next("mundo");
@@ -160,13 +197,13 @@ RxJS, or Reactive Extensions for JavaScript, is a library for reactive programmi
 
             const observer02 = {
                 next: value => o.innerHTML += value + ' from observer02' + '<br>',
-                error: error => o.innerHTML += console.error("ERROR: " + error + '<br>'),
+                error: error => o.innerHTML += "ERROR: " + error + '<br>',
                 complete: () => o.innerHTML += 'Completed' + '<br>',
             };
 
             const observer03 = {
                 next: value => o.innerHTML += value + ' from observer03' + '<br>',
-                error: error => o.innerHTML += console.error("ERROR: " + error + '<br>'),
+                error: error => o.innerHTML += "ERROR: " + error + '<br>',
                 complete: () => o.innerHTML += 'Completed' + '<br>',
             };
 
@@ -175,6 +212,7 @@ RxJS, or Reactive Extensions for JavaScript, is a library for reactive programmi
             subscription1.unsubscribe();
             subscription2.unsubscribe();
 ```
+#### from
 
 ```javascript
             // forma deprecada
@@ -199,27 +237,51 @@ RxJS, or Reactive Extensions for JavaScript, is a library for reactive programmi
                 () => o.innerHTML += '-->Completed!',
             );
 ```
-
 ```javascript
-            const data = new rxjs.Observable(observer => {
-                const origin = [
-                    { id: 1, name: 'A' },
-                    { id: 2, name: 'B' },
-                    { id: 3, name: 'C' },
-                ];
-                for (let x of origin) {
-                    observer.next(x);
-                }
-                observer.complete();
-            });
-
-            data.subscribe(observer => {
-                o.innerHTML += `<p>${observer.id} - ${observer.name}</p>`;
-            });
+            rxjs.from("hello").subscribe(x => o.innerHTML += x);
 ```
+#### of
+```javascript
+            rxjs.of([1, 2, 3]).subscribe(x => o.innerHTML += x);
+```
+#### range
+```javascript
+            const observer = {
+                next: value => o.innerHTML += value + '<br>',
+                error: error => o.innerHTML += "ERROR: " + error + '<br>',
+                complete: () => o.innerHTML += 'Completed' + '<br>',
+            };
+            const nums = rxjs.range(1, 10);
+            const subscription = nums.subscribe(observer);
+```
+#### fromEvent
+```javascript
+            const observer03 = {
+                next: n => o.innerHTML += "(x: " + n.x + " - y: " + n.y + ")" + "<br>",
+                error: err => o.innerHTML += " Error: " + err,
+                complete: () => o.innerHTML += '-->Done!',
+            };
+            const clicks = rxjs.fromEvent(document, 'click')
+            clicks.subscribe(observer03);
+```
+#### interval
+```javascript
+            const observable = rxjs.interval(1000)
+            observable.subscribe(i => o.innerHTML += `<br>observable: ${i}`)
+```
+#### timer
+```javascript
+            const timer = rxjs.timer(2000)
+            timer.subscribe(done => o.innerHTML += '<p>Timer done</p>');
+```
+```javascript
+            const timer = rxjs.timer(1000, 2000)
+            timer.subscribe(done => o.innerHTML += '<p>Timer done</p>');
+```
+#### ajax
 
-
-
+#### empty
+Returns an observable that immediately completes.
 
 ## 4. **Operators:**
 Operators are functions that transform, filter, or combine Observables. RxJS provides a rich set of operators to manipulate data streams. Common operators include `map`, `filter`, `mergeMap`, `switchMap`, `combineLatest`, and more.
