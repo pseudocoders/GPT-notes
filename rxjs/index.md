@@ -279,6 +279,11 @@ RxJS, or Reactive Extensions for JavaScript, is a library for reactive programmi
             timer.subscribe(done => o.innerHTML += '<p>Timer done</p>');
 ```
 #### ajax
+OJO ---> ERROR!
+```javascript
+            const obs = rxjs.ajax('https://jsonplaceholder.typicode.com/posts');
+            obs2.subscribe(data => o.innerHTML += `<p>${data.id}</p>`);
+```
 
 #### empty
 Returns an observable that immediately completes.
