@@ -284,6 +284,17 @@ OJO ---> ERROR!
             const obs = rxjs.ajax('https://jsonplaceholder.typicode.com/posts');
             obs2.subscribe(data => o.innerHTML += `<p>${data.id}</p>`);
 ```
+Usando axios
+```javascript
+            const observer = {
+                next: n => o.innerHTML += n.data.title + "<br>",
+                error: err => o.innerHTML += " Error: " + err,
+                complete: () => o.innerHTML += '-->Completed!<br>',
+            };
+            const responsePromise = axios.get('https://jsonplaceholder.typicode.com/todos/1');
+            const response = rxjs.from(responsePromise);
+            response.subscribe(observer);
+```
 
 #### empty
 Returns an observable that immediately completes.
@@ -402,6 +413,19 @@ In this example, the `double` operator is created as a reusable function and the
                 rxjs.range(1, 3),
                 rxjs.range(4, 5)
             ).subscribe(result => o.innerHTML += '<br>' + result);
+```
+### compose operators
+```javascript
+            rxjs.range(1, 5)
+                .pipe(
+                    rxjs.filter(x => x % 2 === 1),
+                    rxjs.map(x => x + x)
+                )
+                .subscribe(x => o.innerHTML += (x + " - "));
+```
+
+
+```javascript
 ```
 
 ## 5. **Subjects:**
