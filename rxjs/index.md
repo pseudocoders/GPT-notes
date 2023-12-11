@@ -212,6 +212,35 @@ RxJS, or Reactive Extensions for JavaScript, is a library for reactive programmi
             subscription1.unsubscribe();
             subscription2.unsubscribe();
 ```
+
+```javascript
+            const observable01 = rxjs.interval(1000);
+
+            const observer02 = {
+                next: value => o.innerHTML += value + ' from observer02' + '<br>',
+                error: error => o.innerHTML += "ERROR: " + error + '<br>',
+                complete: () => o.innerHTML += 'Completed' + '<br>',
+            };
+
+            const observer03 = {
+                next: value => o.innerHTML += value + ' from observer03' + '<br>',
+                error: error => o.innerHTML += "ERROR: " + error + '<br>',
+                complete: () => o.innerHTML += 'Completed' + '<br>',
+            };
+
+            const subscription1 = observable01.subscribe(observer02);
+            const subscription2 = observable01.subscribe(observer03);
+            
+            setTimeout (() => {
+                subscription1.unsubscribe();
+            }, 10000);
+
+            setTimeout (() => {
+                subscription2.unsubscribe();
+            }, 15000);
+```
+
+
 #### from
 
 ```javascript
