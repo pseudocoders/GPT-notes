@@ -895,31 +895,45 @@ In this example, the `observeOn` operator is used to specify that the observable
 Schedulers are a powerful tool in RxJS for managing the timing and concurrency of observable sequences, and they provide a flexible way to integrate with different execution contexts. They help make RxJS adaptable to various environments, whether synchronous or asynchronous.
 
 ```javascript
-import { of, asyncScheduler } from 'rxjs';
-import { observeOn } from 'rxjs/operators';
+            const observer = {
+                next: value => o.innerHTML += value + '<br>',
+                error: error => o.innerHTML += "ERROR: " + error + '<br>',
+                complete: () => o.innerHTML += 'Completed' + '<br>',
+            };
 
-const source = of('Hello', 'World').pipe(
-  observeOn(asyncScheduler)
-);
+            const source = rxjs.of('Hello', 'World').pipe(
+                rxjs.observeOn(rxjs.asyncScheduler)
+            );
 
-source.subscribe(observer);
+            source.subscribe(observer);
 ```
 
 ## 7. **Error Handling:**
 RxJS provides operators for handling errors in Observables. The `catchError` operator is commonly used to gracefully handle errors and continue the Observable stream.
 
 ```javascript
-import { of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+            const observer = {
+                next: value => o.innerHTML += value + '<br>',
+                error: error => o.innerHTML += "ERROR: " + error + '<br>',
+                complete: () => o.innerHTML += 'Completed' + '<br>',
+            };
 
-const source = of('Hello', 'World').pipe(
-  map(() => {
-    throw new Error('Custom Error');
-  }),
-  catchError(error => of(`Caught an error: ${error.message}`))
-);
+            const source = rxjs.of('Hello', 'World').pipe(
+                rxjs.map(() => {
+                    throw new Error('Custom Error');
+                }),
+                rxjs.catchError(error => rxjs.of(`Caught an error: ${error.message}`))
+            );
 
-source.subscribe(observer);
+            source.subscribe(observer);
+            const source2 = rxjs.of('Hello', 'World').pipe(
+                rxjs.map(() => {
+                    throw new Error('Custom Error');
+                }),
+                rxjs.catchError(error => oof(`Caught an error: ${error.message}`))
+            );
+
+            source2.subscribe(observer);
 ```
 
 ## 8. **Combining Observables:**
