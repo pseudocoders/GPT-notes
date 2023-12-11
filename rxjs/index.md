@@ -487,6 +487,54 @@ Accumulator can be initialized:
             const s2 = process2.subscribe(observer);
 ```
 
+
+```
+### share
+```javascript
+            const observer = {
+                next: n => o.innerHTML += n + " - ",
+                error: err => o.innerHTML += " Error: " + err,
+                complete: () => o.innerHTML += '-->Completed!',
+            };
+            const source = rxjs.interval(1000).pipe(rxjs.take(3));
+            const process = source.pipe(rxjs.share());
+            process.subscribe(observer);
+```
+### FILTERING OPERATORS
+#### take
+
+```javascript
+            const observer = {
+                next: n => o.innerHTML += n + " - ",
+                error: err => o.innerHTML += " Error: " + err,
+                complete: () => o.innerHTML += '-->Completed!',
+            };
+            const source = rxjs.interval(1000).pipe(rxjs.take(9));
+            source.subscribe(observer);
+```
+#### first
+```javascript
+            const observer = {
+                next: n => o.innerHTML += n + " - ",
+                error: err => o.innerHTML += " Error: " + err,
+                complete: () => o.innerHTML += '-->Completed!',
+            };
+            const source = rxjs.interval(1000).pipe(rxjs.take(9));
+            const process = source.pipe(rxjs.first());
+            process.subscribe(observer);
+```
+#### last
+```javascript
+            const observer = {
+                next: n => o.innerHTML += n + " - ",
+                error: err => o.innerHTML += " Error: " + err,
+                complete: () => o.innerHTML += '-->Completed!',
+            };
+            const source = rxjs.interval(1000).pipe(rxjs.take(9));
+            const process = source.pipe(rxjs.last());
+            process.subscribe(observer);
+```
+
 ### partition
 ```javascript
             const observerEven = {
@@ -504,55 +552,8 @@ Accumulator can be initialized:
             const [even, odd] = rxjs.partition(source, (value, index) => value % 2 === 0);            
             even.subscribe(observerEven);
             odd.subscribe(observerOdd);
-```
-### share
-```javascript
-            const observer = {
-                next: n => o.innerHTML += n + " - ",
-                error: err => o.innerHTML += " Error: " + err,
-                complete: () => o.innerHTML += '-->Completed!',
-            };
-            const source = rxjs.interval(1000).pipe(rxjs.take(3));
-            const process = source.pipe(rxjs.share());
-            process.subscribe(observer);
-```
-### first
-```javascript
-            const observer = {
-                next: n => o.innerHTML += n + " - ",
-                error: err => o.innerHTML += " Error: " + err,
-                complete: () => o.innerHTML += '-->Completed!',
-            };
-            const source = rxjs.interval(1000).pipe(rxjs.take(9));
-            const process = source.pipe(rxjs.first());
-            process.subscribe(observer);
-```
-
 
 ### COMBINATION OPERATORS
-
-
-
-
-### withLatestFrom
-```javascript
-            const observer = {
-                next: n => o.innerHTML += n + " - ",
-                error: err => o.innerHTML += " Error: " + err,
-                complete: () => o.innerHTML += '-->Completed!',
-            };
-            const source1 = rxjs.interval(1000);
-            const source2 = rxjs.interval(2000);
-            const process = source1.pipe(rxjs.withLatestFrom(source2));
-            process.subscribe(observer);
-```
-
-
-
-### Combining Observables
-
-
-
 
 Combining observables is a common operation in reactive programming, and RxJS provides several operators to facilitate this. Combining observables allows you to work with multiple streams of data simultaneously. Here are some common ways to combine observables in RxJS:
 
@@ -693,6 +694,21 @@ Combining observables is a common operation in reactive programming, and RxJS pr
 ```
 
 These operators provide powerful ways to combine, merge, or coordinate multiple observables in various ways, depending on the specific requirements of your application.
+
+6. **`withLatestFrom`:**
+
+
+```javascript
+            const observer = {
+                next: n => o.innerHTML += n + " - ",
+                error: err => o.innerHTML += " Error: " + err,
+                complete: () => o.innerHTML += '-->Completed!',
+            };
+            const source1 = rxjs.interval(1000);
+            const source2 = rxjs.interval(2000);
+            const process = source1.pipe(rxjs.withLatestFrom(source2));
+            process.subscribe(observer);
+```
 
 ## 5. **Subject**
 In RxJS (Reactive Extensions for JavaScript), a `Subject` is a special type of observable that acts as both an observer and an observable. It allows values to be multicasted to multiple observers, making it a powerful tool for implementing communication between different parts of an application or coordinating complex asynchronous workflows.
