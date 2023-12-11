@@ -535,7 +535,7 @@ Accumulator can be initialized:
             process.subscribe(observer);
 ```
 
-### partition
+#### partition
 ```javascript
             const observerEven = {
                 next: n => o.innerHTML += "even: " + n + " - ",
