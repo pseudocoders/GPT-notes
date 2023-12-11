@@ -271,7 +271,8 @@ RxJS, or Reactive Extensions for JavaScript, is a library for reactive programmi
 ```
 #### of
 ```javascript
-            rxjs.of([1, 2, 3]).subscribe(x => o.innerHTML += x);
+            rxjs.from([1,2,3,4,5,6]).subscribe(x => o.innerHTML += x + '<br>');
+            rxjs.of([1,2,3,4,5,6]).subscribe(x => o.innerHTML += x + '<br>');
 ```
 #### range
 ```javascript
