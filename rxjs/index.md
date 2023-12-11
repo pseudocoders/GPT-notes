@@ -486,80 +486,6 @@ Accumulator can be initialized:
             );
             const s2 = process2.subscribe(observer);
 ```
-### concat
-
-```javascript
-            var source1 = rxjs.range(1, 3);
-            var source2 = rxjs.range(1, 3);
-            rxjs.concat(source1, source2).subscribe(result => o.innerHTML += '<br>' + result);
-```
-```javascript
-            const observer = {
-                next: n => o.innerHTML += n + " - ",
-                error: err => o.innerHTML += " Error: " + err,
-                complete: () => o.innerHTML += '-->Completed!',
-            };
-            const source1 = rxjs.interval(1000);
-            const source2 = rxjs.interval(2000);
-            const process = rxjs.concat(source1,source2);
-            process.subscribe(observer);
-```
-
-### merge
-
-```javascript
-            var source = rxjs.merge(
-                rxjs.range(1, 3),
-                rxjs.range(4, 5)
-            ).subscribe(result => o.innerHTML += '<br>' + result);
-```
-```javascript
-            const observer = {
-                next: n => o.innerHTML += n + " - ",
-                error: err => o.innerHTML += " Error: " + err,
-                complete: () => o.innerHTML += '-->Completed!',
-            };
-            const source1 = rxjs.interval(1000);
-            const source2 = rxjs.interval(2000);                      
-            const process1 = rxjs.merge(source1,source2);            
-            process1.subscribe(observer);
-```
-### zip
-```javascript
-            const observer = {
-                next: n => o.innerHTML += n + " - ",
-                error: err => o.innerHTML += " Error: " + err,
-                complete: () => o.innerHTML += '-->Completed!',
-            };
-            const source1 = rxjs.interval(1000);
-            const source2 = rxjs.interval(2000);
-            const process = rxjs.zip(source1,source2);
-            process.subscribe(observer);
-```
-### combineLatest
-```javascript
-            const observer = {
-                next: n => o.innerHTML += n + " - ",
-                error: err => o.innerHTML += " Error: " + err,
-                complete: () => o.innerHTML += '-->Completed!',
-            };
-            const source1 = rxjs.interval(1000);
-            const source2 = rxjs.interval(2000);
-            const process = rxjs.combineLatest(source1,source2);
-            process.subscribe(observer);
-```
-### withLatestFrom
-```javascript
-            const observer = {
-                next: n => o.innerHTML += n + " - ",
-                error: err => o.innerHTML += " Error: " + err,
-                complete: () => o.innerHTML += '-->Completed!',
-            };
-            const source1 = rxjs.interval(1000);
-            const source2 = rxjs.interval(2000);
-            const process = source1.pipe(rxjs.withLatestFrom(source2));
-            process.subscribe(observer);
-```
 
 ### partition
 ```javascript
@@ -603,13 +529,170 @@ Accumulator can be initialized:
 ```
 
 
+### COMBINATION OPERATORS
 
 
 
 
-
+### withLatestFrom
 ```javascript
+            const observer = {
+                next: n => o.innerHTML += n + " - ",
+                error: err => o.innerHTML += " Error: " + err,
+                complete: () => o.innerHTML += '-->Completed!',
+            };
+            const source1 = rxjs.interval(1000);
+            const source2 = rxjs.interval(2000);
+            const process = source1.pipe(rxjs.withLatestFrom(source2));
+            process.subscribe(observer);
 ```
+
+
+
+### Combining Observables
+
+
+
+
+Combining observables is a common operation in reactive programming, and RxJS provides several operators to facilitate this. Combining observables allows you to work with multiple streams of data simultaneously. Here are some common ways to combine observables in RxJS:
+
+1. **`forkJoin`:**
+   - `forkJoin` combines multiple observables into a single observable that emits an array of the last values from each input observable when all of them have completed.
+   
+   ```typescript
+   import { forkJoin, of } from 'rxjs';
+
+   const observable1 = of('A');
+   const observable2 = of('B');
+
+   forkJoin([observable1, observable2]).subscribe(values => {
+     console.log(values); // Output: ['A', 'B']
+   });
+   ```
+
+2. **`combineLatest`:**
+   - `combineLatest` combines the latest values from multiple observables into an array and emits that array whenever any of the source observables emits a new value.
+   
+   ```typescript
+   import { combineLatest, interval } from 'rxjs';
+
+   const observable1 = interval(1000);
+   const observable2 = interval(2000);
+
+   combineLatest([observable1, observable2]).subscribe(values => {
+     console.log(values);
+     // Output: [0, 0] (when interval1 emits 0)
+     //         [1, 0] (when interval1 emits 1)
+     //         [1, 1] (when interval2 emits 1)
+     //         [2, 1] (when interval1 emits 2)
+     //         ...
+   });
+   ```
+```javascript
+            const observer = {
+                next: n => o.innerHTML += n + " - ",
+                error: err => o.innerHTML += " Error: " + err,
+                complete: () => o.innerHTML += '-->Completed!',
+            };
+            const source1 = rxjs.interval(1000);
+            const source2 = rxjs.interval(2000);
+            const process = rxjs.combineLatest(source1,source2);
+            process.subscribe(observer);
+```
+3. **`zip`:**
+   - `zip` combines the values of multiple observables in a strict sequence, emitting an array of the nth values from each observable.
+   
+   ```typescript
+   import { zip, of } from 'rxjs';
+
+   const observable1 = of('A', 'B', 'C');
+   const observable2 = of(1, 2, 3);
+
+   zip(observable1, observable2).subscribe(values => {
+     console.log(values);
+     // Output: ['A', 1], ['B', 2], ['C', 3]
+   });
+   ```
+```javascript
+            const observer = {
+                next: n => o.innerHTML += n + " - ",
+                error: err => o.innerHTML += " Error: " + err,
+                complete: () => o.innerHTML += '-->Completed!',
+            };
+            const source1 = rxjs.interval(1000);
+            const source2 = rxjs.interval(2000);
+            const process = rxjs.zip(source1,source2);
+            process.subscribe(observer);
+```
+4. **`merge`:**
+   - `merge` combines multiple observables into a single observable, emitting values from all of them as they arrive. It does not wait for the completion of one observable before starting another.
+   
+   ```typescript
+   import { merge, interval } from 'rxjs';
+
+   const observable1 = interval(1000);
+   const observable2 = interval(500);
+
+   merge(observable1, observable2).subscribe(value => {
+     console.log(value);
+     // Output: 0 (from interval2)
+     //         0 (from interval1)
+     //         1 (from interval2)
+     //         2 (from interval2)
+     //         1 (from interval1)
+     //         3 (from interval2)
+     //         ...
+   });
+   ```
+```javascript
+            var source = rxjs.merge(
+                rxjs.range(1, 3),
+                rxjs.range(4, 5)
+            ).subscribe(result => o.innerHTML += '<br>' + result);
+```
+```javascript
+            const observer = {
+                next: n => o.innerHTML += n + " - ",
+                error: err => o.innerHTML += " Error: " + err,
+                complete: () => o.innerHTML += '-->Completed!',
+            };
+            const source1 = rxjs.interval(1000);
+            const source2 = rxjs.interval(2000);                      
+            const process1 = rxjs.merge(source1,source2);            
+            process1.subscribe(observer);
+```
+5. **`concat`:**
+   - `concat` concatenates multiple observables, emitting values from the first observable until it completes, then emitting values from the second observable, and so on.
+   
+   ```typescript
+   import { concat, of } from 'rxjs';
+
+   const observable1 = of('A', 'B', 'C');
+   const observable2 = of(1, 2, 3);
+
+   concat(observable1, observable2).subscribe(value => {
+     console.log(value);
+     // Output: 'A', 'B', 'C', 1, 2, 3
+   });
+   ```
+```javascript
+            var source1 = rxjs.range(1, 3);
+            var source2 = rxjs.range(1, 3);
+            rxjs.concat(source1, source2).subscribe(result => o.innerHTML += '<br>' + result);
+```
+```javascript
+            const observer = {
+                next: n => o.innerHTML += n + " - ",
+                error: err => o.innerHTML += " Error: " + err,
+                complete: () => o.innerHTML += '-->Completed!',
+            };
+            const source1 = rxjs.interval(1000);
+            const source2 = rxjs.interval(2000);
+            const process = rxjs.concat(source1,source2);
+            process.subscribe(observer);
+```
+
+These operators provide powerful ways to combine, merge, or coordinate multiple observables in various ways, depending on the specific requirements of your application.
 
 ## 5. **Subject**
 In RxJS (Reactive Extensions for JavaScript), a `Subject` is a special type of observable that acts as both an observer and an observable. It allows values to be multicasted to multiple observers, making it a powerful tool for implementing communication between different parts of an application or coordinating complex asynchronous workflows.
