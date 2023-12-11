@@ -502,6 +502,29 @@ In this example, the `double` operator is created as a reusable function and the
             even.subscribe(observerEven);
             odd.subscribe(observerOdd);
 ```
+### share
+```javascript
+            const observer = {
+                next: n => o.innerHTML += n + " - ",
+                error: err => o.innerHTML += " Error: " + err,
+                complete: () => o.innerHTML += '-->Completed!',
+            };
+            const source = rxjs.interval(1000).pipe(rxjs.take(3));
+            const process = source.pipe(rxjs.share());
+            process.subscribe(observer);
+```
+### first
+```javascript
+            const observer = {
+                next: n => o.innerHTML += n + " - ",
+                error: err => o.innerHTML += " Error: " + err,
+                complete: () => o.innerHTML += '-->Completed!',
+            };
+            const source = rxjs.interval(1000).pipe(rxjs.take(9));
+            const process = source.pipe(rxjs.first());
+            process.subscribe(observer);
+```
+
 
 ### compose operators
 ```javascript
@@ -512,6 +535,8 @@ In this example, the `double` operator is created as a reusable function and the
                 )
                 .subscribe(x => o.innerHTML += (x + " - "));
 ```
+
+
 
 
 ```javascript
