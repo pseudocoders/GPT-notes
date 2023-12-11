@@ -397,6 +397,17 @@ In this example, the `double` operator is created as a reusable function and the
             const process = source.pipe(rxjs.reduce((acc, v) => acc * v));
             const s = process.subscribe(observer);
 ```
+### scan
+```javascript
+            const observer = {
+                next: n => o.innerHTML += n + " - ",
+                error: err => o.innerHTML += " Error: " + err,
+                complete: () => o.innerHTML += '-->Completed!',
+            };
+            const source = rxjs.range(1, 5);
+            const process = source.pipe(rxjs.scan((acc, x) => acc + x));
+            process.subscribe(observer);
+```
 
 ### concat
 
@@ -404,6 +415,17 @@ In this example, the `double` operator is created as a reusable function and the
             var source1 = rxjs.range(1, 3);
             var source2 = rxjs.range(1, 3);
             rxjs.concat(source1, source2).subscribe(result => o.innerHTML += '<br>' + result);
+```
+```javascript
+            const observer = {
+                next: n => o.innerHTML += n + " - ",
+                error: err => o.innerHTML += " Error: " + err,
+                complete: () => o.innerHTML += '-->Completed!',
+            };
+            const source1 = rxjs.interval(1000);
+            const source2 = rxjs.interval(2000);
+            const process = rxjs.concat(source1,source2);
+            process.subscribe(observer);
 ```
 
 ### merge
@@ -414,6 +436,73 @@ In this example, the `double` operator is created as a reusable function and the
                 rxjs.range(4, 5)
             ).subscribe(result => o.innerHTML += '<br>' + result);
 ```
+```javascript
+            const observer = {
+                next: n => o.innerHTML += n + " - ",
+                error: err => o.innerHTML += " Error: " + err,
+                complete: () => o.innerHTML += '-->Completed!',
+            };
+            const source1 = rxjs.interval(1000);
+            const source2 = rxjs.interval(2000);                      
+            const process1 = rxjs.merge(source1,source2);            
+            process1.subscribe(observer);
+```
+### zip
+```javascript
+            const observer = {
+                next: n => o.innerHTML += n + " - ",
+                error: err => o.innerHTML += " Error: " + err,
+                complete: () => o.innerHTML += '-->Completed!',
+            };
+            const source1 = rxjs.interval(1000);
+            const source2 = rxjs.interval(2000);
+            const process = rxjs.zip(source1,source2);
+            process.subscribe(observer);
+```
+### combineLatest
+```javascript
+            const observer = {
+                next: n => o.innerHTML += n + " - ",
+                error: err => o.innerHTML += " Error: " + err,
+                complete: () => o.innerHTML += '-->Completed!',
+            };
+            const source1 = rxjs.interval(1000);
+            const source2 = rxjs.interval(2000);
+            const process = rxjs.combineLatest(source1,source2);
+            process.subscribe(observer);
+```
+### withLatestFrom
+```javascript
+            const observer = {
+                next: n => o.innerHTML += n + " - ",
+                error: err => o.innerHTML += " Error: " + err,
+                complete: () => o.innerHTML += '-->Completed!',
+            };
+            const source1 = rxjs.interval(1000);
+            const source2 = rxjs.interval(2000);
+            const process = source1.pipe(rxjs.withLatestFrom(source2));
+            process.subscribe(observer);
+```
+
+### partition
+```javascript
+            const observerEven = {
+                next: n => o.innerHTML += "even: " + n + " - ",
+                error: err => o.innerHTML += " Error: " + err,
+                complete: () => o.innerHTML += '-->Completed!',
+            };
+            const observerOdd = {
+                next: n => o.innerHTML += "odd: " + n + " - ",
+                error: err => o.innerHTML += " Error: " + err,
+                complete: () => o.innerHTML += '-->Completed!',
+            };
+            const source = rxjs.interval(1000);
+            
+            const [even, odd] = rxjs.partition(source, (value, index) => value % 2 === 0);            
+            even.subscribe(observerEven);
+            odd.subscribe(observerOdd);
+```
+
 ### compose operators
 ```javascript
             rxjs.range(1, 5)
