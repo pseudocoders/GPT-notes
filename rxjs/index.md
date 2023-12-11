@@ -162,7 +162,7 @@ RxJS, or Reactive Extensions for JavaScript, is a library for reactive programmi
             const observable01 = rxjs.Observable.create(observer01 => {
                 observer01.next("hello");
                 observer01.next("mundo");
-                observer01.complete;
+                observer01.complete();
             });
 
             observable01.subscribe(
@@ -192,7 +192,7 @@ RxJS, or Reactive Extensions for JavaScript, is a library for reactive programmi
             const observable01 = rxjs.Observable.create(observer01 => {
                 observer01.next("hello");
                 observer01.next("mundo");
-                observer01.complete;
+                observer01.complete();
             });
 
             const observer02 = {
@@ -414,7 +414,23 @@ In this example, the `double` operator is created as a reusable function and the
             const process = source.pipe(rxjs.filter(x => x <= 2));
             const s = process.subscribe(observer);
 ```
-
+```javascript
+            const observer = {
+                next: value => o.innerHTML += value + '<br>',
+                error: error => o.innerHTML += "ERROR: " + error + '<br>',
+                complete: () => o.innerHTML += 'Completed' + '<br>',
+            };
+            const source = rxjs.Observable.create(observer => {
+                observer.next("Hola");
+                observer.next("Mundo");
+                observer.next("sdfd");
+                observer.next("rafa");
+                observer.next("es el mejor");
+                observer.complete();
+            });
+            const process = source.pipe(rxjs.filter(x => x.length > 4));
+            const s = process.subscribe(observer);
+```
 ### reduce
 
 ```javascript
