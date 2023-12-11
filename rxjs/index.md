@@ -443,6 +443,17 @@ In this example, the `double` operator is created as a reusable function and the
             const process = source.pipe(rxjs.reduce((acc, v) => acc * v));
             const s = process.subscribe(observer);
 ```
+Accumulator can be initialized:
+```javascript
+            const observer = {
+                next: value => o.innerHTML += value + '<br>',
+                error: error => o.innerHTML += "ERROR: " + error + '<br>',
+                complete: () => o.innerHTML += 'Completed' + '<br>',
+            };
+            const source = rxjs.range(1, 5);
+            const process = source.pipe(rxjs.reduce((acc, v) => acc + v, 100));
+            const s = process.subscribe(observer);
+```
 ### scan
 ```javascript
             const observer = {
@@ -592,15 +603,7 @@ In this example, the `double` operator is created as a reusable function and the
 ```
 
 
-### compose operators
-```javascript
-            rxjs.range(1, 5)
-                .pipe(
-                    rxjs.filter(x => x % 2 === 1),
-                    rxjs.map(x => x + x)
-                )
-                .subscribe(x => o.innerHTML += (x + " - "));
-```
+
 
 
 
