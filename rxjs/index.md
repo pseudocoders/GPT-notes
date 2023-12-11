@@ -611,7 +611,7 @@ Accumulator can be initialized:
 ```javascript
 ```
 
-## 5. **Subjects:**
+## 5. **Subject**
 In RxJS (Reactive Extensions for JavaScript), a `Subject` is a special type of observable that acts as both an observer and an observable. It allows values to be multicasted to multiple observers, making it a powerful tool for implementing communication between different parts of an application or coordinating complex asynchronous workflows.
 
 Here are the key characteristics and features of a `Subject`:
@@ -705,7 +705,7 @@ Here's a brief breakdown of the key characteristics of a BehaviorSubject:
 
 Here's a simple example in TypeScript:
 
-```typescript
+```javascript
             // Create a BehaviorSubject with an initial value of 0
             const subject = new rxjs.BehaviorSubject(0);
 
@@ -754,10 +754,145 @@ BehaviorSubject characteristics:
 3. **Stateful:**
    - `BehaviorSubject` is stateful as it retains the last emitted value.
 
+## 7. **replaySubject**
 
+In RxJS, a `ReplaySubject` is a type of subject that retains and replays a specified number of values to any new subscribers. It is a type of subject that combines the features of both `Subject` and `BehaviorSubject`. Like a regular `Subject`, it can multicast values to multiple subscribers, and like a `BehaviorSubject`, it keeps a buffer of the last N values so that new subscribers can receive those historical values upon subscription.
 
-## 6. **Schedulers:**
+Here are the key characteristics of a `ReplaySubject`:
+
+1. **Replay Buffer:**
+   - A `ReplaySubject` maintains a buffer that stores a specified number of the most recently emitted values. This buffer is used to replay those values to new subscribers.
+
+2. **Multicasting:**
+   - Similar to a regular `Subject`, a `ReplaySubject` can have multiple subscribers, and any value emitted is multicast to all subscribers.
+
+3. **Initial Values:**
+   - When a new subscriber subscribes to a `ReplaySubject`, it immediately receives the buffered values, up to the specified buffer size. This is different from a regular `Subject`, which doesn't provide any historical values to late subscribers.
+
+4. **Late Subscription:**
+   - Even if a subscriber subscribes after values have been emitted, it will still receive the buffered values up to the specified limit.
+
+Here's a simple example in TypeScript:
+
+```javascript
+            const observer = {
+                next: value => o.innerHTML += value + '<br>',
+                error: error => o.innerHTML += "ERROR: " + error + '<br>',
+                complete: () => o.innerHTML += 'Completed' + '<br>',
+            };
+
+            // Create a ReplaySubject with a buffer size of 2
+            const replaySubject = new rxjs.ReplaySubject(2);
+
+            // Emit values
+            replaySubject.next(1);
+            replaySubject.next(2);
+            replaySubject.next(3);
+
+            // Subscribe to the ReplaySubject
+            replaySubject.subscribe(observer);
+
+// Output:
+// Subscriber A: 1   <-- Subscriber A receives the buffered values upon subscription
+// Subscriber A: 2
+// Subscriber A: 3
+```
+
+In this example, the `ReplaySubject` has a buffer size of 2. When the first subscriber subscribes, it immediately receives the two most recently emitted values (1 and 2). If more values were emitted, the buffer would retain the latest values up to the specified limit.
+
+The ability to provide historical values to late subscribers makes `ReplaySubject` useful in scenarios where you want subscribers to have access to recent data, even if they start observing the stream after some values have already been emitted.
+
+## 9. **AsyncSubject**
+
+In RxJS, an `AsyncSubject` is a type of subject that only emits the last value of the observable sequence to its subscribers, but only when the observable completes. If the observable terminates without completing, the `AsyncSubject` won't emit any value.
+
+Here are the key characteristics of an `AsyncSubject`:
+
+1. **Emits Only on Completion:**
+   - An `AsyncSubject` will only emit the last value of the observable sequence to its subscribers when the observable completes. If the observable terminates without completing (e.g., due to an error), the `AsyncSubject` won't emit any value.
+
+2. **Late Subscription:**
+   - Even if a subscriber subscribes after values have been emitted, it will still receive only the last value upon completion.
+
+3. **Useful for Late Observers:**
+   - `AsyncSubject` is particularly useful when you want to provide a result to late observers only when the observable sequence completes. This is often used when you want to wait until the very end to deliver a result, such as in scenarios where you are calculating a final result over time and only want to provide that result when the computation is complete.
+
+Here's a simple example in TypeScript:
+
+```javascript
+            const observer = {
+                next: value => o.innerHTML += value + '<br>',
+                error: error => o.innerHTML += "ERROR: " + error + '<br>',
+                complete: () => o.innerHTML += 'Completed' + '<br>',
+            };
+            // Create an AsyncSubject
+            const asyncSubject = new rxjs.AsyncSubject();
+
+            // Emit values
+            asyncSubject.next(1);
+            asyncSubject.next(2);
+
+            // Subscribe to the AsyncSubject
+            asyncSubject.subscribe(observer);
+
+            // Emit another value
+            asyncSubject.next(3);
+
+            // Complete the AsyncSubject
+            asyncSubject.complete();
+
+            // Subscribe again
+            asyncSubject.subscribe(observer);
+```
+
+In this example, only the last value (3) is emitted to subscribers when the `AsyncSubject` completes. Both Subscriber A and Subscriber B receive the same value even though Subscriber B subscribes after the value has been emitted.
+
+`AsyncSubject` is a specialized subject and is typically used in scenarios where you want to provide a result to observers only when the observable sequence completes, making it useful for asynchronous computations that yield a final result.
+
+## 8. **Schedulers:**
 Schedulers control the execution context of Observables. RxJS provides schedulers to specify when and where the Observables should be observed. Commonly used schedulers include `observeOn` and `subscribeOn`.
+
+In RxJS, a scheduler is an abstraction that manages the execution of asynchronous operations. It provides a way to control when and where the work associated with an observable is performed. Schedulers are particularly useful for handling concurrency, timing, and controlling the execution context.
+
+Here are the key concepts related to RxJS schedulers:
+
+1. **Concurrency Control:**
+   - Schedulers help control the concurrency of operations in an observable sequence. They determine when and on which execution context (e.g., synchronous or asynchronous) the observable's operations are performed.
+
+2. **Execution Context:**
+   - Schedulers provide an abstraction for the execution context. This could be the current JavaScript execution context (synchronous), a microtask queue (asynchronous), or a specific thread in environments that support multi-threading.
+
+3. **Types of Schedulers:**
+   - **ImmediateScheduler:** Represents the current synchronous execution context. It executes tasks immediately.
+   - **AsapScheduler:** Represents the microtask queue, ensuring that tasks are executed after the current execution context and before the next browser repaint.
+   - **QueueScheduler:** Represents a generic queue for scheduling tasks. It is often used for asynchronous operations.
+   - **AnimationFrameScheduler:** Schedules tasks to be executed in the next browser animation frame.
+
+4. **Custom Schedulers:**
+   - RxJS allows you to create custom schedulers to suit specific application requirements. This can be useful when integrating with external systems or frameworks that have their own scheduling mechanisms.
+
+Here's a simple example using the `observeOn` operator, which allows you to specify a scheduler for an observable:
+
+```javascript
+            const observer = {
+                next: value => o.innerHTML += value + '<br>',
+                error: error => o.innerHTML += "ERROR: " + error + '<br>',
+                complete: () => o.innerHTML += 'Completed' + '<br>',
+            };
+
+            // Create an observable
+            const observable = rxjs.of(1, 2, 3);
+
+            // Use observeOn to specify a scheduler (e.g., asyncScheduler)
+            const scheduledObservable = observable.pipe(rxjs.observeOn(rxjs.asyncScheduler));
+
+            // Subscribe to the scheduled observable
+            scheduledObservable.subscribe(observer);
+```
+
+In this example, the `observeOn` operator is used to specify that the observable should be observed on the `asyncScheduler`. This means that the subscription callback will be scheduled to run asynchronously using the microtask queue.
+
+Schedulers are a powerful tool in RxJS for managing the timing and concurrency of observable sequences, and they provide a flexible way to integrate with different execution contexts. They help make RxJS adaptable to various environments, whether synchronous or asynchronous.
 
 ```javascript
 import { of, asyncScheduler } from 'rxjs';
