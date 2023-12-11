@@ -455,6 +455,26 @@ In this example, the `double` operator is created as a reusable function and the
             process.subscribe(observer);
 ```
 
+* scan vs reduce ...
+
+```javascript
+            const observer = {
+                next: value => o.innerHTML += value + '<br>',
+                error: error => o.innerHTML += "ERROR: " + error + '<br>',
+                complete: () => o.innerHTML += 'Completed' + '<br>',
+            };            
+            const source = rxjs.interval(500);
+            const process = source.pipe(
+                rxjs.take(5),
+                rxjs.reduce((acc, v) => acc + v)
+            );
+            const s = process.subscribe(observer);
+        
+            const process2 = source.pipe(                
+                rxjs.scan((acc, v) => acc + v)
+            );
+            const s2 = process2.subscribe(observer);
+```
 ### concat
 
 ```javascript
