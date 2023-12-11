@@ -612,19 +612,149 @@ Accumulator can be initialized:
 ```
 
 ## 5. **Subjects:**
-Subjects are both Observables and Observers. They allow values to be multicasted to many Observers, making them useful for sharing data between parts of your application.
+In RxJS (Reactive Extensions for JavaScript), a `Subject` is a special type of observable that acts as both an observer and an observable. It allows values to be multicasted to multiple observers, making it a powerful tool for implementing communication between different parts of an application or coordinating complex asynchronous workflows.
+
+Here are the key characteristics and features of a `Subject`:
+
+1. **Multicasting:**
+   - A `Subject` is a multicast observable. It can have multiple subscribers, and when a new value is emitted, it is broadcasted to all the subscribers.
+
+2. **Imperative Emission:**
+   - Unlike regular observables that are more declarative in nature (you define what should happen when a certain event occurs), a `Subject` allows you to imperatively emit values using its `next()` method.
+
+3. **Both Observer and Observable:**
+   - A `Subject` can act as both an observer and an observable. It means you can subscribe to a `Subject` to receive values, and at the same time, you can push values into the `Subject`.
+
+4. **No Initial Value:**
+   - A `Subject` does not have an initial value. When a new observer subscribes to a `Subject`, it does not immediately receive a value.
+
+5. **Late Subscription:**
+   - If an observer subscribes to a `Subject` after some values have been emitted, it will miss those previously emitted values. It only receives values emitted after the time of subscription.
+
+Here's a simple example:
+
 
 ```javascript
-import { Subject } from 'rxjs';
-
-const subject = new Subject();
-
-subject.subscribe(observer); // Observer 1
-subject.next('Hello');
-
-subject.subscribe(observer); // Observer 2
-subject.next('World');
+            const observer = {
+                next: value => o.innerHTML += value + '<br>',
+                error: error => o.innerHTML += "ERROR: " + error + '<br>',
+                complete: () => o.innerHTML += 'Completed' + '<br>',
+            };
+            const subject = new rxjs.Subject();
+            subject.next('Bart');
+            subject.subscribe(observer);
+            subject.next('Homer');
+            subject.subscribe(observer); 
+            subject.next('Lisa');
+            subject.complete();
 ```
+
+Observables and Subjects are both core concepts in RxJS, but they serve different purposes and have distinct characteristics. Here are the key differences between an Observable and a Subject:
+
+1. **Unicast vs. Multicast:**
+   - **Observable:** An Observable is unicast by default. Each subscription to an Observable results in an independent execution of the Observable sequence for each subscriber. In other words, each subscriber gets its own stream of values.
+   - **Subject:** A Subject, on the other hand, is multicast. It can have multiple subscribers, and when a new value is emitted, it is broadcasted to all subscribers.
+
+2. **Imperative vs. Declarative:**
+   - **Observable:** Observables are more declarative in nature. You define what should happen when a certain event or value is emitted, and subscribers react to those emissions.
+   - **Subject:** Subjects allow for imperative emissions. You can actively push values into the Subject using methods like `next()`.
+
+3. **Initial Value:**
+   - **Observable:** Observables do not have an initial value. Subscribers only start receiving values when the Observable emits.
+   - **Subject:** Subjects do not have an initial value either.
+
+4. **Late Subscription:**
+   - **Observable:** If you subscribe to an Observable after it has started emitting values, you miss those previously emitted values. Subscribers only receive values emitted after the time of subscription.
+   - **Subject:** Late subscribers to a Subject do not receive previously emitted values by default. However, there are specialized types of Subjects, such as BehaviorSubject and ReplaySubject, that handle this differently.
+
+5. **Both Observer and Observable:**
+   - **Observable:** An Observable is mainly an observable sequence, and it is used to represent a stream of values over time.
+   - **Subject:** A Subject is both an observer and an observable. It can be subscribed to like an observable to receive values, and it can actively push values to its subscribers like an observer.
+
+In summary, while both Observables and Subjects are fundamental to reactive programming with RxJS, Observables are unicast and more declarative, representing streams of values, while Subjects are multicast, allowing for imperative value emissions and serving as both observers and observables. Additionally, Subjects provide features like multicasting and the ability to act as a bridge between non-observable code and observable code.
+
+Subject characteristics:
+
+1. **No Initial Value:**
+   - A `Subject` does not have an initial value.
+   - When a new observer subscribes to a `Subject`, it does not immediately receive a value.
+
+2. **Late Subscription:**
+   - If an observer subscribes to a `Subject` after some values have been emitted, it will miss those previously emitted values.
+   - It only emits values to subscribers that are active at the time of the emission.
+
+3. **Plain Multicast:**
+   - A `Subject` simply multicasts values to all of its current subscribers without maintaining any memory of the latest emitted value.
+
+
+## 6. **BehaviorSubject**
+
+In RxJS (Reactive Extensions for JavaScript), a BehaviorSubject is a type of Observable that represents a value that changes over time. It is part of the broader category of Subjects, which are special types of Observables that allow values to be multicasted to multiple Observers.
+
+The key feature of a BehaviorSubject is that it maintains and emits the current value to all its subscribers, and it also keeps track of the latest value. When a new Observer subscribes to a BehaviorSubject, it immediately receives the current value. Subsequent changes to the value will be notified to all subscribers.
+
+Here's a brief breakdown of the key characteristics of a BehaviorSubject:
+
+1. **Initial Value:** A BehaviorSubject is created with an initial value. This initial value is the value that is emitted to any subscriber immediately upon subscription.
+
+2. **Current Value:** Unlike regular Observables that only push values when an event occurs, a BehaviorSubject always holds a current value. Subscribers can retrieve the current value at any time using the `getValue()` method.
+
+3. **Multicasting:** The BehaviorSubject multicasts its value to all subscribers. This means that multiple subscribers can listen to the same BehaviorSubject, and they will all receive the same current and subsequent values.
+
+4. **Stateful:** The BehaviorSubject is stateful because it retains the last emitted value. This can be useful in scenarios where you need to keep track of and react to the latest value.
+
+Here's a simple example in TypeScript:
+
+```typescript
+            // Create a BehaviorSubject with an initial value of 0
+            const subject = new rxjs.BehaviorSubject(0);
+
+            // Subscribe to the BehaviorSubject
+            subject.subscribe(value => {
+                o.innerHTML += `Subscriber A: ${value}<br>`;                
+            });
+
+            // Emit a new value
+            subject.next(1);
+
+            // Subscribe again
+            subject.subscribe(value => {
+                o.innerHTML += `Subscriber B: ${value}<br>`;                
+            });
+
+            // Emit another value
+            subject.next(2);
+
+// Output:
+// Subscriber A: 0
+// Subscriber A: 1
+// Subscriber B: 1
+// Subscriber A: 2
+// Subscriber B: 2
+```
+
+In this example, both Subscriber A and Subscriber B receive the same sequence of values, demonstrating the multicasting behavior of the BehaviorSubject.
+
+
+
+
+
+
+
+BehaviorSubject characteristics:
+
+1. **Initial Value:**
+   - A `BehaviorSubject` is created with an initial value.
+   - When a new observer subscribes to a `BehaviorSubject`, it immediately receives the current value.
+
+2. **Maintains Latest Value:**
+   - A `BehaviorSubject` keeps track of the latest emitted value and replays it to new subscribers.
+   - Subscribers can also retrieve the current value at any time using the `getValue()` method.
+
+3. **Stateful:**
+   - `BehaviorSubject` is stateful as it retains the last emitted value.
+
+
 
 ## 6. **Schedulers:**
 Schedulers control the execution context of Observables. RxJS provides schedulers to specify when and where the Observables should be observed. Commonly used schedulers include `observeOn` and `subscribeOn`.
