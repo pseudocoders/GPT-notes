@@ -552,6 +552,7 @@ Accumulator can be initialized:
             const [even, odd] = rxjs.partition(source, (value, index) => value % 2 === 0);            
             even.subscribe(observerEven);
             odd.subscribe(observerOdd);
+```
 
 ### COMBINATION OPERATORS
 
