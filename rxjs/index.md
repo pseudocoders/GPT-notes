@@ -414,7 +414,7 @@ tap(
 
 Here's a breakdown of how `tap` is commonly used:
 
-### Logging and Debugging
+#### tap Logging and Debugging
 
 ```javascript
             const observer = {
@@ -432,7 +432,7 @@ Here's a breakdown of how `tap` is commonly used:
 
 In this example, the `tap` operator is used to log values before and after the `map` operator is applied, providing insight into the data at different stages of the observable pipeline.
 
-### Side Effects
+#### tap Side Effects
 
 ```javascript
             const observer = {
@@ -450,7 +450,7 @@ In this example, the `tap` operator is used to log values before and after the `
 
 Here, `tap` is used to log messages during the process of filtering even numbers. It doesn't affect the stream's values but allows you to observe what's happening.
 
-### Resource Cleanup
+#### tap Resource Cleanup
 
 ```javascript
             rxjs.fromEvent(document, 'click').pipe(
