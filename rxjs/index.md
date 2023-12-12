@@ -488,8 +488,8 @@ Accumulator can be initialized:
 ```
 
 
-```
 ### share
+
 ```javascript
             const observer = {
                 next: n => o.innerHTML += n + " - ",
@@ -501,6 +501,7 @@ Accumulator can be initialized:
             process.subscribe(observer);
 ```
 ### FILTERING OPERATORS
+
 #### take
 
 ```javascript
@@ -511,6 +512,51 @@ Accumulator can be initialized:
             };
             const source = rxjs.interval(1000).pipe(rxjs.take(9));
             source.subscribe(observer);
+```
+### takeUntil
+
+```javascript
+            const observer = {
+                next: n => o.innerHTML += n + " - ",
+                error: err => o.innerHTML += " Error: " + err,
+                complete: () => o.innerHTML += '-->Completed!',
+            };
+            const source = rxjs.interval(500);
+            const clicks = rxjs.fromEvent(document, 'click');
+            const result = source.pipe(rxjs.takeUntil(clicks));
+            result.subscribe(observer);
+```
+#### skip
+```javascript
+            const observer = {
+                next: n => o.innerHTML += n + " - ",
+                error: err => o.innerHTML += " Error: " + err,
+                complete: () => o.innerHTML += '-->Completed!',
+            };
+            rxjs.interval(500).pipe(rxjs.skip(5)).subscribe(observer);
+```
+
+#### skipUntil
+```javascript
+            const observer = {
+                next: n => o.innerHTML += n + " - ",
+                error: err => o.innerHTML += " Error: " + err,
+                complete: () => o.innerHTML += '-->Completed!',
+            };
+            const source = rxjs.interval(500);
+            const clicks = rxjs.fromEvent(document, 'click');
+            const result = source.pipe(rxjs.skipUntil(clicks));
+            result.subscribe(observer);
+```
+
+#### find
+```javascript
+            const observer = {
+                next: n => o.innerHTML += n + " - ",
+                error: err => o.innerHTML += " Error: " + err,
+                complete: () => o.innerHTML += '-->Completed!',
+            };
+            rxjs.interval(500).pipe(rxjs.find((x) => x === 5)).subscribe(observer);
 ```
 #### first
 ```javascript
