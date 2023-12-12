@@ -392,7 +392,85 @@ Here's an example of creating a reusable operator function and using it with `pi
 
 In this example, the `double` operator is created as a reusable function and then used within the `pipe` function along with another operator. This illustrates the reusability and composability of the `pipe` function in creating observable pipelines.
 
-### map
+### tap
+
+In RxJS, the `tap` operator is a utility operator that allows you to perform side effects or observe the values emitted by an observable stream without modifying the values themselves. It is often used for debugging, logging, or performing actions that don't alter the stream's data.
+
+The signature of `tap` looks like this:
+
+```javascript
+tap(
+  nextFn?: (value: T) => void,
+  errorFn?: (error: any) => void,
+  completeFn?: () => void
+): Observable<T>
+```
+
+- `nextFn`: A function that will be called when a new value is emitted by the observable.
+
+- `errorFn`: A function that will be called if an error occurs in the observable.
+
+- `completeFn`: A function that will be called when the observable completes.
+
+Here's a breakdown of how `tap` is commonly used:
+
+### Logging and Debugging
+
+```javascript
+            const observer = {
+                next: n => o.innerHTML += n + " - ",
+                error: err => o.innerHTML += " Error: " + err,
+                complete: () => o.innerHTML += '-->Completed!',
+            };
+            const source = rxjs.of(1, 2, 3);
+            source.pipe(
+                rxjs.tap(value => o.innerHTML += `Before Mapping: ${value} <br>`),
+                rxjs.map(value => value * 2),
+                rxjs.tap(value => o.innerHTML += `After Mapping: ${value} <br>`)
+            ).subscribe(observer);
+```
+
+In this example, the `tap` operator is used to log values before and after the `map` operator is applied, providing insight into the data at different stages of the observable pipeline.
+
+### Side Effects
+
+```javascript
+            const observer = {
+                next: n => o.innerHTML += n + " - ",
+                error: err => o.innerHTML += " Error: " + err,
+                complete: () => o.innerHTML += '-->Completed!',
+            };
+            const source = rxjs.from([1, 2, 3, 4, 5]);
+            source.pipe(
+                rxjs.tap(value => o.innerHTML += `Checking value: ${value} <br>`),
+                rxjs.filter(value => value % 2 === 0),
+                rxjs.tap(value => o.innerHTML += `Even value found: ${value} <br>`)
+            ).subscribe(observer);
+```
+
+Here, `tap` is used to log messages during the process of filtering even numbers. It doesn't affect the stream's values but allows you to observe what's happening.
+
+### Resource Cleanup
+
+```javascript
+            rxjs.fromEvent(document, 'click').pipe(
+                rxjs.tap(() => o.innerHTML += 'Click detected <br>'),
+                rxjs.take(5),
+                rxjs.tap(() => o.innerHTML += 'Unsubscribing after 5 clicks <br>')
+            ).subscribe({
+                next: n => o.innerHTML += "x: " + n.x + " - y: " + n.y + "<br>",
+                error: err => o.innerHTML += " Error: " + err,
+                complete: () => o.innerHTML += '-->Completed!',
+            });
+```
+
+In this case, `tap` is used to log messages when a click is detected and when the observable is unsubscribed after a certain number of clicks.
+
+Remember that while `tap` is useful for debugging and performing side effects, it's crucial not to misuse it for transforming data or making asynchronous calls. If you need to transform the data, consider using other operators like `map`, `filter`, etc.
+
+### BASIC OPERATORS
+
+#### map
 ```javascript
             const observer = {
                 next: value => o.innerHTML += value + '<br>',
@@ -403,7 +481,7 @@ In this example, the `double` operator is created as a reusable function and the
             const process = source.pipe(rxjs.map(x => x * 2));
             const s = process.subscribe(observer);
 ```
-### filter
+#### filter
 ```javascript
             const observer = {
                 next: value => o.innerHTML += value + '<br>',
@@ -431,7 +509,7 @@ In this example, the `double` operator is created as a reusable function and the
             const process = source.pipe(rxjs.filter(x => x.length > 4));
             const s = process.subscribe(observer);
 ```
-### reduce
+#### reduce
 
 ```javascript
             const observer = {
@@ -454,7 +532,7 @@ Accumulator can be initialized:
             const process = source.pipe(rxjs.reduce((acc, v) => acc + v, 100));
             const s = process.subscribe(observer);
 ```
-### scan
+#### scan
 ```javascript
             const observer = {
                 next: n => o.innerHTML += n + " - ",
@@ -499,6 +577,33 @@ Accumulator can be initialized:
             const source = rxjs.interval(1000).pipe(rxjs.take(3));
             const process = source.pipe(rxjs.share());
             process.subscribe(observer);
+```
+
+### CONDITIONAL OPERATORS
+
+#### every
+```javascript
+            const observer = {
+                next: n => o.innerHTML += n + " - ",
+                error: err => o.innerHTML += " Error: " + err,
+                complete: () => o.innerHTML += '-->Completed!',
+            };
+            const source = rxjs.interval(500).pipe(rxjs.take(9));
+            const result = source.pipe(rxjs.every(x => x < 10));
+            result.subscribe(observer);
+```
+
+#### sequenceEqual
+```javascript
+            const observer = {
+                next: n => o.innerHTML += n + " - ",
+                error: err => o.innerHTML += " Error: " + err,
+                complete: () => o.innerHTML += '-->Completed!',
+            };
+            const source1 = rxjs.interval(1000).pipe(rxjs.take(9));
+            const source2 = rxjs.interval(400).pipe(rxjs.take(9));
+            const result = source1.pipe(rxjs.sequenceEqual(source2));
+            result.subscribe(observer);
 ```
 ### FILTERING OPERATORS
 
@@ -602,7 +707,7 @@ Accumulator can be initialized:
 
 ### COMBINATION OPERATORS
 
-Combining observables is a common operation in reactive programming, and RxJS provides several operators to facilitate this. Combining observables allows you to work with multiple streams of data simultaneously. Here are some common ways to combine observables in RxJS:
+RxJS provides operators to combine multiple Observables. Combining observables is a common operation in reactive programming, and RxJS provides several operators to facilitate this. Combining observables allows you to work with multiple streams of data simultaneously. Here are some common ways to combine observables in RxJS:
 
 1. **`forkJoin`:**
    - `forkJoin` combines multiple observables into a single observable that emits an array of the last values from each input observable when all of them have completed.
@@ -647,6 +752,10 @@ Combining observables is a common operation in reactive programming, and RxJS pr
             const process = rxjs.combineLatest(source1,source2);
             process.subscribe(observer);
 ```
+
+
+
+
 3. **`zip`:**
    - `zip` combines the values of multiple observables in a strict sequence, emitting an array of the nth values from each observable.
    
@@ -900,7 +1009,7 @@ BehaviorSubject characteristics:
 3. **Stateful:**
    - `BehaviorSubject` is stateful as it retains the last emitted value.
 
-## 7. **replaySubject**
+## 7. **ReplaySubject**
 
 In RxJS, a `ReplaySubject` is a type of subject that retains and replays a specified number of values to any new subscribers. It is a type of subject that combines the features of both `Subject` and `BehaviorSubject`. Like a regular `Subject`, it can multicast values to multiple subscribers, and like a `BehaviorSubject`, it keeps a buffer of the last N values so that new subscribers can receive those historical values upon subscription.
 
@@ -1082,16 +1191,5 @@ RxJS provides operators for handling errors in Observables. The `catchError` ope
             source2.subscribe(observer);
 ```
 
-## 8. **Combining Observables:**
-RxJS provides operators to combine multiple Observables. `merge`, `concat`, `combineLatest`, and others are used to handle scenarios where you need to work with multiple streams of data.
-
-```javascript
-import { interval, combineLatest } from 'rxjs';
-
-const source1 = interval(1000);
-const source2 = interval(500);
-
-combineLatest(source1, source2).subscribe(observer);
-```
 
 
