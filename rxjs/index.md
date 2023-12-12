@@ -329,6 +329,24 @@ Usando axios
 #### empty
 Returns an observable that immediately completes.
 
+### share
+Allows duplicating observables
+```javascript
+            const source = rxjs.interval(500).pipe(rxjs.take(5));
+            const process1 = source.pipe(rxjs.share());
+            process1.subscribe({
+                next: n => o.innerHTML += "o1: " + n + " <br>",
+                error: err => o.innerHTML += " Error o1: " + err + " <br>",
+                complete: () => o.innerHTML += '--> o1 Completed! <br>',
+            });
+            const process2 = source.pipe(rxjs.share());
+            process2.subscribe({
+                next: n => o.innerHTML += "o2: " + n + " <br>",
+                error: err => o.innerHTML += " Error o2: " + err + " <br>",
+                complete: () => o.innerHTML += '--> o1 Completed! <br>',
+            });
+```
+
 ## 4. **Operators:**
 Operators are functions that transform, filter, or combine Observables. RxJS provides a rich set of operators to manipulate data streams. 
 
@@ -566,18 +584,7 @@ Accumulator can be initialized:
 ```
 
 
-### share
 
-```javascript
-            const observer = {
-                next: n => o.innerHTML += n + " - ",
-                error: err => o.innerHTML += " Error: " + err,
-                complete: () => o.innerHTML += '-->Completed!',
-            };
-            const source = rxjs.interval(1000).pipe(rxjs.take(3));
-            const process = source.pipe(rxjs.share());
-            process.subscribe(observer);
-```
 
 ### CONDITIONAL OPERATORS
 
