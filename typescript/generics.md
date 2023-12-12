@@ -182,3 +182,85 @@ console.log(data.serializeData()); // Output: {"name":"Alice","age":25}
 ```
 
 In this example, we create an instance of the `Person` class named `person` and pass it to the `Data` class constructor. We then call the `printData()` method of the `Data` instance, which in turn calls the `print()` method of the `Person` instance, printing the person's name and age. Finally, we call the `serializeData()` method of the `Data` instance, which calls the `serialize()` method of the `Person` instance, returning a JSON string representation of the person object.
+
+## Factory pattern using interfaces and generics
+
+
+
+
+```typescript
+// Define a common interface for the product using generics
+interface Product<T> {
+    operation(): T;
+}
+
+// Define an interface for the factory using generics
+interface Factory<T> {
+    createProduct(): Product<T>;
+}
+
+// Implementations of the product interface
+class ConcreteProductA implements Product<string> {
+    operation(): string {
+        return 'ConcreteProductA operation: ' + Math.floor(Math.random() * 10000000);
+    }
+}
+
+class ConcreteProductB implements Product<number> {
+    operation(): number {
+        return Math.floor(Math.random() * 10000000);
+    }
+}
+
+class ConcreteProductC implements Product<boolean> {
+    operation(): boolean {
+        if (Math.random() <= 0.5) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
+// Implementations of the factory interface
+class ConcreteFactoryA implements Factory<string> {
+    createProduct(): Product<string> {
+        return new ConcreteProductA();
+    }
+}
+
+class ConcreteFactoryB implements Factory<number> {
+    createProduct(): Product<number> {
+        return new ConcreteProductB();
+    }
+}
+
+class ConcreteFactoryC implements Factory<boolean> {
+    createProduct(): Product<boolean> {
+        return new ConcreteProductC();
+    }
+}
+
+// Client code using the factory
+function genericProduction<T>(factory: Factory<T>): void {
+    const product: Product<T> = factory.createProduct();
+    console.log(product.operation());
+}
+
+// Usage
+for (let i: number = 1; i <= 10; i++) {
+    let f: Factory<any>;
+    if (Math.random() <= 0.33) {
+        f = new ConcreteFactoryA();
+    } else {
+        if (Math.random() <= 0.5) {
+            f = new ConcreteFactoryC();
+        } else {
+            f = new ConcreteFactoryB();
+        }
+    }
+    genericProduction(f);
+}
+```
+
+
