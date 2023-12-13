@@ -50,7 +50,47 @@ Interfaces in TypeScript provide a way to define the structure and shape of an o
 
 8. **Type Checking**: Interfaces provide type checking during compile-time. When an object or class implements an interface, TypeScript checks if it conforms to the structure defined by the interface. It verifies that all required properties and methods are present and have the correct types.
 
-9. **Duck Typing**: TypeScript uses a structural type system, which means that objects are considered compatible with an interface as long as they have the same structure and shape, regardless of their explicit declaration of implementing the interface. This concept is known as "duck typing" or "structural typing."
+9. **Duck Typing**: Duck typing is a concept in programming languages like TypeScript where the type or class of an object is determined by its behavior (methods and properties) rather than its explicit type or inheritance. In TypeScript, this means that objects are considered compatible with an interface as long as they have the same structure and shape, regardless of their explicit declaration of implementing the interface. Here's an example:
+
+```typescript
+// Define an interface
+interface Quackable {
+  quack(): void;
+}
+
+// An object with the same structure as the interface
+const duck1 = {
+  quack: () => console.log('Quack!'),
+};
+
+// Another object with the same structure as the interface
+const duck2 = {
+  quack: () => console.log('Quack! Quack!'),
+};
+
+// Function that takes a Quackable parameter
+function makeDuckQuack(duck: Quackable) {
+  duck.quack();
+}
+
+// Both objects can be passed to the function
+makeDuckQuack(duck1); // Output: Quack!
+makeDuckQuack(duck2); // Output: Quack! Quack!
+
+// A different object structure, but still quackable
+const robotDuck = {
+  makeSound: () => console.log('Beep beep!'),
+  quack: () => console.log('Quack! (from a robot)'),
+};
+
+// This object can also be passed to the function
+makeDuckQuack(robotDuck); // Output: Quack! (from a robot)
+```
+
+In this example, `duck1` and `duck2` are objects that conform to the `Quackable` interface, even though they haven't explicitly stated that they implement the interface. The `makeDuckQuack` function takes a parameter of type `Quackable`, and it can accept any object that has a `quack` method, regardless of its declared type.
+
+The `robotDuck` object is not explicitly declared to implement the `Quackable` interface, but since it has the same structure (a `quack` method), it can be used wherever a `Quackable` is expected. This demonstrates the concept of duck typing in TypeScript, where the compatibility of an object with an interface is based on its shape rather than its explicit type or class declaration.
+
 
 Interfaces in TypeScript play a crucial role in defining contracts and ensuring type safety in your code. They promote code reusability, modularity, and consistency, making it easier to work with complex data structures and collaborate in larger projects.
 
