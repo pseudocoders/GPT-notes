@@ -195,7 +195,7 @@ Here's a brief overview of how `this` is used in classes in TypeScript:
 3. **Arrow Functions:**
    - When using arrow functions as class methods, the lexical scoping of `this` is preserved, avoiding the need to use function binding or workarounds.
 
-    ```typescript
+```typescript
 class ArrowFunctionExample {
     private value: number;
 
@@ -223,7 +223,7 @@ console.log(arrowInstance.getValue());
 
 console.log(arrowInstance.getValue2());
 
-    ```
+```
 
 4. **Function Binding:**
    - In some cases, you might need to explicitly bind a function to a specific context using `.bind(this)`.
