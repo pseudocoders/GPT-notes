@@ -182,10 +182,14 @@ Here's a brief overview of how `this` is used in classes in TypeScript:
         this.value *= value;
         return this;
       }
+
+      value(): number {
+        return this.value;
+      }
     }
 
     const chainInstance = new ChainingExample(2);
-    chainInstance.add(3).multiply(4);
+    chainInstance.add(3).multiply(4).value();
     ```
 
 3. **Arrow Functions:**
