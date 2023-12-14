@@ -196,20 +196,33 @@ Here's a brief overview of how `this` is used in classes in TypeScript:
    - When using arrow functions as class methods, the lexical scoping of `this` is preserved, avoiding the need to use function binding or workarounds.
 
     ```typescript
-    class ArrowFunctionExample {
-      private value: number;
+class ArrowFunctionExample {
+    private value: number;
 
-      constructor(initialValue: number) {
+    constructor(initialValue: number) {
         this.value = initialValue;
-      }
-
-      updateValue = (newValue: number): void => {
-        this.value = newValue;
-      }
     }
 
-    const arrowInstance = new ArrowFunctionExample(10);
-    arrowInstance.updateValue(20);
+    updateValue = (newValue: number): void => {
+        this.value = newValue;
+    }
+
+    getValue = (): number => this.value;
+
+    getValue2(): number {
+        return this.value;
+    }
+
+}
+
+const arrowInstance = new ArrowFunctionExample(10);
+
+arrowInstance.updateValue(20);
+
+console.log(arrowInstance.getValue());
+
+console.log(arrowInstance.getValue2());
+
     ```
 
 4. **Function Binding:**
