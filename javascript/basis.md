@@ -10,7 +10,6 @@ This statement prints the message "Hello, world!" to the console, which is a too
 
 ## Data types
 
-3. Data types:
 JavaScript has several built-in data types, including strings, numbers, booleans, arrays, objects, and more. Here are a few examples:
 
 ```javascript
