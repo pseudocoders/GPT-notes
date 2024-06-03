@@ -70,6 +70,8 @@ It's important to note that the DOM and BOM are separate but interconnected comp
 
 ## DOM manipulation
 
+DOM (Document Object Model) manipulation is a fundamental concept in web development that allows you to dynamically change the content, structure, and style of a web page using JavaScript. 
+
 ### createElement(), setAttribute(), appendChild()
 
 In JavaScript, the `createElement` method is used to create an HTML element dynamically. This method is available on the `document` object in the browser and can be used to create any HTML element, such as `div`, `p`, `img`, `input`, etc.
