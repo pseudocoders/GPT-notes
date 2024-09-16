@@ -55,81 +55,11 @@ Here's a list of some of the most popular and widely used backend frameworks:
 
 2. Flask: Flask is a lightweight and flexible microframework that provides the essentials for building web applications. It emphasizes simplicity and allows developers to choose the components they need for their specific project requirements.
 
-3. Pyramid: Pyramid is a general-purpose web framework that is known for its flexibility and scalability. It follows a minimalist design philosophy and provides the tools needed for building large-scale applications.
-
-4. Bottle: Bottle is a minimalist web framework that is easy to learn and use. It is designed for small-scale projects and emphasizes simplicity and speed.
-
-5. CherryPy: CherryPy is a minimalistic yet powerful Python web framework. It focuses on being modular and extensible, providing developers with the freedom to choose and integrate components as needed.
-
-6. Tornado: Tornado is a scalable and non-blocking web framework known for its high-performance capabilities. It is particularly suitable for building real-time applications and web services that require high concurrency.
-
-7. Falcon: Falcon is a lightweight and fast framework for building RESTful APIs. It is designed to be efficient and requires minimal resources, making it suitable for microservices and high-performance applications.
-
-8. FastAPI: FastAPI is a modern, high-performance web framework for building APIs with Python. It leverages type annotations and automatic documentation generation, making it easy to build robust and efficient backend services.
-
-9. Hug: Hug is a Python framework for building APIs. It focuses on developer productivity and provides automatic documentation, input/output validation, and various serialization formats.
-
-10. web2py: web2py is a full-stack framework that aims to simplify web application development. It provides an inclusive environment with a built-in database abstraction layer, an admin interface, and tools for security and deployment.
-
-11. TurboGears: TurboGears is a full-stack framework that combines several libraries, including SQLAlchemy, Jinja2, and WebOb, to provide a complete solution for web application development.
-
-12. Sanic: Sanic is a lightweight and asynchronous web framework that aims to provide high performance. It is built on top of asyncio and is suitable for building fast and scalable web applications.
-
-13. Pyramid: Pyramid is a general-purpose web framework known for its flexibility and extensibility. It follows a minimalist approach and provides features for routing, authentication, and templating.
-
-14. Dash: Dash is a framework for building analytical web applications in Python. It allows developers to create interactive and data-driven dashboards with ease.
-
-15. Nameko: Nameko is a microservices framework for Python. It provides tools and abstractions for building scalable and distributed systems using the microservices architectural pattern.
-
-16. Flask-RESTful: Flask-RESTful is an extension for Flask that simplifies the development of RESTful APIs. It provides a convenient way to define resources, handle requests, and handle common API-related tasks.
-
-17. Masonite: Masonite is a modern and developer-friendly web framework that aims to provide a clean and elegant API for building web applications. It follows the principles of good software design and includes features like an ORM and a command-line interface.
-
-18. Django REST Framework: Django REST Framework is a powerful and flexible toolkit for building Web APIs with Django. It provides a set of tools and abstractions for serialization, authentication, and API documentation.
-
-19. Vibora: Vibora is an asynchronous and high-performance web framework for Python. It aims to provide fast request/response times and supports advanced features like WebSockets and HTTP/2
-
 ### Ruby frameworks
 
 1. Ruby on Rails (Rails): Ruby on Rails is a full-stack web application framework that follows the Model-View-Controller (MVC) architectural pattern. It emphasizes convention over configuration and provides features like routing, an ORM (Active Record), and built-in testing.
 
 2. Sinatra: Sinatra is a lightweight and flexible web framework that focuses on simplicity and minimalism. It provides a DSL (Domain-Specific Language) for building web applications and APIs.
-
-3. Hanami: Hanami (formerly Lotus) is a modern web framework that follows the MVC pattern. It emphasizes modularity, simplicity, and performance, and allows developers to choose the components they need for their specific project requirements.
-
-4. Grape: Grape is a framework for building RESTful APIs in Ruby. It provides a simple and concise syntax for defining API endpoints and supports various serialization formats.
-
-5. Padrino: Padrino is a lightweight web framework that is built on top of Sinatra. It adds additional features and utilities to Sinatra, such as routing, ORM (Active Record), and authentication.
-
-6. Cuba: Cuba is a microframework for building web applications in Ruby. It focuses on simplicity, speed, and flexibility, allowing developers to choose the components they need for their specific project requirements.
-
-7. Roda: Roda is a routing tree web toolkit for Ruby. It provides a modular and flexible approach to building web applications and supports various plugins for additional functionality.
-
-8. Ramaze: Ramaze is a simple and modular web framework for Ruby. It follows the MVC pattern and provides features like routing, caching, and database integration.
-
-9. Volt: Volt is a reactive web framework for building real-time applications in Ruby. It leverages the power of websockets and allows developers to create dynamic and responsive user interfaces.
-
-10. Lotus: Lotus is a web framework that aims to provide a modular and flexible architecture for building web applications in Ruby. It promotes separation of concerns and adheres to good software design principles.
-
-11. Trailblazer: Trailblazer is a framework that introduces concepts like form objects, operations, and representers to help developers create maintainable and encapsulated business logic in Ruby applications.
-
-12. Merb: Merb is a lightweight and modular web framework that focuses on performance and flexibility. It allows developers to choose the components they need and provides a flexible architecture for building web applications.
-
-13. Camping: Camping is a microframework that aims to be simple and lightweight. It provides a minimalistic approach to building web applications and is suitable for small projects and prototypes.
-
-14. Pakyow: Pakyow is a framework for building modern web applications in Ruby. It focuses on performance, developer experience, and reusability, providing features like data binding and component-based architecture.
-
-15. Rodauth: Rodauth is a library that provides a robust authentication and authorization system for Ruby web applications. It supports various authentication strategies and offers a high level of customization.
-
-16. Volt.rb: Volt.rb is a reactive web framework that combines Ruby with the power of the Volt.js library. It allows developers to build real-time applications with ease.
-
-17. Nancy: Nancy is a lightweight and modular web framework for Ruby that aims to provide a simple and intuitive API. It focuses on convention over configuration and supports various plugins for added functionality.
-
-18. Scorched: Scorched is a microframework for Ruby that focuses on performance and simplicity. It provides a lightweight and fast environment for building web applications.
-
-19. Rodauth: Rodauth is a feature-rich library for handling authentication and authorization in Ruby web applications. It provides a customizable and secure authentication system.
-
-20. Cuba: Cuba is a lightweight microframework for building web applications in Ruby. It is designed to
 
 ### JavaScript - Node.js frameworks
 
@@ -219,36 +149,6 @@ Here's a list of some of the most popular and widely used backend frameworks:
 
 4. Xamarin: Xamarin is a framework for building cross-platform mobile applications using C#. It allows developers to share code across iOS, Android, and Windows platforms, providing native performance and user experience.
 
-5. Windows Presentation Foundation (WPF): WPF is a graphical subsystem for creating desktop applications in Windows. It provides a rich set of UI controls, data binding capabilities, and a powerful styling system.
-
-6. Windows Communication Foundation (WCF): WCF is a framework for building distributed systems and services in Windows. It provides a unified programming model for creating secure and reliable services using various protocols.
-
-7. Windows Forms: Windows Forms is a framework for building desktop applications in Windows. It provides a rich set of UI controls and event-driven programming model.
-
-8. Nancy: Nancy is a lightweight and flexible framework for building web applications and APIs in C#. It focuses on simplicity and modular design, allowing developers to choose the components they need.
-
-9. Dapper: Dapper is a simple and fast micro-ORM for C#. It provides a lightweight and high-performance way to map database results to objects, making database access more efficient.
-
-10. Akka.NET: Akka.NET is a framework for building highly concurrent and distributed systems in C#. It implements the actor model, providing a scalable and fault-tolerant approach to building reactive applications.
-
-11. Serilog: Serilog is a flexible and easy-to-use logging framework for .NET applications. It supports structured logging and provides various sinks for storing log data.
-
-12. NancyFx: NancyFx is a lightweight web framework for building RESTful APIs and web applications in C#. It follows a modular and convention-based approach, making it easy to build and extend applications.
-
-13. AutoMapper: AutoMapper is a mapping library that simplifies object-to-object mapping in C#. It reduces the boilerplate code required for mapping objects and allows developers to focus on the core logic.
-
-14. MediatR: MediatR is a framework that implements the mediator pattern in C#. It simplifies the communication between components by decoupling senders and receivers, making it easy to build modular and scalable applications.
-
-15. Hangfire: Hangfire is a background processing library for .NET applications. It allows developers to perform background jobs, schedule tasks, and process queues efficiently.
-
-16. IdentityServer: IdentityServer is an OpenID Connect and OAuth 2.0 framework for building authentication and authorization systems in C#. It provides a secure and scalable solution for handling user authentication and authorization.
-
-17. MassTransit: MassTransit is a distributed application framework for .NET. It provides a message-based architecture for building scalable and decoupled systems using message queues.
-
-18. Quartz.NET: Quartz.NET is a job scheduling library for .NET applications. It allows developers to schedule and manage recurring tasks and background jobs with ease.
-
-19. ReactiveUI: ReactiveUI is a framework for building reactive and responsive user interfaces in C#. It combines the reactive programming paradigm with the MVVM (Model-View-ViewModel) pattern to create robust and
-
 ### PHP frameworks
 
 1. Laravel: Laravel is a powerful and widely-used PHP framework known for its elegant syntax, expressive features, and a rich ecosystem. It follows the MVC architectural pattern and provides features like routing, ORM, caching, and authentication.
@@ -279,39 +179,11 @@ Here's a list of some of the most popular and widely used backend frameworks:
 
 14. Phalcon: Phalcon is a high-performance PHP framework that is implemented as a C extension. It aims to provide speed and efficiency by minimizing overhead, making it suitable for applications that require optimal performance.
 
-15. Mezzio: Mezzio (formerly Zend Expressive) is a flexible and lightweight PHP framework built on top of the expressive PSR-7 HTTP message interfaces. It allows developers to build APIs and web applications with ease.
-
-16. Silex: Silex is a micro-framework based on Symfony components. It provides a simple and intuitive API for building web applications and RESTful APIs.
-
-17. Nette: Nette is a popular PHP framework known for its simplicity and component-based architecture. It offers features like templating, forms, and database access to speed up development.
-
-18. Fat-Free Framework: Fat-Free is a lightweight yet powerful PHP micro-framework that emphasizes speed, simplicity, and modularity. It provides essential features for routing, caching, and templating.
-
-19. Zikula: Zikula is an extensible and modular PHP framework that focuses on content management and application development. It provides a flexible architecture and
-
 ### Go frameworks
 
 1. Gin: Gin is a lightweight web framework for Go. It provides a fast HTTP router and a set of middleware functions for building web applications and APIs. Gin is known for its simplicity and high performance.
 
 2. Echo: Echo is a fast and minimalistic web framework for Go. It offers a simple and intuitive API for building web applications and RESTful APIs. Echo is designed to be easy to use and efficient.
-
-3. Revel: Revel is a full-featured web framework for Go. It follows the Model-View-Controller (MVC) architectural pattern and provides features like routing, request handling, templates, and automatic code reloading.
-
-4. Fiber: Fiber is an Express.js-inspired web framework for Go. It is designed to be fast, flexible, and easy to use. Fiber provides a range of features including routing, middleware support, and HTTP handlers.
-
-5. Buffalo: Buffalo is a batteries-included web development framework for Go. It aims to provide an opinionated and productive environment for building modern web applications. Buffalo includes features like routing, database integration, asset management, and authentication.
-
-6. Iris: Iris is a high-performance web framework for Go. It offers a rich set of features, including routing, middleware, template rendering, and WebSocket support. Iris is known for its speed and scalability.
-
-7. Beego: Beego is a full-featured web framework for Go. It follows the Model-View-Controller (MVC) architectural pattern and provides a comprehensive set of features, including routing, ORM, validation, and internationalization.
-
-9. Gorilla: Gorilla is a set of packages for building web applications in Go. It provides a collection of modules for handling routing, sessions, websockets, and other common web development tasks.
-
-10. Chi: Chi is a lightweight and flexible HTTP router for Go. It is designed to be fast, modular, and easy to use. Chi provides a minimalistic API for building web applications and APIs.
-
-11. Goa: Goa is a framework for building microservices and APIs in Go. It focuses on design-first development and provides tools for defining APIs using a Domain-Specific Language (DSL). Goa generates Go code from the API definition, including routing, serialization, and documentation.
-
-These frameworks offer a variety of features and approaches for building web applications and APIs in Go. Each framework has its own strengths and focuses, so you can choose the one that best suits your project requirements and development style.
 
 ### Rust frameworks
 
@@ -321,55 +193,11 @@ These frameworks offer a variety of features and approaches for building web app
 
 3. Tide: Tide is a minimalistic and flexible web framework for Rust. It is designed to be composable and follows an asynchronous programming model using async/await syntax.
 
-4. Warp: Warp is a lightweight and highly performant web framework for Rust. It leverages async/await syntax and provides a functional programming approach for building asynchronous web applications.
-
-5. Nickel: Nickel is a simple and lightweight web framework for Rust. It aims to provide a minimalistic and easy-to-use API for building web applications and APIs.
-
-6. Gotham: Gotham is a flexible web framework for building web applications and APIs in Rust. It focuses on modularity, extensibility, and type-safety, providing a rich set of features for web development.
-
-7. Rocket: Rocket is a web framework for Rust that emphasizes ease of use, safety, and speed. It provides a powerful API for building web applications and APIs and includes features like routing, request handling, and templates.
-
-8. Tide: Tide is a minimalistic and asynchronous web framework for Rust. It follows a modular and composable design and provides a flexible API for building web applications.
-
-9. Iron: Iron is a middleware-based web framework for Rust. It provides a modular and extensible architecture and includes a set of middleware for handling common web development tasks.
-
-10. Actix: Actix is an actor framework for Rust that can be used for building high-performance, concurrent, and fault-tolerant systems. It provides a scalable and efficient way to handle concurrent tasks and communication between components.
-
-11. Warp: Warp is a lightweight and composable web framework for Rust. It leverages the power of asynchronous programming and provides a functional programming style for building web applications.
-
-12. Thruster: Thruster is a fast and lightweight web framework for Rust. It aims to provide high-performance and efficient routing for web applications and APIs.
-
-These frameworks provide a range of options for building backend applications and APIs using Rust. Each framework has its own strengths and focuses, so you can choose the one that best suits your project requirements and development style.
-
 ### Haskell frameworks
 
 1. Yesod: Yesod is a high-level web framework for Haskell. It follows the MVC (Model-View-Controller) architectural pattern and provides strong static typing, type-safe routing, templating, and a built-in ORM.
 
 2. Servant: Servant is a lightweight and type-safe web API framework for Haskell. It allows you to define your API using a type-level DSL and automatically generates server-side handlers and client bindings.
-
-3. Scotty: Scotty is a minimalistic web framework for Haskell. It provides a simple API for building web applications with routing, middleware support, and template rendering.
-
-4. Snap: Snap is a high-performance web framework for Haskell. It focuses on speed and efficiency and provides features like routing, state handling, and authentication.
-
-5. Spock: Spock is a lightweight and flexible web framework for Haskell. It is inspired by Sinatra and allows you to build web applications using a DSL-style syntax.
-
-6. Happstack: Happstack is a web framework for Haskell that emphasizes simplicity and robustness. It provides an intuitive API for building web applications and supports routing, state handling, and templating.
-
-7. Miso: Miso is a frontend and backend web framework for Haskell. It allows you to build isomorphic web applications, meaning that the same code can run on both the client and the server.
-
-8. Restful: Restful is a lightweight REST API framework for Haskell. It provides a type-safe DSL for defining RESTful routes and automatically generates server-side handlers.
-
-9. Scotty-ng: Scotty-ng is a fork of Scotty with additional features and improvements. It provides a lightweight and efficient web framework for Haskell.
-
-10. WAI (Web Application Interface): WAI is not a framework itself, but a specification for building web applications in Haskell. It defines a common interface between web servers and applications, allowing interoperability between different Haskell web frameworks.
-
-11. Acid-State: Acid-State is a Haskell library for building scalable and fault-tolerant applications with ACID (Atomicity, Consistency, Isolation, Durability) guarantees. It provides a persistent and transactional state layer for your backend applications.
-
-12. Haskell on Heroku: Haskell on Heroku is a set of tools and libraries that allow you to deploy Haskell web applications to the Heroku platform. It provides integration with the Heroku ecosystem and simplifies the deployment process.
-
-These frameworks and libraries provide a range of options for building web applications, REST APIs, and backend services using Haskell. Each framework has its own strengths and focuses, so you can choose the one that best suits your project requirements and development style.
-
-These are just a few examples, and there are many more frameworks available for different programming languages and platforms. The choice of framework often depends on factors like language preference, project requirements, community support, and developer familiarity.
 
 ### Elixir frameworks
 
@@ -377,89 +205,17 @@ These are just a few examples, and there are many more frameworks available for 
 
 2. Plug: Plug is a specification and library for building composable web middleware in Elixir. It provides a unified interface for connecting different components in the request-response cycle, allowing developers to build custom pipelines and handle HTTP requests efficiently.
 
-3. Nerves: Nerves is a framework for building embedded systems and IoT (Internet of Things) devices using Elixir. It provides a set of abstractions and tools for developing and deploying reliable and scalable firmware for connected devices.
-
-4. Absinthe: Absinthe is a GraphQL toolkit for Elixir. It allows developers to define GraphQL schemas, execute queries, and handle mutations efficiently. Absinthe integrates well with Elixir's ecosystem and provides a flexible and performant solution for building GraphQL APIs.
-
-5. Sugar: Sugar is a lightweight web framework for Elixir. It focuses on simplicity and productivity, providing a clean and expressive syntax for building web applications. Sugar includes features like routing, middleware support, and templating.
-
-6. Raxx: Raxx is a minimalistic web framework for Elixir. It provides a low-level API for building web applications, giving developers full control over the request-response cycle. Raxx is designed to be lightweight and flexible.
-
-7. Maru: Maru is a RESTful API framework for Elixir. It provides a simple and declarative syntax for defining API endpoints, serialization, and validation. Maru aims to make building and testing APIs in Elixir straightforward and efficient.
-
-8. Elixir-GraphQL: Elixir-GraphQL is a library for building GraphQL servers in Elixir. It provides a DSL for defining GraphQL schemas, resolvers for handling queries and mutations, and utilities for executing and validating GraphQL operations.
-
-9. Dynamo: Dynamo is a web framework for Elixir inspired by Ruby's Sinatra. It focuses on simplicity and minimalism, allowing developers to quickly build lightweight web applications with concise syntax.
-
-10. ExMachina: ExMachina is a library for creating test data in Elixir. It provides a convenient API for generating and manipulating test data, making it easy to set up fixtures and write tests for Elixir applications.
-
-11. Phoenix LiveView: Phoenix LiveView is an extension to the Phoenix framework that allows you to build interactive, real-time web applications without writing JavaScript. It leverages Elixir's concurrency model to provide a highly responsive user experience.
-
-These frameworks and libraries offer a range of options for building backend applications and APIs using Elixir. Each framework has its own strengths and focuses, so you can choose the one that best suits your project requirements and development style.
-
 ### Scala frameworks
 
 1. Play Framework: Play Framework is a full-stack web framework for Scala. It follows the Model-View-Controller (MVC) architectural pattern and provides a comprehensive set of features for building web applications. Play Framework emphasizes developer productivity, scalability, and performance.
-
-2. Akka HTTP: Akka HTTP is a reactive web framework for building scalable and high-performance web applications in Scala. It is built on top of Akka, a toolkit and runtime for building highly concurrent and distributed systems. Akka HTTP provides a powerful and flexible API for handling HTTP requests and building RESTful APIs.
-
-3. Finch: Finch is a lightweight and composable web framework for Scala. It is designed to be expressive, type-safe, and easy to use. Finch leverages functional programming concepts and provides a functional DSL for defining HTTP routes and handling requests.
-
-4. Scalatra: Scalatra is a simple and flexible web framework for Scala. It focuses on providing a minimalistic API for building RESTful web services and APIs. Scalatra emphasizes simplicity, extensibility, and developer productivity.
-
-5. Lift: Lift is a full-featured web framework for Scala. It follows the convention-over-configuration principle and provides a rich set of features for building web applications. Lift emphasizes security, scalability, and maintainability.
-
-6. Slick: Slick is a database access library for Scala. It provides a type-safe and functional programming approach for interacting with databases. Slick allows you to define database schemas, perform queries, and handle transactions in a concise and expressive manner.
-
-7. Finch: Finch is a lightweight and purely functional web framework for Scala. It is built on top of the Finagle library, which provides a highly concurrent and asynchronous programming model. Finch allows you to build RESTful APIs using a functional and type-safe DSL.
-
-8. Spray: Spray is a lightweight web framework for Scala. It is designed to be modular, flexible, and scalable. Spray provides a DSL for building RESTful web services and includes features like routing, JSON marshalling, and client-side HTTP.
-
-9. Circe: Circe is a JSON library for Scala. It allows you to serialize and deserialize JSON data in a type-safe and functional programming style. Circe integrates well with other Scala frameworks and provides seamless JSON handling capabilities.
-
-10. Lagom: Lagom is a microservices framework for building reactive systems in Scala. It combines the principles of the Lightbend Reactive Platform, including Akka and Play Framework, to provide a development environment for building scalable and resilient applications.
-
-11. Finch: Finch is a lightweight and composable web framework for Scala. It leverages the power of functional programming and provides a type-safe DSL for defining HTTP endpoints and handling requests.
 
 ### Clojure frameworks
 
 1. Ring: Ring is a simple and lightweight web framework for Clojure. It provides a standard interface for handling HTTP requests and responses, making it easy to build web applications and APIs. Ring can be used with different web servers and integrates well with other Clojure libraries.
 
-2. Compojure: Compojure is a routing library for Clojure that is built on top of Ring. It provides a concise DSL for defining routes and handling requests. Compojure emphasizes simplicity and functional programming principles.
-
-3. Luminus: Luminus is a full-stack web framework for Clojure. It is designed to be modular, flexible, and productive. Luminus integrates various Clojure libraries and provides a set of templates and conventions for building web applications and APIs.
-
-4. Pedestal: Pedestal is a web framework for building scalable and high-performance applications in Clojure. It follows a server-centric architecture and provides features like routing, request handling, and advanced I/O handling. Pedestal emphasizes performance and extensibility.
-
-5. Duct: Duct is a flexible framework for building Clojure applications, including web applications. It focuses on simplicity and composability, allowing developers to assemble applications from reusable components. Duct provides features like dependency injection, configuration management, and modular routing.
-
-6. Bidi: Bidi is a routing library for Clojure that is built on top of Ring. It provides a declarative syntax for defining routes and handling requests. Bidi emphasizes simplicity, flexibility, and efficient route matching.
-
-7. Aleph: Aleph is a scalable networking library for Clojure. It provides asynchronous I/O and supports various transport protocols, such as HTTP, WebSockets, and TCP. Aleph is well-suited for building high-performance server applications.
-
-8. HoneySQL: HoneySQL is a SQL library for Clojure. It provides a simple and flexible API for generating SQL queries and interacting with databases. HoneySQL supports different SQL dialects and integrates well with other Clojure libraries.
-
-9. Integrant: Integrant is a dependency injection and configuration management library for Clojure. It allows you to manage application state, configure components, and handle lifecycle events. Integrant provides a declarative and extensible approach to building and managing complex systems.
-
-10. Yada: Yada is a full-featured web framework for Clojure that is built on top of Ring and Compojure. It provides a set of conventions and utilities for building RESTful APIs and web applications. Yada emphasizes simplicity, performance, and scalability.
-
 ### Swift frameworks
 
 1. Vapor: Vapor is a popular web framework for Swift that allows you to build web applications and APIs. It provides a robust set of features, including routing, middleware, templating, database integration, and authentication. Vapor follows the Model-View-Controller (MVC) architectural pattern and emphasizes type-safety and performance.
-
-2. Kitura: Kitura is a web framework and web server for Swift. It is developed by IBM and provides a rich set of features for building web applications and services. Kitura supports routing, middleware, templating, and database integration. It is designed to be fast, scalable, and secure.
-
-3. Perfect: Perfect is a server-side framework for Swift that enables the development of highly scalable and efficient web applications and APIs. It provides a range of features, including routing, middleware, database connectors, and templating. Perfect aims to simplify server-side development in Swift.
-
-4. Zewo: Zewo is a lightweight and modular web framework for Swift. It follows a middleware-based approach, allowing you to compose your application using independent middleware components. Zewo supports routing, middleware, and JSON serialization.
-
-5. Kitura-NIO: Kitura-NIO is a next-generation version of the Kitura framework that is built on top of SwiftNIO, a low-level networking library. It provides a powerful and scalable foundation for building web applications and services in Swift.
-
-6. Smoke Framework: Smoke Framework is a server-side framework for Swift that focuses on building scalable and high-performance web services. It leverages SwiftNIO for asynchronous networking and provides features like routing, serialization, and middleware.
-
-7. Swifter: Swifter is a lightweight web framework for Swift. It is designed to be simple and easy to use, providing a basic set of features for building web applications. Swifter is well-suited for small projects or as a starting point for more complex applications.
-
-8. Ktor: Ktor is a server-side framework for Kotlin, but it can also be used with Swift through the Ktor-IO library. Ktor provides a flexible and asynchronous API for building web applications and services. It supports routing, HTTP clients, and templating.
 
 ## ORM
 
