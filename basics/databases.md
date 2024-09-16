@@ -1,5 +1,7 @@
 # Databases
 
+## Introduction
+
 A database is an organized collection of structured data that is stored and managed using a database management system (DBMS). It is designed to efficiently store, retrieve, update, and manage large volumes of data, providing a structured and controlled environment for data management.
 
 Common types of databases include relational databases (RDBMS), where data is organized in tables with predefined relationships, and non-relational databases (NoSQL), which provide flexible data models suitable for unstructured or semi-structured data.
